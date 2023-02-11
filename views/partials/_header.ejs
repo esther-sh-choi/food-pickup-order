@@ -1,0 +1,16 @@
+<header>
+  <nav>
+    <a class="logo">LOGO</a>
+    <div>
+      <div>
+        <% if (owner) { %>
+          <form class="form-inline" action="/logout" method="POST">
+            <span style="margin: 0.5em"> Logged in as: <%= owner.id %>! </span>
+            <button type="submit" class="btn btn-primary">Log Out</button>
+          </form>
+        <% } else { %>
+          <a href="/cart">CART</a>
+        <% } %>
+    </div>
+  </nav>
+</header>
