@@ -1,0 +1,27 @@
+<header>
+  <nav>
+    <a class="logo">LOGO</a>
+    <div>
+      <div>
+        <% if (owner) { %>
+          <form class="form-inline" action="/logout" method="POST">
+            <span>Logged in as: <%= owner.id %></span>
+            <button type="submit" class="logout">Log Out</button>
+          </form>
+        <% } else { %>
+          <a href="/cart">CART ICON</a>
+        <% } %>
+    </div>
+  </nav>
+</header>
+
+
+<!---
+
+  ******** Add this to the index.ejs file once merged. ********
+
+  <header>
+    <%- include('./partials/_header'); %>
+  </header>
+
+  --->
