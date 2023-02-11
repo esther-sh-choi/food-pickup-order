@@ -1,0 +1,23 @@
+// Cart
+
+.hide {
+  display: none;
+}
+
+.menu-item,
+.subtotal,
+.tax,
+.total {
+  display: flex;
+  justify-content: space-between;
+}
+.cart-content {
+  background-color: white;
+  padding: 2rem;
+}
+
+form {
+  padding: 2rem 0;
+}
+
+// cart end
