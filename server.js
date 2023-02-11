@@ -40,8 +40,8 @@ const restaurantRoutes = requires("./routes/restaurant");
 app.use("/api/users", userApiRoutes);
 app.use("/api/widgets", widgetApiRoutes);
 app.use("/users", usersRoutes);
-app.use("/customer", usersRoutes);
-app.use("/restaurant", usersRoutes);
+app.use("/customer", customerRoutes);
+app.use("/restaurant", restaurantRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
