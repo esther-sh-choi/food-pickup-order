@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Menu</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <header>
+    <%- include('./partials/_header'); %>
+  </header>
+  <menu class="menu-container">
+
+    <menu-card class="menu-card-container">
+      <div class="col s12 m7">
+          <h2 class="header"></h2>
+          <div class="card horizontal">
+            <div class="card-image">
+              <img src="https://media.blogto.com/uploads/2022/11/08/1667952466-20221104-CongeeQueen-16.jpg?w=1400&cmd=resize&height=2500&quality=70" width="300" height="200" alt="Food Photo">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Delicious Food Item</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </menu-card>
+
+  </menu>
+
+</body>
+
+</html>
