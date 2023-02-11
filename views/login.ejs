@@ -1,17 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Login</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/users.js"></script>
 </head>
 <body>
   <h1>Owner Login</h1>
-  <form action="">
-    <input type="text" id="username" name="username" placeholder="Username"><br><br>
-    <input type="password" id="password" name="password" placeholder="Password"><br><br>
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
-  <br>
-  <p>Looking for something delicious?</p>
-  <a class="waves-effect waves-light btn" href="customer_menu.html">Check out our menu!</a>
+
+
+  <div>
+    <form action="">
+      <div class="input-field">
+        <input id="email" type="email" class="validate">
+        <label for="email">Email</label>
+      </div>
+      <div class="input-field">
+        <input id="password" type="password" class="validate">
+        <label for="password">Password</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+
+
+  <div>
+    <p>Looking for something delicious?</p>
+    <a class="waves-effect waves-light btn" href="customer_menu.html">Check out our menu!</a>
+  </div>
+
+  <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+      integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
 </body>
 </html>
