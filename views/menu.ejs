@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Menu</title>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/menu.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script defer src="/scripts/menu.js"></script>
+  </head>
+
+  <body>
+    <%- include('./partials/_header') %>
+    <main>
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">filter_drama</i>All
+          </div>
+          <div class="collapsible-body">
+            <section class="menu-container">
+              <div class="menu-item card horizontal">
+                <div class="card-image">
+                  <img
+                    src="https://media.blogto.com/uploads/2022/11/08/1667952466-20221104-CongeeQueen-16.jpg?w=1400&cmd=resize&height=2500&quality=70"
+                  />
+                </div>
+                <div class="card-stacked">
+                  <div class="card-content">
+                    <p>Delicious Food Item</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">Add to cart</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">place</i>Starters
+          </div>
+          <div class="collapsible-body">
+            <section class="menu-container">
+              <div class="menu-item card horizontal">
+                <div class="card-image">
+                  <img
+                    src="https://media.blogto.com/uploads/2022/11/08/1667952466-20221104-CongeeQueen-16.jpg?w=1400&cmd=resize&height=2500&quality=70"
+                  />
+                </div>
+                <div class="card-stacked">
+                  <div class="card-content">
+                    <p>Delicious Food Item</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">Add to cart</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">whatshot</i>Main
+          </div>
+          <div class="collapsible-body">
+            <section class="menu-container">
+              <div class="menu-item card horizontal">
+                <div class="card-image">
+                  <img
+                    src="https://media.blogto.com/uploads/2022/11/08/1667952466-20221104-CongeeQueen-16.jpg?w=1400&cmd=resize&height=2500&quality=70"
+                  />
+                </div>
+                <div class="card-stacked">
+                  <div class="card-content">
+                    <p>Delicious Food Item</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">Add to cart</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </li>
+      </ul>
+    </main>
+    <section class="cart">
+      <div class="cart-content sidenav" id="slide-out">
+        <h4>CART</h4>
+        <div class="menu-item">
+          <p>Spagetti x 2</p>
+          <p>$24.50</p>
+        </div>
+        <div class="menu-item">
+          <p>Salad x 1</p>
+          <p>$12.99</p>
+        </div>
+        <div class="menu-item">
+          <p>Bubble x 1</p>
+          <p>$3.20</p>
+        </div>
+        <div class="divider"></div>
+        <div class="subtotal">
+          <h6>Subtotal</h6>
+          <p>$40.69</p>
+        </div>
+        <div class="tax">
+          <h6>GST-HST</h6>
+          <p>$5.29</p>
+        </div>
+        <div class="total">
+          <h6>TOTAL</h6>
+          <p>$45.98</p>
+        </div>
+        <div class="divider"></div>
+        <form>
+          <div class="input-field">
+            <label for="name_input">Name</label
+            ><input type="tel" id="name_input" />
+          </div>
+          <div class="input-field">
+            <label for="phone_input">Phone Number</label
+            ><input type="tel" id="phone_input" />
+          </div>
+          <button type="submit">Checkout</button>
+        </form>
+      </div>
+    </section>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+      integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </body>
+</html>
