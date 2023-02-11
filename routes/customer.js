@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/menu", (req, res) => {
-  res.render("menu");
+  res.render("menu", {owner: true});
 });
 
 router.get("/status", (req, res) => {
