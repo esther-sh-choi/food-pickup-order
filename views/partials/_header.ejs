@@ -1,12 +1,12 @@
 <nav>
   <div class="nav-wrapper">
-    <a class="brand-logo">LOGO</a>
-    <ul class="right hide-on-med-and-down">
+    <a class="brand-logo left">LOGO</a>
+    <ul class="right">
       <% if (owner) { %>
       <li>Logged in as: <%= owner.username %></li>
       <li>
-        <form class="form-inline" action="/logout" method="POST">
-          <button type="submit" class="logout">Log Out</button>
+        <form action="/logout" method="POST">
+          <button type="submit" class="btn logout">Log Out</button>
         </form>
       </li>
       <% } else { %>

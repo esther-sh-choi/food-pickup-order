@@ -69,7 +69,7 @@
           </ul>
           <div class="preptime-form-container">
             <p>Estimated prep time (minutes)</p>
-            <form>
+            <form id="preptime">
               <p class="range-field">
                 <!-- <label for="prep-time">Estimated prep time (minutes)</label> -->
                 <input
@@ -78,6 +78,7 @@
                   name="preparation-time"
                   min="15"
                   max="70"
+                  step="5"
                 />
               </p>
               <button class="btn" type="submit">Submit</button>
@@ -94,7 +95,7 @@
           <section class="card-reveal-content">
             <div class="preptime-form-container">
               <p>Edit Estimated prep time (minutes)</p>
-              <form>
+              <form id="preptime-edit">
                 <p class="range-field">
                   <input
                     type="range"
@@ -102,19 +103,20 @@
                     name="preparation-time"
                     min="15"
                     max="70"
+                    step="5"
                   />
                 </p>
-                <button class="btn" type="submit">Edit</button>
+                <button class="btn modal-trigger">Edit</button>
               </form>
             </div>
             <div class="button-forms">
-              <form>
-                <button class="btn order-ready" type="submit">
+              <form id="order-ready">
+                <button class="btn modal-trigger order-ready">
                   Order Ready
                 </button>
               </form>
-              <form>
-                <button class="btn order-cancel red darken-4" type="submit">
+              <form id="order-cancel">
+                <button class="btn modal-trigger order-cancel red darken-4">
                   Cancel Order
                 </button>
               </form>
@@ -124,6 +126,17 @@
       </div>
     </main>
     <main id="completed"></main>
+    <div class="modal-container hide">
+      <div class="custom-backdrop close-modal"></div>
+      <div class="custom-modal">
+        <i class="small material-icons close-modal">close</i>
+        <p></p>
+        <div class="modal-button-container">
+          <button class="btn">YES</button>
+          <button class="btn close-modal">NO</button>
+        </div>
+      </div>
+    </div>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
       integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q=="

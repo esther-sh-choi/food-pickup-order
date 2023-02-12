@@ -19,3 +19,13 @@ body {
 }
 
 // Landing Page END
+
+// Navbar
+nav .nav-wrapper {
+  .brand-logo {
+    margin-left: 10px;
+  }
+  ul :first-child {
+    padding-right: 10px;
+  }
+}
