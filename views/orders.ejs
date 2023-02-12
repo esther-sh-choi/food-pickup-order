@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="/vendor/border-box.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/orders.css" />
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
@@ -39,10 +40,90 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script defer src="/scripts/orders.js"></script>
   </head>
 
   <body>
-    <h1>Have fun! 🥔</h1>
+    <%- include('./partials/_header') %>
+
+    <ul class="tabs">
+      <li class="tab col s3">
+        <a class="active" href="#in-progress">In-Progress</a>
+      </li>
+      <li class="tab col s3">
+        <a href="#completed">Completed</a>
+      </li>
+    </ul>
+
+    <main class="cards-container" id="in-progress">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4"
+            >Order ID: 123<i class="material-icons right">more_vert</i></span
+          >
+          <p>Phone Number: <a href="tel:123-456-7890">123-456-7890</a></p>
+          <ul>
+            <li>FOOD1 x 2</li>
+            <li>FOOD2 x 1</li>
+            <li>FOOD3 x 1</li>
+          </ul>
+          <div class="preptime-form-container">
+            <p>Estimated prep time (minutes)</p>
+            <form>
+              <p class="range-field">
+                <!-- <label for="prep-time">Estimated prep time (minutes)</label> -->
+                <input
+                  type="range"
+                  id="prep-time"
+                  name="preparation-time"
+                  min="15"
+                  max="70"
+                />
+              </p>
+              <button class="btn" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+        <div class="card-reveal">
+          <section class="card-reveal-header">
+            <span class="card-title grey-text text-darken-4"
+              >Order ID: 123<i class="material-icons right">close</i></span
+            >
+            <p>Phone Number: <a href="tel:123-456-7890">123-456-7890</a></p>
+          </section>
+          <section class="card-reveal-content">
+            <div class="preptime-form-container">
+              <p>Edit Estimated prep time (minutes)</p>
+              <form>
+                <p class="range-field">
+                  <input
+                    type="range"
+                    id="prep-time"
+                    name="preparation-time"
+                    min="15"
+                    max="70"
+                  />
+                </p>
+                <button class="btn" type="submit">Edit</button>
+              </form>
+            </div>
+            <div class="button-forms">
+              <form>
+                <button class="btn order-ready" type="submit">
+                  Order Ready
+                </button>
+              </form>
+              <form>
+                <button class="btn order-cancel red darken-4" type="submit">
+                  Cancel Order
+                </button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <main id="completed"></main>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
       integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q=="
