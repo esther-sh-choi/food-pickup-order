@@ -21,8 +21,9 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/preptime", (req, res) => {
-  const userId = req.session.userId;
+router.get("/preptime", (req, res) => {
+  // const userId = req.session.userId;
+  const userId = true;
   if (userId) {
     restaurantQueries
       .editPreptime(1, 40)
