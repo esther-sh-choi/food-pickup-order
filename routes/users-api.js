@@ -37,4 +37,20 @@ router.get("/preptime", (req, res) => {
   }
 });
 
+router.get("/cancel", (req, res) => {
+  // const userId = req.session.userId;
+  const userId = true;
+  if (userId) {
+    restaurantQueries
+      .cancelOrder(1)
+      .then((order) => {
+        res.json({ order });
+      })
+      .catch((e) => {
+        console.error(e);
+        res.send(e);
+      });
+  }
+});
+
 module.exports = router;
