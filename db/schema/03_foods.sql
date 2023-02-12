@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS foods CASCADE;
+
+CREATE TABLE foods (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  category VARCHAR(255) NOT NULL,
+  photo_url VARCHAR(255),
+  description VARCHAR(255),
+  price VARCHAR(255) NOT NULL,
+  restaurant_id INTEGER REFERENCES restaurants(id) ON DELETE CASCADE
+);
