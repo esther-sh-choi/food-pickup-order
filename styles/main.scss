@@ -1,2 +1,20 @@
 body {
 }
+
+// Landing Page
+
+.landing-page-container {
+  width: 100vw;
+  height: 100vh;
+  // background-image: url('https://aloetterestaurant.com/wp-content/uploads/2017/10/Aloette-Interiors_003.jpg');
+  // background-size: cover;
+  // fun! but for later...
+  padding-top: 150px;
+  padding-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Landing Page END
