@@ -36,4 +36,22 @@ const cancelOrder = (order_id) => {
     });
 };
 
-module.exports = { editPreptime, cancelOrder };
+const readyOrder = (order_id, ready_at) => {
+  return db
+    .query(
+      `UPDATE orders
+  SET ready_at = NOW()
+  WHERE orders.id = $1
+  RETURNING *;`,
+      [order_id]
+    )
+    .then((data) => {
+      console.log(data);
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+module.exports = { editPreptime, cancelOrder, readyOrder };

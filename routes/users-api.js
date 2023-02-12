@@ -53,4 +53,20 @@ router.get("/cancel", (req, res) => {
   }
 });
 
+router.get("/ready", (req, res) => {
+  // const userId = req.session.userId;
+  const userId = true;
+  if (userId) {
+    restaurantQueries
+      .readyOrder(1)
+      .then((order) => {
+        res.json({ order });
+      })
+      .catch((e) => {
+        console.error(e);
+        res.send(e);
+      });
+  }
+});
+
 module.exports = router;
