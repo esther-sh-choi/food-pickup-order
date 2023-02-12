@@ -2,13 +2,27 @@ const db = require("../connection");
 
 
 /**
- * User Story: 1
+ * User Story: 3
  *
- * As a customer, I want to see all the available items on the menu because I want to select menu items that I want to eat.
+ * As a customer, I want to click on the Checkout button to send a request to the server that I want to purchase those items.
  *
- * Query (c): Select all the items  from the foods table.
- * Then we render the data to the menu cards. → return array of data → ('api/customer/menu' : GET)
+ * Send data to db (c): send the food_id and the count to the database. INSERT to food_orders table.  → ('api/customer/checkout' POST)
+ *
  */
+
+
+const addFoodOrder = () => {
+  return db
+  .query(`INSERT`)
+  .then((data) => {
+    console.log(data);
+    return data.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+};
+
 
 
 const getAllFoods = () => {
@@ -23,4 +37,7 @@ const getAllFoods = () => {
     });
 };
 
-module.exports = { getAllFoods };
+module.exports = {
+  getAllFoods,
+  addFoodOrder
+};
