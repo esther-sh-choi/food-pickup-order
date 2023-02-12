@@ -69,4 +69,20 @@ router.get("/ready", (req, res) => {
   }
 });
 
+router.get("/complete", (req, res) => {
+  // const userId = req.session.userId;
+  const userId = true;
+  if (userId) {
+    restaurantQueries
+      .completeOrder(1)
+      .then((order) => {
+        res.json({ order });
+      })
+      .catch((e) => {
+        console.error(e);
+        res.send(e);
+      });
+  }
+});
+
 module.exports = router;

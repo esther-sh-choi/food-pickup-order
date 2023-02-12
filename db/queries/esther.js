@@ -36,7 +36,7 @@ const cancelOrder = (order_id) => {
     });
 };
 
-const readyOrder = (order_id, ready_at) => {
+const readyOrder = (order_id) => {
   return db
     .query(
       `UPDATE orders
@@ -54,4 +54,22 @@ const readyOrder = (order_id, ready_at) => {
     });
 };
 
-module.exports = { editPreptime, cancelOrder, readyOrder };
+const completeOrder = (order_id) => {
+  return db
+    .query(
+      `UPDATE orders
+  SET isComplete = TRUE
+  WHERE orders.id = $1
+  RETURNING *;`,
+      [order_id]
+    )
+    .then((data) => {
+      console.log(data);
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+module.exports = { editPreptime, cancelOrder, readyOrder, completeOrder };
