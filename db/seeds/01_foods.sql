@@ -1,6 +1,7 @@
 -- foods seeds here
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -10,6 +11,7 @@ INSERT INTO
   )
 VALUES
   (
+    1,
     'East Coast Oysters',
     'Starters',
     'https://media-cdn.tripadvisor.com/media/photo-s/15/ea/9b/fd/oysters.jpg',
@@ -20,6 +22,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -29,6 +32,7 @@ INSERT INTO
   )
 VALUES
   (
+    2,
     'Beef Tartare',
     'Starters',
     'https://cdn.tasteatlas.com/images/dishes/baab0ab2a0b041f883f01e68ac9f1ba5.jpg',
@@ -39,6 +43,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -48,6 +53,7 @@ INSERT INTO
   )
 VALUES
   (
+    3,
     'Heirloom Beet Salad',
     'Starters',
     'https://www.petrossian.com/blog/wp-content/uploads/2019/11/Picture2.jpg',
@@ -58,6 +64,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -67,6 +74,7 @@ INSERT INTO
   )
 VALUES
   (
+    4,
     'Aloette Burger',
     'Mains',
     'https://aloetterestaurant.com/wp-content/uploads/2017/10/food-image-6.jpg',
@@ -77,6 +85,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -86,16 +95,18 @@ INSERT INTO
   )
 VALUES
   (
+    5,
     '12oz Prime Striploin',
     'Mains',
     'https://aloetterestaurant.com/wp-content/uploads/2017/10/AE-Short-Rib-.jpg',
-    'sauce au poivre',
+    'sauce au poivre, garlic mash',
     60,
     1
   );
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -105,6 +116,7 @@ INSERT INTO
   )
 VALUES
   (
+    6,
     'Seabass',
     'Mains',
     'https://i.pinimg.com/originals/36/1e/4f/361e4f633c5d85e9eb24c8343352c1e4.jpg',
@@ -115,6 +127,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -124,6 +137,7 @@ INSERT INTO
   )
 VALUES
   (
+    7,
     'Squash Carpaccio',
     'Mains',
     'https://media-cdn.tripadvisor.com/media/photo-s/12/99/38/5a/butternut-squash-carpaccio.jpg',
@@ -134,6 +148,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -143,6 +158,7 @@ INSERT INTO
   )
 VALUES
   (
+    8,
     'Pasta',
     'Mains',
     'https://www.billyparisi.com/wp-content/uploads/2019/09/pomodoro-fb.jpg',
@@ -153,6 +169,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -162,6 +179,7 @@ INSERT INTO
   )
 VALUES
   (
+    9,
     'Chocolate Caramel Tart',
     'Desserts',
     'https://i.pinimg.com/736x/eb/0d/75/eb0d7584a3e5671aa917c5ac635483bf.jpg',
@@ -172,6 +190,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -181,6 +200,7 @@ INSERT INTO
   )
 VALUES
   (
+    10,
     'Lemon Meringue Pie',
     'Desserts',
     'https://s3-eu-west-1.amazonaws.com/onin.london/assets/Deconstructed-Lemon-Meringue-Pie-1024x682.jpg',
@@ -191,6 +211,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -200,6 +221,7 @@ INSERT INTO
   )
 VALUES
   (
+    11,
     'Apple Crumble',
     'Desserts',
     'https://aloetterestaurant.com/wp-content/uploads/2017/10/Aloette-2022-Action-Shots-21-1.jpg',
@@ -210,6 +232,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -219,6 +242,7 @@ INSERT INTO
   )
 VALUES
   (
+    12,
     'Espresso Martini',
     'Drinks',
     'https://hips.hearstapps.com/hmg-prod/images/210923-delish-seo-espresso-martini-horizontal-0087-eb-1633535263.jpg?crop=0.8893229166666666xw:1xh;center,top&resize=1200:*',
@@ -229,6 +253,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -238,6 +263,7 @@ INSERT INTO
   )
 VALUES
   (
+    13,
     'French 55',
     'Drinks',
     'https://www.acouplecooks.com/wp-content/uploads/2019/12/French-75-001.jpg',
@@ -248,6 +274,7 @@ VALUES
 
 INSERT INTO
   foods (
+    id,
     name,
     category,
     photo_url,
@@ -257,6 +284,7 @@ INSERT INTO
   )
 VALUES
   (
+    14,
     'Nogroni',
     'Drinks',
     'https://res.cloudinary.com/sagacity/image/upload/c_crop,h_4576,w_4576,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/shutterstock_1478698988_pwhqh1.png',
