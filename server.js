@@ -37,6 +37,7 @@ app.use(
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require("./routes/users-api");
 const widgetApiRoutes = require("./routes/widgets-api");
+const restaurantApiRoutes = require("./routes/restaurant-api");
 const usersRoutes = require("./routes/users");
 const customerRoutes = require("./routes/customer");
 const restaurantRoutes = require("./routes/restaurant");
@@ -46,6 +47,7 @@ const restaurantRoutes = require("./routes/restaurant");
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use("/api/users", userApiRoutes);
 app.use("/api/widgets", widgetApiRoutes);
+app.use("/api/restaurant", restaurantApiRoutes);
 app.use("/users", usersRoutes);
 app.use("/customer", customerRoutes);
 app.use("/restaurant", restaurantRoutes);
