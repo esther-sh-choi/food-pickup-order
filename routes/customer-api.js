@@ -5,7 +5,7 @@ const customerQueries = require('../db/queries/customers');
 // Customer Queries
 
 router.get('/menu', (req, res) => {
-  customerQueries.getUsers()
+  customerQueries.getAllFoods()
     .then(users => {
       res.json({ users });
     })
