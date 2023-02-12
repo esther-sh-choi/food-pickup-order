@@ -11,9 +11,13 @@ const db = require("../connection");
  */
 
 
-const addFoodOrder = () => {
+const addFoodOrder = (food_orders) => {
   return db
-  .query(`INSERT`)
+  .query(`
+    INSERT INTO food_orders (food_id, order_id)
+    VALUES ($1, $2)
+    RETURNING *;
+  `, [food_orders.food_id, food_orders.order_id])
   .then((data) => {
     console.log(data);
     return data.rows;
@@ -22,7 +26,6 @@ const addFoodOrder = () => {
     console.log(err.message);
   });
 };
-
 
 
 const getAllFoods = () => {
