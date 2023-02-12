@@ -1,0 +1,51 @@
+ul.tabs {
+  display: flex;
+  justify-content: center;
+}
+
+main.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+}
+
+p.range-field {
+  flex: 1;
+  padding-right: 20px;
+}
+
+div.card {
+  width: 100%;
+}
+
+div.button-forms {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  form {
+    width: 48%;
+    button {
+      width: 100%;
+    }
+  }
+}
+
+div.card-reveal {
+  p {
+    margin: 0;
+  }
+}
+
+.preptime-form-container {
+  p {
+    font-weight: bold;
+  }
+}

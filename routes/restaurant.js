@@ -6,7 +6,7 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/orders", (req, res) => {
-  res.render("orders");
+  res.render("orders", { owner: true });
 });
 
 module.exports = router;
