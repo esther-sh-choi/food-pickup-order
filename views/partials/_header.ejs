@@ -1,16 +1,21 @@
-<header>
-  <nav>
-    <a class="logo">LOGO</a>
-    <div>
-      <div>
-        <% if (owner) { %>
-          <form class="form-inline" action="/logout" method="POST">
-            <span>Logged in as: <%= owner.id %></span>
-            <button type="submit" class="logout">Log Out</button>
-          </form>
-        <% } else { %>
-          <a href="/cart">CART ICON</a>
-        <% } %>
-    </div>
-  </nav>
-</header>
+<nav>
+  <div class="nav-wrapper">
+    <a class="brand-logo">LOGO</a>
+    <ul class="right hide-on-med-and-down">
+      <% if (owner) { %>
+      <li>Logged in as: <%= owner.username %></li>
+      <li>
+        <form class="form-inline" action="/logout" method="POST">
+          <button type="submit" class="logout">Log Out</button>
+        </form>
+      </li>
+      <% } else { %>
+      <li>
+        <i class="material-icons sidenav-trigger" data-target="slide-out"
+          >local_grocery_store</i
+        >
+      </li>
+      <% } %>
+    </ul>
+  </div>
+</nav>
