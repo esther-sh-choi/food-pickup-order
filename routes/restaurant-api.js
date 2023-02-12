@@ -8,6 +8,8 @@
 const express = require("express");
 const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
+const bcrypt = require('bcrypt');
+
 
 router.get("/orders", (req, res) => {
   restaurantQueries
@@ -83,5 +85,35 @@ router.get("/complete", (req, res) => {
       });
   }
 });
+
+const login = function(username, password) {
+  return db.getadminWithUsername(username)
+    .then(user => {
+      if (bcrypt.compareSync(password, user.password)) {
+        return user;
+      }
+      return null;
+    });
+};
+
+
+router.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  login(username, password)
+    .then(user => {
+      if (!user) {
+        res.send({ error: "error" });
+        return;
+      }
+      req.session.userId = user.id;
+      res.send({ user: { id: user.id } });
+    })
+    .catch(e => res.send(e));
+});
+
+
+
+
+
 
 module.exports = router;

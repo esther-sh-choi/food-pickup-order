@@ -83,10 +83,22 @@ const completeOrder = (order_id) => {
     });
 };
 
+const getadminWithUsername = (username) => {
+  return db
+    .query(`SELECT * FROM restaurants WHERE username = $1`, [username])
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 module.exports = {
   getAllOrders,
   editPreptime,
   cancelOrder,
   readyOrder,
   completeOrder,
+  getadminWithUsername
 };
