@@ -6,5 +6,6 @@ CREATE TABLE orders (
   preparation_time INTEGER,
   isComplete BOOLEAN DEFAULT FALSE,
   ready_at TIMESTAMP,
+  isCancelled BOOLEAN DEFAULT FALSE,
   customer_id INTEGER REFERENCES customers(id) ON DELETE CASCADE
 );
