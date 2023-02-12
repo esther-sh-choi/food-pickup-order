@@ -21,10 +21,19 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/preptime", (req, res) => {
-  restaurantQueries.editPreptime().then((order) => {
-    res.json({ order });
-  });
+router.post("/preptime", (req, res) => {
+  const userId = req.session.userId;
+  if (userId) {
+    restaurantQueries
+      .editPreptime(1, 40)
+      .then((order) => {
+        res.json({ order });
+      })
+      .catch((e) => {
+        console.error(e);
+        res.send(e);
+      });
+  }
 });
 
 module.exports = router;

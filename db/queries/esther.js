@@ -11,7 +11,7 @@ const editPreptime = (order_id, preptime) => {
     )
     .then((data) => {
       console.log(data);
-      return data.rows;
+      return data.rows[0];
     })
     .catch((err) => {
       console.log(err.message);
