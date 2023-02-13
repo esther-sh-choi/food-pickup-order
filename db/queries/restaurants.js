@@ -1,8 +1,35 @@
 const db = require("../connection");
 
 const getAllOrders = () => {
+  const queryString = `
+  SELECT orders.id as order_id, orders.preparation_time, customers.phone_number
+  FROM orders
+  JOIN customers ON customers.id = orders.customer_id
+  JOIN food_orders ON food_orders.order_id = orders.id
+  GROUP BY orders.id, customers.phone_number
+  ORDER BY created_at;`;
+
   return db
-    .query("SELECT * FROM orders ORDER BY created_at;")
+    .query(queryString)
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+const getAllOrderFoods = (order_id) => {
+  const queryString = `
+  SELECT foods.name, count(food_orders.*) as food_count
+  FROM food_orders
+  JOIN foods ON food_orders.food_id = foods.id
+  WHERE order_id = $1
+  GROUP BY food_id, order_id, foods.name;
+  `;
+
+  return db
+    .query(queryString, [order_id])
     .then((data) => {
       return data.rows;
     })
@@ -96,6 +123,7 @@ const getAdminWithUsername = (username) => {
 
 module.exports = {
   getAllOrders,
+  getAllOrderFoods,
   editPreptime,
   cancelOrder,
   readyOrder,

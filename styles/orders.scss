@@ -8,18 +8,26 @@ ul.tabs {
 }
 
 main.cards-container {
-  display: flex;
+  // Special circumstance where Materialize CSS keep overriding to display: block whenever change occurs
+  display: flex !important;
   flex-wrap: wrap;
-  max-width: 500px;
+  justify-content: center;
+
   padding: 20px;
 
   div.card {
-    width: 100%;
-
+    width: 400px;
+    margin: 0 10px;
     form {
       display: flex;
       align-items: center;
       padding-top: 20px;
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
   }
 }
@@ -49,6 +57,7 @@ div.card-reveal {
 }
 
 .preptime-form-container {
+  margin-top: auto;
   p {
     font-weight: bold;
   }
