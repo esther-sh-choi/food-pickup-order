@@ -43,13 +43,30 @@ const createMenuCard = (name, photo_url, description, price) => {
 
 const renderAllMenuCards = (foods) => {
   // $(".menu-container").empty();
-  foods.forEach((menu_card) => {
-    const { name, photo_url, description, price } = menu_card;
-
+  console.log(foods);
+  const categories = [];
+  foods.forEach((food) => {
+    if (!categories.includes(food.category.toLowerCase())) {
+      categories.push(food.category.toLowerCase());
+    }
+  });
+  console.log(categories);
+  foods.forEach((food) => {
+    const { name, photo_url, description, price } = food;
     $(".all-menu-container").append(
       createMenuCard(name, photo_url, description, price)
       );
+  })
 
+  categories.forEach((sectionCategory) => {
+    foods.forEach((food) => {
+      const { name, category, photo_url, description, price } = food;
+      if (sectionCategory === category.toLowerCase()) {
+        $(`.${sectionCategory}-menu-container`).append(
+          createMenuCard(name, photo_url, description, price)
+          );
+      }
+    })
   })
 }
 
@@ -61,7 +78,7 @@ const renderStartersMenuCards = (foods) => {
   foods.forEach((food_card) => {
     const { name, photo_url, description, price } = food_card;
 
-    $(".starter-menu-container").append(
+    $(".starters-menu-container").append(
       createMenuCard(name, photo_url, description, price)
       );
 
