@@ -5,7 +5,7 @@
       <% if (owner) { %>
       <li>Logged in as: <%= owner.username %></li>
       <li>
-        <form action="/logout" method="POST">
+        <form action="/api/restaurant/logout" method="POST">
           <button type="submit" class="btn logout">Log Out</button>
         </form>
       </li>
