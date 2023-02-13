@@ -42,20 +42,28 @@ const createMenuCard = (name, photo_url, description, price) => {
 // Then I need each type of collasible Menu Filled with the cards
 
 const renderAllMenuCards = (foods) => {
-  $(".menu-container").empty();
+  // $(".menu-container").empty();
   foods.forEach((menu_card) => {
     const { name, photo_url, description, price } = menu_card;
 
-  $(".all-menu-container").append(
-    createMenuCard(name, photo_url, description, price)
-    );
+    $(".all-menu-container").append(
+      createMenuCard(name, photo_url, description, price)
+      );
+
   })
 }
+
+
+// Feels repetitive...
 
 const renderStartersMenuCards = (foods) => {
   $(".menu-container").empty();
   foods.forEach((food_card) => {
     const { name, photo_url, description, price } = food_card;
+
+    $(".starter-menu-container").append(
+      createMenuCard(name, photo_url, description, price)
+      );
 
   })
 }
@@ -65,6 +73,10 @@ const renderMainsMenuCards = (foods) => {
   foods.forEach((food_card) => {
     const { name, photo_url, description, price } = food_card;
 
+    $(".mains-menu-container").append(
+      createMenuCard(name, photo_url, description, price)
+      );
+
   })
 }
 
@@ -73,6 +85,10 @@ const renderDessertsMenuCards = (foods) => {
   foods.forEach((food_card) => {
     const { name, photo_url, description, price } = food_card;
 
+    $(".desserts-menu-container").append(
+      createMenuCard(name, photo_url, description, price)
+      );
+
   })
 }
 
@@ -80,6 +96,10 @@ const renderDrinksMenuCards = (foods) => {
   $(".menu-container").empty();
   foods.forEach((food_card) => {
     const { name, photo_url, description, price } = food_card;
+
+    $(".drinks-menu-container").append(
+      createMenuCard(name, photo_url, description, price)
+      );
 
   })
 }
