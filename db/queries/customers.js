@@ -34,5 +34,4 @@ const getAllFoods = () => {
 module.exports = {
   getAllFoods,
   addFoodOrder,
-  getStarterFoods
 };
