@@ -7,6 +7,12 @@ $(() => {
     success: renderOrderCards,
   });
 
+  $.ajax({
+    type: "POST",
+    url: "/api/restaurant/preptime",
+    success: updateRemainingTime,
+  });
+
   const modalMessages = {
     add: "Are you sure you want to set the prep time?",
     cancel: "Are you sure you want to cancel the order?",
@@ -127,14 +133,13 @@ const createOrderCard = (order_id, phone_number, preparation_time, foods) => {
 
   let $preptimeFormContainer = $orderCard.find(".preptime-form-container.new");
 
-  const deadline = new Date(Date.now() + preparation_time * 60 * 1000);
-  const localDeadline = deadline.toLocaleTimeString();
-
   let $prepFormContent;
   if (preparation_time) {
     $prepFormContent = $(`
-    <p>You set the preparation time to ${preparation_time} minutes.</p>
-    <p>You have until ${localDeadline} to prepare this order.</p>`);
+    <p>You set the preparation time to ${
+      preparation_time / (60 * 1000)
+    } minutes.</p>
+    <p id="countdown"></p>`);
   } else {
     $prepFormContent = $(`
     <p>Estimated prep time (minutes)</p>
@@ -156,4 +161,39 @@ const createOrderCard = (order_id, phone_number, preparation_time, foods) => {
   $preptimeFormContainer.append($prepFormContent);
 
   return $orderCard;
+};
+
+const updateRemainingTime = (order) => {
+  const preparation_time = order.preparation_time;
+  const deadline = Date.now() + preparation_time * 60 * 1000;
+  console.log(order);
+
+  const countdown = setInterval(() => {
+    const distance = deadline - Date.now();
+
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    $.ajax({
+      type: "POST",
+      url: "/api/restaurant/countdown",
+      data: { order_id: order.id },
+    });
+
+    if (preparation_time) {
+      $("#countdown").empty();
+      $("#countdown").append(
+        `Time Remaining: ${String(hours).padStart(2, "0")} : ${String(
+          minutes
+        ).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`
+      );
+    }
+
+    if (distance < 0) {
+      clearInterval(countdown);
+    }
+  }, 1000);
 };

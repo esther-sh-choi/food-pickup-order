@@ -57,6 +57,24 @@ const editPreptime = (order_id, preptime) => {
     });
 };
 
+const countdownPreptime = (order_id) => {
+  return db
+    .query(
+      `UPDATE orders
+SET preparation_time = preparation_time - 1000
+WHERE orders.id = $1
+RETURNING *;`,
+      [order_id]
+    )
+    .then((data) => {
+      // console.log(data);
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 const cancelOrder = (order_id) => {
   return db
     .query(
@@ -126,6 +144,7 @@ module.exports = {
   getAllOrders,
   getAllOrderFoods,
   editPreptime,
+  countdownPreptime,
   cancelOrder,
   readyOrder,
   completeOrder,

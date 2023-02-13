@@ -29,11 +29,27 @@ router.get("/orders", async (req, res) => {
   }
 });
 
-router.get("/preptime", (req, res) => {
+router.post("/preptime", (req, res) => {
   const userId = req.session.userId;
   if (userId) {
     restaurantQueries
-      .editPreptime(1, 60)
+      .editPreptime(1, 60 * 60 * 1000)
+      .then((order) => {
+        res.json(order);
+      })
+      .catch((e) => {
+        console.error(e);
+        res.send(e);
+      });
+  }
+});
+
+router.post("/countdown", (req, res) => {
+  const userId = req.session.userId;
+  console.log(req);
+  if (userId) {
+    restaurantQueries
+      .countdownPreptime(1)
       .then((order) => {
         res.json(order);
       })
