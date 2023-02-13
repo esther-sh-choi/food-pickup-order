@@ -6,8 +6,8 @@ const customerQueries = require('../db/queries/customers');
 
 router.get('/menu', (req, res) => {
   customerQueries.getAllFoods()
-    .then(users => {
-      res.json({ users });
+    .then(foods => {
+      res.json(foods);
     })
     .catch(err => {
       res
@@ -21,8 +21,8 @@ router.get("/checkout", (req, res) => {
   const userId = true;
   if (userId) {
     customerQueries.addFoodOrder(1, 2)
-    .then(users => {
-      res.json({ users });
+    .then(foods => {
+      res.json({ foods });
     })
     .catch(err => {
       res
