@@ -67,7 +67,7 @@ RETURNING *;`,
       [order_id]
     )
     .then((data) => {
-      // console.log(data);
+      console.log(data.rows[0]);
       return data.rows[0];
     })
     .catch((err) => {

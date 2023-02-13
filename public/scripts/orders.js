@@ -167,8 +167,8 @@ const createOrderCard = (order_id, phone_number, preparation_time, foods) => {
 
 const updateRemainingTime = (order) => {
   const preparation_time = order.preparation_time;
-  const deadline = Date.now() + preparation_time * 60 * 1000;
-  console.log(order);
+  const deadline = Date.now() + preparation_time;
+  console.log(preparation_time / (60 * 1000));
 
   const countdown = setInterval(() => {
     const distance = deadline - Date.now();

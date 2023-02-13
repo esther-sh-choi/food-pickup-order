@@ -46,10 +46,10 @@ router.post("/preptime", (req, res) => {
 
 router.post("/countdown", (req, res) => {
   const userId = req.session.userId;
-  console.log(req);
+  const order_id = req.body.order_id;
   if (userId) {
     restaurantQueries
-      .countdownPreptime(1)
+      .countdownPreptime(order_id)
       .then((order) => {
         res.json(order);
       })
