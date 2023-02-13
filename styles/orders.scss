@@ -7,28 +7,28 @@ ul.tabs {
   justify-content: center;
 }
 
-main.cards-container {
-  // Special circumstance where Materialize CSS keep overriding to display: block whenever change occurs
-  display: flex !important;
-  flex-wrap: wrap;
-  justify-content: center;
+// main.cards-container {
+//   // Special circumstance where Materialize CSS keep overriding to display: block whenever change occurs
+//   display: flex !important;
+//   flex-wrap: wrap;
+//   justify-content: center;
 
-  padding: 20px;
+//   padding: 20px;
+// }
 
-  div.card {
-    width: 400px;
-    margin: 0 10px;
-    form {
-      display: flex;
-      align-items: center;
-      padding-top: 20px;
-    }
+div.card {
+  width: 400px;
+  margin: 10px;
+  form {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+  }
 
-    .card-content {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 }
 

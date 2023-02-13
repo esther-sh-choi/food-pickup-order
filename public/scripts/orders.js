@@ -4,16 +4,7 @@ $(() => {
   $.ajax({
     type: "GET",
     url: "/api/restaurant/orders",
-    success: function (orders) {
-      $(".cards-container").empty();
-      orders.forEach((order) => {
-        const { order_id, phone_number, foods } = order;
-
-        $(".cards-container").append(
-          createOrderCard(order_id, phone_number, foods)
-        );
-      });
-    },
+    success: renderOrderCards,
   });
 
   const modalMessages = {
@@ -55,7 +46,25 @@ const toggleModalHandler = function (e, message = "") {
   }
 };
 
-const createOrderCard = (order_id, phone_number, foods) => {
+const renderOrderCards = (orders) => {
+  $(".cards-container").empty();
+  orders.forEach((order) => {
+    const { order_id, phone_number, preparation_time, foods, is_complete } =
+      order;
+
+    if (is_complete) {
+      $("#completed").append(
+        createOrderCard(order_id, phone_number, preparation_time, foods)
+      );
+    } else {
+      $("#in-progress").append(
+        createOrderCard(order_id, phone_number, preparation_time, foods)
+      );
+    }
+  });
+};
+
+const createOrderCard = (order_id, phone_number, preparation_time, foods) => {
   let $orderCard = $(`
   <div class="card">
   <div class="card-content">
@@ -66,22 +75,7 @@ const createOrderCard = (order_id, phone_number, foods) => {
 <ul class='food-list'>
 
 </ul>
-<div class="preptime-form-container">
-  <p>Estimated prep time (minutes)</p>
-  <form id="preptime">
-    <p class="range-field">
-      <!-- <label for="prep-time">Estimated prep time (minutes)</label> -->
-      <input
-        type="range"
-        id="prep-time"
-        name="preparation-time"
-        min="15"
-        max="70"
-        step="5"
-      />
-    </p>
-    <button class="btn" type="submit">Submit</button>
-  </form>
+<div class="preptime-form-container new">
 </div>
 </div>
 <div class="card-reveal">
@@ -130,6 +124,36 @@ const createOrderCard = (order_id, phone_number, foods) => {
       `<li>${food.name} x<strong>${food.food_count}</strong></li>`
     );
   });
+
+  let $preptimeFormContainer = $orderCard.find(".preptime-form-container.new");
+
+  const deadline = new Date(Date.now() + preparation_time * 60 * 1000);
+  const localDeadline = deadline.toLocaleTimeString();
+
+  let $prepFormContent;
+  if (preparation_time) {
+    $prepFormContent = $(`
+    <p>You set the preparation time to ${preparation_time} minutes.</p>
+    <p>You have until ${localDeadline} to prepare this order.</p>`);
+  } else {
+    $prepFormContent = $(`
+    <p>Estimated prep time (minutes)</p>
+    <form id="preptime">
+     <p class="range-field">
+        <!-- <label for="prep-time">Estimated prep time (minutes)</label> -->
+        <input
+        type="range"
+        id="prep-time"
+        name="preparation-time"
+        min="15"
+        max="70"
+        step="5"
+        />
+      </p>
+      <button class="btn" type="submit">Submit</button>
+    </form>`);
+  }
+  $preptimeFormContainer.append($prepFormContent);
 
   return $orderCard;
 };

@@ -2,7 +2,8 @@ const db = require("../connection");
 
 const getAllOrders = () => {
   const queryString = `
-  SELECT orders.id as order_id, orders.preparation_time, customers.phone_number
+  SELECT orders.id as order_id, orders.preparation_time, customers.phone_number,
+  orders.isComplete as is_complete, orders.ready_at, orders.isCancelled as is_cancelled, orders.customer_id
   FROM orders
   JOIN customers ON customers.id = orders.customer_id
   JOIN food_orders ON food_orders.order_id = orders.id
