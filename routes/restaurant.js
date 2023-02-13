@@ -6,7 +6,12 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/orders", (req, res) => {
-  res.render("orders", { owner: true });
+  const userId = req.session.userId;
+
+  // Create getUserById and search restaurant table
+  if (userId) {
+    res.render("orders", { owner: true });
+  }
 });
 
 module.exports = router;

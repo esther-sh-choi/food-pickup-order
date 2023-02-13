@@ -9,4 +9,10 @@ INSERT INTO
   NULL,
   NULL,
   1
+),
+(
+  NOW(),
+  NULL,
+  NULL,
+  2
 );

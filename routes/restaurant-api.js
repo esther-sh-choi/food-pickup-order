@@ -2,25 +2,40 @@ const express = require("express");
 const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
 
-router.get("/orders", (req, res) => {
-  restaurantQueries
-    .getAllOrders()
-    .then((orders) => {
-      res.json({ orders });
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
+router.get("/orders", async (req, res) => {
+  const templateVar = { orders: [] };
+  const userId = req.session.userId;
+
+  if (userId) {
+    try {
+      const orders = await restaurantQueries.getAllOrders();
+
+      for (const order of orders) {
+        const foodData = await restaurantQueries.getAllOrderFoods(
+          order.order_id
+        );
+        templateVar.orders.push({
+          ...order,
+          foods: foodData,
+        });
+      }
+
+      res.send(templateVar.orders);
+    } catch (e) {
+      console.error(e);
+      res.send(e);
+    }
+    return;
+  }
 });
 
 router.get("/preptime", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
+  const userId = req.session.userId;
   if (userId) {
     restaurantQueries
       .editPreptime(1, 60)
       .then((order) => {
-        res.json({ order });
+        res.json(order);
       })
       .catch((e) => {
         console.error(e);
