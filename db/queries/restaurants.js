@@ -83,7 +83,7 @@ const completeOrder = (order_id) => {
     });
 };
 
-const getadminWithUsername = (username) => {
+const getAdminWithUsername = (username) => {
   return db
     .query(`SELECT * FROM restaurants WHERE username = $1`, [username])
     .then((result) => {
@@ -100,5 +100,5 @@ module.exports = {
   cancelOrder,
   readyOrder,
   completeOrder,
-  getadminWithUsername
+  getAdminWithUsername,
 };
