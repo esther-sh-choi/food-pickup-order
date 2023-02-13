@@ -13,8 +13,6 @@ $(() => {
 });
 
 
-// First I need the actual Menu Cards
-
 const createMenuCard = (name, photo_url, description, price) => {
   let $menuCard = $(`
   <div class="menu-item card horizontal">
@@ -39,10 +37,7 @@ const createMenuCard = (name, photo_url, description, price) => {
 };
 
 
-// Then I need each type of collasible Menu Filled with the cards
-
 const renderAllMenuCards = (foods) => {
-  // $(".menu-container").empty();
   console.log(foods);
   const categories = [];
   foods.forEach((food) => {
@@ -67,56 +62,5 @@ const renderAllMenuCards = (foods) => {
           );
       }
     })
-  })
-}
-
-
-// Feels repetitive...
-
-const renderStartersMenuCards = (foods) => {
-  $(".menu-container").empty();
-  foods.forEach((food_card) => {
-    const { name, photo_url, description, price } = food_card;
-
-    $(".starters-menu-container").append(
-      createMenuCard(name, photo_url, description, price)
-      );
-
-  })
-}
-
-const renderMainsMenuCards = (foods) => {
-  $(".menu-container").empty();
-  foods.forEach((food_card) => {
-    const { name, photo_url, description, price } = food_card;
-
-    $(".mains-menu-container").append(
-      createMenuCard(name, photo_url, description, price)
-      );
-
-  })
-}
-
-const renderDessertsMenuCards = (foods) => {
-  $(".menu-container").empty();
-  foods.forEach((food_card) => {
-    const { name, photo_url, description, price } = food_card;
-
-    $(".desserts-menu-container").append(
-      createMenuCard(name, photo_url, description, price)
-      );
-
-  })
-}
-
-const renderDrinksMenuCards = (foods) => {
-  $(".menu-container").empty();
-  foods.forEach((food_card) => {
-    const { name, photo_url, description, price } = food_card;
-
-    $(".drinks-menu-container").append(
-      createMenuCard(name, photo_url, description, price)
-      );
-
   })
 }
