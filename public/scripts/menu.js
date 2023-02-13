@@ -3,6 +3,13 @@ $(() => {
 
   const elems = $(".sidenav");
   const instances = M.Sidenav.init(elems, { edge: "right" });
+
+  $.ajax({
+    type: "GET",
+    url: "/api/customer/menu",
+    success: renderAllMenuCards,
+  });
+
 });
 
 
@@ -28,16 +35,20 @@ const createMenuCard = (name, photo_url, description, price) => {
     </div>
   </div>
   `)
-}
+  return $menuCard;
+};
 
 
 // Then I need each type of collasible Menu Filled with the cards
 
 const renderAllMenuCards = (foods) => {
   $(".menu-container").empty();
-  foods.forEach((food_card) => {
-    const { name, photo_url, description, price } = food_card;
+  foods.forEach((menu_card) => {
+    const { name, photo_url, description, price } = menu_card;
 
+  $(".all-menu-container").append(
+    createMenuCard(name, photo_url, description, price)
+    );
   })
 }
 

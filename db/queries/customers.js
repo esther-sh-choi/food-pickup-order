@@ -40,7 +40,20 @@ const getAllFoods = () => {
     });
 };
 
+const getStarterFoods = () => {
+  return db
+    .query(`SELECT * FROM foods WHERE category = 'Starters'`)
+    .then((data) => {
+      console.log(data);
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 module.exports = {
   getAllFoods,
-  addFoodOrder
+  addFoodOrder,
+  getStarterFoods
 };
