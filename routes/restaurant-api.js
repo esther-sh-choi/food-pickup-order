@@ -4,9 +4,9 @@ const restaurantQueries = require("../db/queries/restaurants");
 
 router.get("/orders", async (req, res) => {
   const templateVar = { orders: [] };
-  const userId = req.session.userId;
+  const user = req.session.user;
 
-  if (userId) {
+  if (user) {
     try {
       const orders = await restaurantQueries.getAllOrders();
 
@@ -29,11 +29,16 @@ router.get("/orders", async (req, res) => {
   }
 });
 
-router.get("/preptime", (req, res) => {
-  const userId = req.session.userId;
-  if (userId) {
+router.post("/orders/:order_id/confirm", (req, res) => {
+  const order_id = req.params.order_id;
+  const user = req.session.user;
+  const { preparation_time } = req.body;
+
+  console.log(order_id, preparation_time);
+
+  if (user) {
     restaurantQueries
-      .editPreptime(1, 60)
+      .updateEstimatedTime(order_id, preparation_time)
       .then((order) => {
         res.json(order);
       })
@@ -44,81 +49,35 @@ router.get("/preptime", (req, res) => {
   }
 });
 
-router.get("/cancel", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
+router.post("/orders/:order_id/update", (req, res) => {
+  const order_id = req.params.order_id;
+  const user = req.session.user;
+  const {
+    isComplete = false,
+    isReady = false,
+    isCancelled = false,
+    preparation_time = 0,
+  } = req.body;
+
+  const receivedData = {
+    isComplete,
+    isReady,
+    isCancelled,
+    preparation_time,
+    ...req.body,
+  };
+
+  if (user) {
     restaurantQueries
-      .cancelOrder(1)
+      .updateOrder(order_id, receivedData)
       .then((order) => {
-        res.json({ order });
+        res.json(order);
       })
       .catch((e) => {
         console.error(e);
         res.send(e);
       });
   }
-});
-
-router.get("/ready", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .readyOrder(1)
-      .then((order) => {
-        res.json({ order });
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
-router.get("/complete", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .completeOrder(1)
-      .then((order) => {
-        res.json({ order });
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
-const login = function (username, password) {
-  return restaurantQueries.getAdminWithUsername(username).then((user) => {
-    if (password === user.password) {
-      console.log(user);
-      return user;
-    }
-    return null;
-  });
-};
-
-router.post("/login", (req, res) => {
-  // const { username, password } = req.body;
-  login("admin", "admin")
-    .then((user) => {
-      if (!user) {
-        res.send({ error: "error" });
-        return;
-      }
-      req.session.userId = user.id;
-      res.render("orders", { owner: user });
-    })
-    .catch((e) => res.send(e));
-});
-
-router.post("/logout", (req, res) => {
-  req.session.userId = null;
-  res.render("index", { owner: null });
 });
 
 module.exports = router;
