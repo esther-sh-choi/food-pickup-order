@@ -21,7 +21,9 @@ $(() => {
     toggleModalHandler(e, modalMessages[e.target.id], e.target);
   });
 
-  $(document).on("click", ".close-modal", (e) => toggleModalHandler(e));
+  $(document).on("click", ".close-modal", (e) => {
+    toggleModalHandler(e);
+  });
 });
 
 /*------------------------------------------------------------------------------------*/
@@ -31,19 +33,19 @@ const toggleModalHandler = (e, message = "", target) => {
   const $modalContainer = $(".modal-container");
   const $modalMessage = $modalContainer.find("p");
 
-  $(document).on("click", ".confirm-button", (e) => {
-    console.log(target);
-    if (target.id === "preptime-confirm") {
-      confirmOrderForm(e, target);
-    } else {
-      submitUpdateOrderForm(e, target);
-    }
-  });
-
   if ($modalContainer.hasClass("hide")) {
     $modalMessage.empty();
     $modalMessage.append(message);
     $modalContainer.removeClass("hide");
+    $(document).on("click", ".confirm-button", (e) => {
+      if (target) {
+        if (target.id === "preptime-confirm") {
+          confirmOrderForm(e, target);
+        } else {
+          submitUpdateOrderForm(e, target);
+        }
+      }
+    });
   } else {
     $modalContainer.addClass("hide");
   }
@@ -155,7 +157,7 @@ const createOrderCard = (
   ready_at,
   is_complete
 ) => {
-  let $orderCard = $(`
+  const $orderCard = $(`
   <div class="card col">
   <div class="card-content">
 <span class="card-title activator grey-text text-darken-4"
@@ -254,7 +256,8 @@ const createOrderCard = (
     ).toLocaleTimeString();
 
     $prepFormContent = $(`
-    <p>You have until ${localTime} to prepare this order.</p>`);
+    <p>You have until ${localTime} to prepare this order.</p>
+    <p id="countdown"></p>`);
   } else if (!estimated_ready_at && !ready_at) {
     $prepFormContent = $(`
     <form id="preptime-confirm">
@@ -278,5 +281,38 @@ const createOrderCard = (
 
   $preptimeFormContainer.append($prepFormContent);
 
+  updateRemainingTime(estimated_ready_at);
+
   return $orderCard;
+};
+
+const updateRemainingTime = (estimated_ready_at) => {
+  const dateExpectedReadyAt = new Date(estimated_ready_at);
+  const msSinceEpoch = dateExpectedReadyAt.getTime();
+  const countdown = setInterval(() => {
+    const timeRemaining = msSinceEpoch - Date.now();
+
+    const hours = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    if (estimated_ready_at) {
+      $("#countdown").empty();
+      $("#countdown").append(
+        `Time Remaining: ${String(hours).padStart(2, "0")} : ${String(
+          minutes
+        ).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`
+      );
+    }
+
+    if (timeRemaining < 0) {
+      clearInterval(countdown);
+      $("#countdown").empty();
+      $("#countdown").append(`Time's up!`);
+    }
+  }, 1000);
 };
