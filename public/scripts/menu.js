@@ -34,11 +34,16 @@ $(() => {
     const name = $("input#name_input").val();
     const phone = $("input#phone_input").val();
 
-    console.log(`Name: ${name}, Phone Number: ${phone}`);
+    console.log(`name: ${name}, phone: ${phone}`);
   });
 
 
 });
+
+
+///// This function stores the customer info in an encrypted cookie-session
+
+// const createCustomerCookie =
 
 
 ///// This function renders the cart tempate.
