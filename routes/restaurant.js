@@ -26,7 +26,7 @@ const login = function (username, password) {
 
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
-  console.log(req.body);
+
   login(username, password)
     .then((user) => {
       if (!user) {
@@ -41,7 +41,7 @@ router.post("/login", (req, res) => {
 
 router.post("/logout", (req, res) => {
   req.session.user = null;
-  res.render("index", { owner: null });
+  res.redirect("/");
 });
 
 module.exports = router;
