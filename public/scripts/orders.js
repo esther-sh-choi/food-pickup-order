@@ -32,6 +32,7 @@ const toggleModalHandler = (e, message = "", target) => {
   const $modalMessage = $modalContainer.find("p");
 
   $(document).on("click", ".confirm-button", (e) => {
+    console.log(target);
     if (target.id === "preptime-confirm") {
       confirmOrderForm(e, target);
     } else {
@@ -155,7 +156,7 @@ const createOrderCard = (
   is_complete
 ) => {
   let $orderCard = $(`
-  <div class="card">
+  <div class="card col">
   <div class="card-content">
 <span class="card-title activator grey-text text-darken-4"
   >Order ID: ${order_id}<i id="options_icon" class="material-icons right">more_vert</i></span
