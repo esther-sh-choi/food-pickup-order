@@ -1,11 +1,7 @@
 $(() => {
   $(".tabs").tabs();
 
-  $.ajax({
-    type: "GET",
-    url: "/api/restaurant/orders",
-    success: renderOrderCards,
-  });
+  getOrderCards();
 
   const modalMessages = {
     "order-cancel": "Are you sure you want to cancel the order?",
@@ -18,16 +14,17 @@ $(() => {
       "Are you sure you want to add the preparation time to this order?",
   };
 
+  $(document).on("submit", "form#preptime-confirm", (e) => {
+    toggleModalHandler(e, modalMessages[e.target.id], e.target);
+  });
   $(document).on("submit", "form.update", (e) => {
     toggleModalHandler(e, modalMessages[e.target.id], e.target);
   });
 
   $(document).on("click", ".close-modal", (e) => toggleModalHandler(e));
-
-  // need to handle the prep-time submit with an ajax request
-  // once request is successful, replace the content of preptime-form and display prep time.
 });
 
+/*------------------------------------------------------------------------------------*/
 const toggleModalHandler = (e, message = "", target) => {
   e.preventDefault();
 
@@ -35,7 +32,11 @@ const toggleModalHandler = (e, message = "", target) => {
   const $modalMessage = $modalContainer.find("p");
 
   $(document).on("click", ".confirm-button", (e) => {
-    submitUpdateOrderForm(e, target);
+    if (target.id === "preptime-confirm") {
+      confirmOrderForm(e, target);
+    } else {
+      submitUpdateOrderForm(e, target);
+    }
   });
 
   if ($modalContainer.hasClass("hide")) {
@@ -47,6 +48,8 @@ const toggleModalHandler = (e, message = "", target) => {
   }
 };
 
+/*------------------------------------------------------------------------------------*/
+
 const getOrderCards = () => {
   $.ajax({
     type: "GET",
@@ -54,6 +57,27 @@ const getOrderCards = () => {
     success: renderOrderCards,
   });
 };
+
+/*------------------------------------------------------------------------------------*/
+
+const confirmOrderForm = function (e, target) {
+  e.preventDefault();
+
+  const formData = $(target).serialize();
+  const order_id = formData
+    .split("&")
+    .map((data) => data.split("="))
+    .find((data) => data[0] === "order_id")[1];
+
+  $.ajax({
+    type: "POST",
+    url: `/api/restaurant/orders/${order_id}/confirm`,
+    data: formData,
+    success: getOrderCards(),
+  });
+};
+
+/*------------------------------------------------------------------------------------*/
 
 const submitUpdateOrderForm = function (e, target) {
   e.preventDefault();
@@ -64,7 +88,6 @@ const submitUpdateOrderForm = function (e, target) {
     .map((data) => data.split("="))
     .find((data) => data[0] === "order_id")[1];
 
-  console.log(formData);
   $.ajax({
     type: "POST",
     url: `/api/restaurant/orders/${order_id}/update`,
@@ -72,6 +95,8 @@ const submitUpdateOrderForm = function (e, target) {
     success: getOrderCards(),
   });
 };
+
+/*------------------------------------------------------------------------------------*/
 
 const renderOrderCards = (orders) => {
   const $modalContainer = $(".modal-container");
@@ -118,6 +143,8 @@ const renderOrderCards = (orders) => {
     }
   });
 };
+
+/*------------------------------------------------------------------------------------*/
 
 const createOrderCard = (
   order_id,

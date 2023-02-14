@@ -29,6 +29,26 @@ router.get("/orders", async (req, res) => {
   }
 });
 
+router.post("/orders/:order_id/confirm", (req, res) => {
+  const order_id = req.params.order_id;
+  const userId = req.session.userId;
+  const { preparation_time } = req.body;
+
+  console.log(order_id, preparation_time);
+
+  if (userId) {
+    restaurantQueries
+      .updateEstimatedTime(order_id, preparation_time)
+      .then((order) => {
+        res.json(order);
+      })
+      .catch((e) => {
+        console.error(e);
+        res.send(e);
+      });
+  }
+});
+
 router.post("/orders/:order_id/update", (req, res) => {
   const order_id = req.params.order_id;
   const userId = req.session.userId;
