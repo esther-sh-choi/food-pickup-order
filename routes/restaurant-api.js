@@ -38,6 +38,7 @@ router.post("/orders/:order_id/update", (req, res) => {
     isCancelled = false,
     preparation_time = 0,
   } = req.body;
+
   const receivedData = {
     isComplete,
     isReady,

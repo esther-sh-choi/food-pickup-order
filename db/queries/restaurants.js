@@ -3,7 +3,7 @@ const db = require("../connection");
 const getAllOrders = () => {
   const queryString = `
   SELECT orders.id as order_id, orders.estimated_ready_at, customers.phone_number,
-  orders.isComplete as is_complete, orders.ready_at, orders.isCancelled as is_cancelled, orders.customer_id
+  orders.is_complete, orders.ready_at, orders.is_cancelled, orders.customer_id
   FROM orders
   JOIN customers ON customers.id = orders.customer_id
   JOIN food_orders ON food_orders.order_id = orders.id
@@ -41,10 +41,11 @@ const getAllOrderFoods = (order_id) => {
 };
 
 const updateOrder = (order_id, data) => {
-  const { preparation_time, isComplete, isReady, isCancelled } = data;
+  const { preparation_time, is_complete, isReady, is_cancelled } = data;
 
   let ready_at = null;
   if (isReady) {
+    console.log("here");
     ready_at = "NOW()";
   }
 
@@ -54,12 +55,12 @@ const updateOrder = (order_id, data) => {
   SET estimated_ready_at = estimated_ready_at + interval '${String(
     preparation_time
   )} minutes',
-  isComplete = $2,
+  is_complete = $2,
   ready_at = $3,
-  isCancelled = $4
+  is_cancelled = $4
   WHERE orders.id = $1
   RETURNING *;`,
-      [order_id, isComplete, ready_at, isCancelled]
+      [order_id, is_complete, ready_at, is_cancelled]
     )
     .then((data) => {
       return data.rows;
