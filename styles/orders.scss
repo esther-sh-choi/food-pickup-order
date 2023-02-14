@@ -61,7 +61,8 @@ div.card-reveal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  form#preptime {
+  form#preptime-confirm,
+  #preptime-edit {
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -1,16 +1,15 @@
 INSERT INTO
   orders (
     created_at,
-    preparation_time,
+    estimated_ready_at,
     ready_at,
     customer_id
   ) VALUES (
   NOW(),
-  NULL,
+  NOW(),
   NULL,
   1
-),
-(
+),(
   NOW(),
   NULL,
   NULL,

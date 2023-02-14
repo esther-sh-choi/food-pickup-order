@@ -29,61 +29,29 @@ router.get("/orders", async (req, res) => {
   }
 });
 
-router.get("/preptime", (req, res) => {
+router.post("/orders/:order_id/update", (req, res) => {
+  const order_id = req.params.order_id;
   const userId = req.session.userId;
+  const {
+    isComplete = false,
+    isReady = false,
+    isCancelled = false,
+    preparation_time = 0,
+  } = req.body;
+
+  const receivedData = {
+    isComplete,
+    isReady,
+    isCancelled,
+    preparation_time,
+    ...req.body,
+  };
+
   if (userId) {
     restaurantQueries
-      .editPreptime(1, 60)
+      .updateOrder(order_id, receivedData)
       .then((order) => {
         res.json(order);
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
-router.get("/cancel", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .cancelOrder(1)
-      .then((order) => {
-        res.json({ order });
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
-router.get("/ready", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .readyOrder(1)
-      .then((order) => {
-        res.json({ order });
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
-router.get("/complete", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .completeOrder(1)
-      .then((order) => {
-        res.json({ order });
       })
       .catch((e) => {
         console.error(e);

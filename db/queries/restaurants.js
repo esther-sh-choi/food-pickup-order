@@ -2,8 +2,8 @@ const db = require("../connection");
 
 const getAllOrders = () => {
   const queryString = `
-  SELECT orders.id as order_id, orders.preparation_time, customers.phone_number,
-  orders.isComplete as is_complete, orders.ready_at, orders.isCancelled as is_cancelled, orders.customer_id
+  SELECT orders.id as order_id, orders.estimated_ready_at, customers.phone_number,
+  orders.is_complete, orders.ready_at, orders.is_cancelled, orders.customer_id
   FROM orders
   JOIN customers ON customers.id = orders.customer_id
   JOIN food_orders ON food_orders.order_id = orders.id
@@ -13,6 +13,7 @@ const getAllOrders = () => {
   return db
     .query(queryString)
     .then((data) => {
+      console.log(data.rows);
       return data.rows;
     })
     .catch((err) => {
@@ -39,72 +40,30 @@ const getAllOrderFoods = (order_id) => {
     });
 };
 
-const editPreptime = (order_id, preptime) => {
-  return db
-    .query(
-      `UPDATE orders
-  SET preparation_time = $2
-  WHERE orders.id = $1
-  RETURNING *;`,
-      [order_id, preptime]
-    )
-    .then((data) => {
-      console.log(data);
-      return data.rows[0];
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
+const updateOrder = (order_id, data) => {
+  const { preparation_time, is_complete, isReady, is_cancelled } = data;
 
-const cancelOrder = (order_id) => {
-  return db
-    .query(
-      `UPDATE orders
-  SET isCancelled = TRUE
-  WHERE orders.id = $1
-  RETURNING *;`,
-      [order_id]
-    )
-    .then((data) => {
-      console.log(data);
-      return data.rows[0];
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
+  let ready_at = null;
+  if (isReady) {
+    console.log("here");
+    ready_at = "NOW()";
+  }
 
-const readyOrder = (order_id) => {
   return db
     .query(
       `UPDATE orders
-  SET ready_at = NOW()
+  SET estimated_ready_at = estimated_ready_at + interval '${String(
+    preparation_time
+  )} minutes',
+  is_complete = $2,
+  ready_at = $3,
+  is_cancelled = $4
   WHERE orders.id = $1
   RETURNING *;`,
-      [order_id]
+      [order_id, is_complete, ready_at, is_cancelled]
     )
     .then((data) => {
-      console.log(data);
-      return data.rows[0];
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
-
-const completeOrder = (order_id) => {
-  return db
-    .query(
-      `UPDATE orders
-  SET isComplete = TRUE
-  WHERE orders.id = $1
-  RETURNING *;`,
-      [order_id]
-    )
-    .then((data) => {
-      console.log(data);
-      return data.rows[0];
+      return data.rows;
     })
     .catch((err) => {
       console.log(err.message);
@@ -125,9 +84,6 @@ const getAdminWithUsername = (username) => {
 module.exports = {
   getAllOrders,
   getAllOrderFoods,
-  editPreptime,
-  cancelOrder,
-  readyOrder,
-  completeOrder,
+  updateOrder,
   getAdminWithUsername,
 };
