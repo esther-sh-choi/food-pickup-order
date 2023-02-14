@@ -34,8 +34,6 @@ router.post("/orders/:order_id/confirm", (req, res) => {
   const user = req.session.user;
   const { preparation_time } = req.body;
 
-  console.log(order_id, preparation_time);
-
   if (user) {
     restaurantQueries
       .updateEstimatedTime(order_id, preparation_time)
