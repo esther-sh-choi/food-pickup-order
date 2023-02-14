@@ -8,12 +8,10 @@ ul.tabs {
 }
 
 // main.cards-container {
-//   // Special circumstance where Materialize CSS keep overriding to display: block whenever change occurs
-//   display: flex !important;
-//   flex-wrap: wrap;
-//   justify-content: center;
+//   display: grid;
+//   grid-auto-rows: 1fr;
 
-//   padding: 20px;
+//   // padding: 20px;
 // }
 
 div.card {

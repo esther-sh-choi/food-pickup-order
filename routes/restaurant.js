@@ -14,4 +14,32 @@ router.get("/orders", (req, res) => {
   }
 });
 
+const login = function (username, password) {
+  return restaurantQueries.getAdminWithUsername(username).then((user) => {
+    if (password === user.password) {
+      console.log(user);
+      return user;
+    }
+    return null;
+  });
+};
+
+router.post("/login", (req, res) => {
+  // const { username, password } = req.body;
+  login("admin", "admin")
+    .then((user) => {
+      if (!user) {
+        res.send({ error: "error" });
+        return;
+      }
+      req.session.userId = user.id;
+    })
+    .catch((e) => res.send(e));
+});
+
+router.post("/logout", (req, res) => {
+  req.session.userId = null;
+  res.render("index", { owner: null });
+});
+
 module.exports = router;
