@@ -34,7 +34,42 @@ const getAllFoods = () => {
 };
 
 
+///// This query gets all the customers from the customers table.
+
+const getAllCustomers = () => {
+  return db
+    .query(`SELECT * FROM customers;`)
+    .then((data) => {
+      console.log(data);
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+
+// This query adds a new customer to the customers table.
+
+const addCustomer = (customers) => {
+  return db
+  .query(`
+    INSERT INTO customers (name, phone_number)
+    VALUES ($1, $2)
+    RETURNING *;
+  `, [customers.name, customers.phone_number])
+  .then((data) => {
+    console.log(data);
+    return data.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+};
+
 module.exports = {
   getAllFoods,
   addFoodOrder,
+  getAllCustomers,
+  addCustomer
 };
