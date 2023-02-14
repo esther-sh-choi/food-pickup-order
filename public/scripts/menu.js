@@ -28,11 +28,14 @@ $(() => {
 
   ///// The below captures the customer's name and phone number
 
-  $(document).on("submit", "form.add-to-cart", (event) => {
+  $(document).on("submit", "form.checkout", (event) => {
     event.preventDefault();
 
-  });
+    const name = $("input#name_input").val();
+    const phone = $("input#phone_input").val();
 
+    console.log(`Name: ${name}, Phone Number: ${phone}`);
+  });
 
 
 });
