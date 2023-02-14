@@ -1,5 +1,6 @@
 const db = require("../connection");
 
+///// This query adds a new food order into the food_orders bridge table
 
 const addFoodOrder = (food_orders) => {
   return db
@@ -17,6 +18,8 @@ const addFoodOrder = (food_orders) => {
   });
 };
 
+
+///// This query gets all the food item data from the foods table.
 
 const getAllFoods = () => {
   return db

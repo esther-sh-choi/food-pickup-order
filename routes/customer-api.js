@@ -19,6 +19,8 @@ router.get('/menu', (req, res) => {
 router.get("/checkout", (req, res) => {
   // const userId = req.session.userId;
   const userId = true;
+  // let phone = req.body.phone_input
+  // let name = req.body.name_input
   if (userId) {
     customerQueries.addFoodOrder(1, 2)
     .then(foods => {
