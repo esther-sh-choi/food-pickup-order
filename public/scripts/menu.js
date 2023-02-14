@@ -38,14 +38,12 @@ const createMenuCard = (name, photo_url, description, price) => {
 
 
 const renderAllMenuCards = (foods) => {
-  console.log(foods);
   const categories = [];
   foods.forEach((food) => {
     if (!categories.includes(food.category.toLowerCase())) {
       categories.push(food.category.toLowerCase());
     }
   });
-  console.log(categories);
   foods.forEach((food) => {
     const { name, photo_url, description, price } = food;
     $(".all-menu-container").append(
@@ -63,4 +61,9 @@ const renderAllMenuCards = (foods) => {
       }
     })
   })
+}
+
+
+const renderCartContents = (customer_order) => {
+
 }
