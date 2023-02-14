@@ -59,54 +59,6 @@ router.post("/orders/:order_id/update", (req, res) => {
   }
 });
 
-router.get("/cancel", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .cancelOrder(1)
-      .then((order) => {
-        res.json({ order });
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
-router.get("/ready", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .readyOrder(1)
-      .then((order) => {
-        res.json({ order });
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
-router.get("/complete", (req, res) => {
-  // const userId = req.session.userId;
-  const userId = true;
-  if (userId) {
-    restaurantQueries
-      .completeOrder(1)
-      .then((order) => {
-        res.json({ order });
-      })
-      .catch((e) => {
-        console.error(e);
-        res.send(e);
-      });
-  }
-});
-
 const login = function (username, password) {
   return restaurantQueries.getAdminWithUsername(username).then((user) => {
     if (password === user.password) {
