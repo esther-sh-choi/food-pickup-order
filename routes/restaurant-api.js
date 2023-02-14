@@ -4,9 +4,9 @@ const restaurantQueries = require("../db/queries/restaurants");
 
 router.get("/orders", async (req, res) => {
   const templateVar = { orders: [] };
-  const userId = req.session.userId;
+  const user = req.session.user;
 
-  if (userId) {
+  if (user) {
     try {
       const orders = await restaurantQueries.getAllOrders();
 
@@ -31,12 +31,12 @@ router.get("/orders", async (req, res) => {
 
 router.post("/orders/:order_id/confirm", (req, res) => {
   const order_id = req.params.order_id;
-  const userId = req.session.userId;
+  const user = req.session.user;
   const { preparation_time } = req.body;
 
   console.log(order_id, preparation_time);
 
-  if (userId) {
+  if (user) {
     restaurantQueries
       .updateEstimatedTime(order_id, preparation_time)
       .then((order) => {
@@ -51,7 +51,7 @@ router.post("/orders/:order_id/confirm", (req, res) => {
 
 router.post("/orders/:order_id/update", (req, res) => {
   const order_id = req.params.order_id;
-  const userId = req.session.userId;
+  const user = req.session.user;
   const {
     isComplete = false,
     isReady = false,
@@ -67,7 +67,7 @@ router.post("/orders/:order_id/update", (req, res) => {
     ...req.body,
   };
 
-  if (userId) {
+  if (user) {
     restaurantQueries
       .updateOrder(order_id, receivedData)
       .then((order) => {
