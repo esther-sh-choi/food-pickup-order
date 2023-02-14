@@ -40,6 +40,25 @@ const getAllOrderFoods = (order_id) => {
     });
 };
 
+const updateEstimatedTime = (order_id, preparation_time) => {
+  return db
+    .query(
+      `UPDATE orders
+  SET estimated_ready_at = NOW() + interval '${String(
+    preparation_time
+  )} minutes'
+  WHERE orders.id = $1
+  RETURNING *;`,
+      [order_id]
+    )
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 const updateOrder = (order_id, data) => {
   const { preparation_time, is_complete, isReady, is_cancelled } = data;
 
@@ -85,5 +104,6 @@ module.exports = {
   getAllOrders,
   getAllOrderFoods,
   updateOrder,
+  updateEstimatedTime,
   getAdminWithUsername,
 };
