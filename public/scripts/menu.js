@@ -11,26 +11,7 @@ $(() => {
   });
 
 
-  // FIRST ATTEMPT
-  //
-  // const cartArray = [];
-  //
-  // $(document).on("submit", "form.add-to-cart", (e) => {
-  //   e.preventDefault()
-  //   const target = e.target;
-  //   const formData = $(target).serialize();
-  //   const formDataArray = formData.replace(/%20/g, " ").split("&");
-  //   const finalDataArray = formDataArray.map(data => data.split("="));
-  //   const result = {};
-  //   finalDataArray.forEach(data => {
-  //     result[data[0]] = data[1];
-  //   })
-  //   cartArray.push(result);
-  //   renderCartContents(cartArray);
-  // })
-
-
-  // SIMPLIFIED VERSION
+  ///// The below captures what the customer adds to cart
 
   const cartArray = [];
 
@@ -43,8 +24,15 @@ $(() => {
     });
     cartArray.push(result);
     renderCart(cartArray);
-    // console.log(cartArray)
   });
+
+  ///// The below captures the customer's name and phone number
+
+  $(document).on("submit", "form.add-to-cart", (event) => {
+    event.preventDefault();
+
+  });
+
 
 
 });
