@@ -29,11 +29,26 @@ router.get("/orders", async (req, res) => {
   }
 });
 
-router.get("/preptime", (req, res) => {
+router.post("/orders/:order_id/update", (req, res) => {
+  const order_id = req.params.order_id;
   const userId = req.session.userId;
+  const {
+    isComplete = false,
+    isReady = false,
+    isCancelled = false,
+    preparation_time = 0,
+  } = req.body;
+  const receivedData = {
+    isComplete,
+    isReady,
+    isCancelled,
+    preparation_time,
+    ...req.body,
+  };
+
   if (userId) {
     restaurantQueries
-      .editPreptime(1, 60)
+      .updateOrder(order_id, receivedData)
       .then((order) => {
         res.json(order);
       })

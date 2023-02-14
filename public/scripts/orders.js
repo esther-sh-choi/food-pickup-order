@@ -13,16 +13,9 @@ $(() => {
     edit: "Are you sure you want to edit the preparation time for this order?",
   };
 
-  $(document).on("submit", "#order-cancel", (e) =>
-    toggleModalHandler(e, modalMessages.cancel)
-  );
-  $(document).on("submit", "#preptime", (e) => {
-    toggleModalHandler(e, modalMessages.edit);
+  $(document).on("submit", "form.update", (e) => {
+    toggleModalHandler(e, modalMessages.edit, e.target);
   });
-
-  $(document).on("submit", "#order-ready", (e) =>
-    toggleModalHandler(e, modalMessages.ready)
-  );
 
   $(document).on("click", ".close-modal", (e) => toggleModalHandler(e));
 
@@ -30,11 +23,15 @@ $(() => {
   // once request is successful, replace the content of preptime-form and display prep time.
 });
 
-const toggleModalHandler = (e, message = "") => {
+const toggleModalHandler = (e, message = "", target) => {
   e.preventDefault();
 
   const $modalContainer = $(".modal-container");
   const $modalMessage = $modalContainer.find("p");
+
+  $(document).on("click", ".confirm-button", (e) => {
+    submitUpdateOrderForm(e, target);
+  });
 
   if ($modalContainer.hasClass("hide")) {
     $modalMessage.empty();
@@ -45,25 +42,53 @@ const toggleModalHandler = (e, message = "") => {
   }
 };
 
+const getOrderCards = () => {
+  $.ajax({
+    type: "GET",
+    url: "/api/restaurant/orders",
+    success: renderOrderCards,
+  });
+};
+
+const submitUpdateOrderForm = function (e, target) {
+  e.preventDefault();
+
+  const formData = $(target).serialize();
+  const order_id = formData
+    .split("&")
+    .map((data) => data.split("="))
+    .find((data) => data[0] === "order_id")[1];
+
+  $.ajax({
+    type: "POST",
+    url: `/api/restaurant/orders/${order_id}/update`,
+    data: formData,
+    success: getOrderCards(),
+  });
+};
+
 const renderOrderCards = (orders) => {
+  const $modalContainer = $(".modal-container");
+  $modalContainer.addClass("hide");
   $(".cards-container").empty();
+
   orders.forEach((order) => {
-    const { order_id, phone_number, preparation_time, foods, is_complete } =
+    const { order_id, phone_number, estimated_ready_at, foods, is_complete } =
       order;
 
     if (is_complete) {
       $("#completed").append(
-        createOrderCard(order_id, phone_number, preparation_time, foods)
+        createOrderCard(order_id, phone_number, estimated_ready_at, foods)
       );
     } else {
       $("#in-progress").append(
-        createOrderCard(order_id, phone_number, preparation_time, foods)
+        createOrderCard(order_id, phone_number, estimated_ready_at, foods)
       );
     }
   });
 };
 
-const createOrderCard = (order_id, phone_number, preparation_time, foods) => {
+const createOrderCard = (order_id, phone_number, estimated_ready_at, foods) => {
   let $orderCard = $(`
   <div class="card">
   <div class="card-content">
@@ -86,29 +111,33 @@ const createOrderCard = (order_id, phone_number, preparation_time, foods) => {
 </section>
 <section class="card-reveal-content">
   <div class="preptime-form-container">
-    <form id="preptime">
-    <label for="preptime-input" >Estimated prep time (minutes)</label>
-    <div class='input-container'>
-      <input
-      class="browser-default"
-      id="preptime-input"
-      type="number"
-      name="preparation-time"
-      min="15"
-      max="70"
-      step='5'
-      />
-      <button id="preptime-button" class="btn" type="submit">Submit</button>
-    </div>
+    <form class="update" id="preptime-edit">
+      <label for="preptime-input" >Estimated prep time (minutes)</label>
+      <div class='input-container'>
+        <input
+        class="browser-default"
+        id="preptime-input"
+        type="number"
+        name="preparation_time"
+        min="10"
+        max="70"
+        step='5'
+        />
+        <input type='hidden' name='order_id' value='${order_id}' />
+        <button id="preptime-button" class="btn" type="submit">Submit</button>
+      </div>
     </form>
   </div>
   <div class="button-forms">
-    <form id="order-ready">
+    <form class="update" id="order-ready">
+      <input type='hidden' name='isReady' value='true' />
+      <input type='hidden' name='order_id' value='${order_id}' />
       <button class="btn modal-trigger order-ready">
         Order Ready
       </button>
     </form>
-    <form id="order-cancel">
+    <form class="update" id="order-cancel">
+      <input type='hidden' name='order_id' value='${order_id}' />
       <button class="btn modal-trigger order-cancel red darken-4">
         Cancel Order
       </button>
@@ -127,29 +156,31 @@ const createOrderCard = (order_id, phone_number, preparation_time, foods) => {
 
   let $preptimeFormContainer = $orderCard.find(".preptime-form-container.new");
 
-  const deadline = new Date(Date.now() + preparation_time * 60 * 1000);
-  const localDeadline = deadline.toLocaleTimeString();
-
   let $prepFormContent;
-  if (preparation_time) {
+  if (estimated_ready_at) {
+    const utcDate = new Date(estimated_ready_at);
+    const localTime = new Date(
+      utcDate.getTime() - utcDate.getTimezoneOffset() * 60 * 1000
+    ).toLocaleTimeString();
+
     $prepFormContent = $(`
-    <p>You set the preparation time to ${preparation_time} minutes.</p>
-    <p>You have until ${localDeadline} to prepare this order.</p>`);
+    <p>You have until ${localTime} to prepare this order.</p>`);
   } else {
     $prepFormContent = $(`
 
-    <form id="preptime">
+    <form id="preptime-confirm">
       <label for="preptime-input" >Estimated prep time (minutes)</label>
       <div class='input-container'>
         <input
         class="browser-default"
         id="preptime-input"
         type="number"
-        name="preparation-time"
-        min="15"
+        name="preparation_time"
+        min="10"
         max="70"
         step='5'
         />
+        <input type='hidden' name='order_id' value='${order_id}' />
         <button id="preptime-button" class="btn" type="submit">Submit</button>
       </div>
     </form>

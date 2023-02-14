@@ -2,7 +2,7 @@ const db = require("../connection");
 
 const getAllOrders = () => {
   const queryString = `
-  SELECT orders.id as order_id, orders.preparation_time, customers.phone_number,
+  SELECT orders.id as order_id, orders.estimated_ready_at, customers.phone_number,
   orders.isComplete as is_complete, orders.ready_at, orders.isCancelled as is_cancelled, orders.customer_id
   FROM orders
   JOIN customers ON customers.id = orders.customer_id
@@ -13,6 +13,7 @@ const getAllOrders = () => {
   return db
     .query(queryString)
     .then((data) => {
+      console.log(data.rows);
       return data.rows;
     })
     .catch((err) => {
@@ -39,18 +40,29 @@ const getAllOrderFoods = (order_id) => {
     });
 };
 
-const editPreptime = (order_id, preptime) => {
+const updateOrder = (order_id, data) => {
+  const { preparation_time, isComplete, isReady, isCancelled } = data;
+
+  let ready_at = null;
+  if (isReady) {
+    ready_at = "NOW()";
+  }
+
   return db
     .query(
       `UPDATE orders
-  SET preparation_time = $2
+  SET estimated_ready_at = estimated_ready_at + interval '${String(
+    preparation_time
+  )} minutes',
+  isComplete = $2,
+  ready_at = $3,
+  isCancelled = $4
   WHERE orders.id = $1
   RETURNING *;`,
-      [order_id, preptime]
+      [order_id, isComplete, ready_at, isCancelled]
     )
     .then((data) => {
-      console.log(data);
-      return data.rows[0];
+      return data.rows;
     })
     .catch((err) => {
       console.log(err.message);
@@ -125,7 +137,7 @@ const getAdminWithUsername = (username) => {
 module.exports = {
   getAllOrders,
   getAllOrderFoods,
-  editPreptime,
+  updateOrder,
   cancelOrder,
   readyOrder,
   completeOrder,
