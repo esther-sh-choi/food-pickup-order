@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
 
-router.get("/login", (req, res) => {
-  res.render("login");
-});
-
 router.get("/orders", (req, res) => {
   const user = req.session.user;
 
@@ -13,6 +9,16 @@ router.get("/orders", (req, res) => {
   if (user) {
     res.render("orders", { owner: user });
   }
+});
+
+router.get("/login", (req, res) => {
+  if (req.session.user) {
+    res.redirect("/restaurant/orders");
+  }
+
+  console.log("here");
+
+  res.render("login", { errorMessage: "" });
 });
 
 const login = function (username, password) {
@@ -27,11 +33,18 @@ const login = function (username, password) {
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
+  if (!username || !password || (!username && !password)) {
+    return res
+      .status(400)
+      .render("login", { errorMessage: "You cannot submit empty fields." });
+  }
+
   login(username, password)
     .then((user) => {
       if (!user) {
-        res.send({ error: "error" });
-        return;
+        return res.status(403).render("login", {
+          errorMessage: "This username/password does not exist.",
+        });
       }
       req.session.user = user;
       res.redirect("/restaurant/orders");

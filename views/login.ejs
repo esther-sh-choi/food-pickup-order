@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
     <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/login.css" />
     <link
       rel="stylesheet"
@@ -21,8 +22,8 @@
     <script src="/vendor/jquery-3.0.0.js"></script>
   </head>
   <body>
-    <div class="input">
-      <h1>Owner Login</h1>
+    <section class="input-container">
+      <h3>Owner Login</h3>
       <form action="/restaurant/login" method="post">
         <div class="input-field">
           <input id="username" type="text" class="validate" name="username" />
@@ -37,17 +38,19 @@
           />
           <label for="password">Password</label>
         </div>
-
         <button type="submit" class="btn btn-primary">Login</button>
+        <% if (errorMessage) { %>
+        <div class="login-error-message"><p><%= errorMessage %></p></div>
+        <% } %>
       </form>
-    </div>
+    </section>
 
-    <div class="link">
+    <section class="link">
       <p>Looking for something delicious?</p>
-      <a class="waves-effect waves-light btn" href="customer_menu.html"
+      <a class="waves-effect waves-light btn" href="/customer/menu"
         >Check out our menu!</a
       >
-    </div>
+    </section>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
