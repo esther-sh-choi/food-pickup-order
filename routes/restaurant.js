@@ -7,7 +7,7 @@ router.get("/orders", (req, res) => {
 
   // Create getUserById and search restaurant table
   if (user) {
-    res.render("orders", { owner: user });
+    res.render("orders", { owner: user, status: false });
   }
 });
 

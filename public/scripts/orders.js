@@ -56,8 +56,7 @@ const orderFormHandler = function (event) {
     ...data,
     preptime,
   };
-  console.log("data: ", data);
-  console.log("complete: ", completeData);
+
   if (data.type === "confirm") {
     toggleModalHandler(onConfirm, completeData);
   } else {
@@ -145,10 +144,6 @@ const renderOrderCards = (ordersData) => {
       is_cancelled,
     } = order;
 
-    if (is_cancelled) {
-      return;
-    }
-
     if (is_complete) {
       $("#completed").append(
         createOrderCard(
@@ -158,7 +153,21 @@ const renderOrderCards = (ordersData) => {
           foods,
           ready_at,
           is_complete,
-          updateRemainingTime
+          updateRemainingTime,
+          is_cancelled
+        )
+      );
+    } else if (is_cancelled) {
+      $("#cancelled").append(
+        createOrderCard(
+          order_id,
+          phone_number,
+          estimated_ready_at,
+          foods,
+          ready_at,
+          is_complete,
+          updateRemainingTime,
+          is_cancelled
         )
       );
     } else {
@@ -170,7 +179,8 @@ const renderOrderCards = (ordersData) => {
           foods,
           ready_at,
           is_complete,
-          updateRemainingTime
+          updateRemainingTime,
+          is_cancelled
         )
       );
     }
@@ -186,7 +196,8 @@ const createOrderCard = (
   foods,
   ready_at,
   is_complete,
-  countdownFn
+  countdownFn,
+  is_cancelled
 ) => {
   const $orderCard = $(`
   <div class="card col">
@@ -239,7 +250,14 @@ const createOrderCard = (
 
   let $prepFormContent;
 
-  console.log(ready_at);
+  if (is_cancelled) {
+    $prepFormContent = $(`
+    <p>This order was cancelled.</p>`);
+    $orderCard.find(".card-reveal").remove();
+    $orderCard.find(".options-icon").remove();
+    $orderCard.find(".card-title").removeClass("activator");
+  }
+
   if (ready_at) {
     $prepFormContent = $(`
     <form class="update" id="order-complete" data-is-complete="true" data-type="complete" data-order-id='${order_id}' onSubmit="orderFormHandler(event)" >
@@ -263,11 +281,9 @@ const createOrderCard = (
   `);
   }
 
-  if (estimated_ready_at && !ready_at && !is_complete) {
-    const utcDate = new Date(estimated_ready_at);
-    const localTime = new Date(
-      utcDate.getTime() - utcDate.getTimezoneOffset() * 60 * 1000
-    ).toLocaleTimeString();
+  if (estimated_ready_at && !ready_at && !is_complete && !is_cancelled) {
+    const date = new Date(estimated_ready_at);
+    const localTime = date.toLocaleTimeString();
 
     countdownFn(estimated_ready_at, order_id);
 
@@ -292,7 +308,7 @@ const createOrderCard = (
         </div>
       </form>
 `);
-  } else if (!estimated_ready_at && !ready_at) {
+  } else if (!estimated_ready_at && !ready_at && !is_cancelled) {
     $prepFormContent = $(`
     <form id="preptime-confirm" data-type="confirm" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
       <label for="preptime-input" >Estimated prep time (minutes)</label>
@@ -352,5 +368,3 @@ const updateRemainingTime = (estimated_ready_at, order_id) => {
     }
   }, 1000);
 };
-
-console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);

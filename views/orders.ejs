@@ -3,8 +3,7 @@
   <head>
     <title>Order Up</title>
 
-  <%- include('./partials/favicon') %>
-
+    <%- include('./partials/favicon') %>
 
     <!--Import materialize.css-->
     <link
@@ -57,10 +56,14 @@
       <li class="tab col s3">
         <a href="#completed">Completed</a>
       </li>
+      <li class="tab col s3">
+        <a href="#cancelled">Cancelled</a>
+      </li>
     </ul>
 
     <main class="cards-container row" id="in-progress"></main>
     <main class="cards-container row" id="completed"></main>
+    <main class="cards-container row" id="cancelled"></main>
     <div class="modal-container hide">
       <div class="custom-backdrop close-modal"></div>
       <div class="custom-modal">
