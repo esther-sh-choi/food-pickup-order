@@ -6,7 +6,7 @@ router.get("/menu", (req, res) => {
 });
 
 router.get("/status", (req, res) => {
-  res.render("status");
+  res.render("status", { owner: false });
 });
 
 module.exports = router;

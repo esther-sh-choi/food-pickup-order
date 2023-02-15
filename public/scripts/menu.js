@@ -10,6 +10,17 @@ $(() => {
     success: renderAllMenuCards,
   });
 
+  const checkoutHandler = (inputData) => {
+    // console.log(inputData);
+    $.ajax({
+      type: "POST",
+      url: "/api/customer/checkout",
+      data: inputData,
+      success: (res) => {
+        console.log(res)
+      }
+  })
+};
 
   ///// The below captures what the customer adds to cart
 
@@ -28,11 +39,10 @@ $(() => {
 
   ///// The below captures the customer's name and phone number
 
-  const customerData = [];
-
   $(document).on("submit", "form.checkout", (event) => {
     event.preventDefault();
 
+    const customerData = [];
     const name = $("input#name_input").val();
     const phone_number = $("input#phone_input").val();
 
@@ -40,10 +50,11 @@ $(() => {
     console.log(customerData);
 
     const foodArray = cartArray.map((food) => {
-      return food.id;
+      return Number(food.id);
     })
 
-    console.log(foodArray);
+    checkoutHandler({ foodArray, customerData });
+    // console.log(foodArray);
 
   });
 
