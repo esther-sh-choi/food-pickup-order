@@ -4,61 +4,65 @@ $(() => {
   const elems = $(".sidenav");
   const instances = M.Sidenav.init(elems, { edge: "right" });
 
+  renderMenu();
+
+  $(document).on("submit", "form.add-to-cart", addToCartHandler);
+
+  $(document).on("submit", "form.checkout", formCheckoutHandler);
+
+});
+
+
+const renderMenu = () => {
   $.ajax({
     type: "GET",
     url: "/api/customer/menu",
     success: renderAllMenuCards,
   });
+};
 
-  const checkoutHandler = (inputData) => {
-    // console.log(inputData);
-    $.ajax({
-      type: "POST",
-      url: "/api/customer/checkout",
-      data: inputData,
-      success: (res) => {
-        console.log(res)
-      }
+
+const checkoutHandler = (inputData) => {
+  $.ajax({
+    type: "POST",
+    url: "/api/customer/checkout",
+    data: inputData,
+    success: () => {
+      window.location.href = "/customer/status";
+    }
   })
 };
 
-  ///// The below captures what the customer adds to cart
 
-  const cartArray = [];
+///// The below captures what the customer adds to cart
 
-  $(document).on("submit", "form.add-to-cart", (event) => {
-    event.preventDefault();
-    const formDataArray = $(event.target).serializeArray();
-    const result = {};
-    formDataArray.forEach((data) => {
-      result[data.name] = data.value;
-    });
-    cartArray.push(result);
-    renderCart(cartArray);
+const cartArray = [];
+
+const addToCartHandler = (event) => {
+  event.preventDefault();
+  const formDataArray = $(event.target).serializeArray();
+  const result = {};
+  formDataArray.forEach((data) => {
+    result[data.name] = data.value;
   });
+  cartArray.push(result);
+  renderCart(cartArray);
+};
 
-  ///// The below captures the customer's name and phone number
 
-  $(document).on("submit", "form.checkout", (event) => {
-    event.preventDefault();
+///// The below captures the customer's name and phone number
 
-    const customerData = [];
-    const name = $("input#name_input").val();
-    const phone_number = $("input#phone_input").val();
-
-    customerData.push(name, phone_number);
-    console.log(customerData);
-
-    const foodArray = cartArray.map((food) => {
-      return Number(food.id);
-    })
-
-    checkoutHandler({ foodArray, customerData });
-    // console.log(foodArray);
-
-  });
-
-});
+const formCheckoutHandler = (event) => {
+  event.preventDefault();
+  const customerData = [];
+  const name = $("input#name_input").val();
+  const phone_number = $("input#phone_input").val();
+  customerData.push(name, phone_number);
+  const foodArray = cartArray.map((food) => {
+    return Number(food.id);
+  })
+  checkoutHandler({ foodArray, customerData });
+};
 
 
 ///// This function renders the cart tempate.
@@ -75,7 +79,6 @@ const renderCart = (customer_orders) => {
   }
 
   const orders = Object.values(ordersObj)
-  console.log(customer_orders);
   let subtotal = 0;
   orders.forEach((order) => {
     const { price, quantity } = order;
@@ -85,7 +88,6 @@ const renderCart = (customer_orders) => {
   const total = subtotal + tax;
   orders.forEach((order) => {
     const { name, quantity, price, id } = order;
-    console.log(order);
     $(".cart-container").append(
       createCartContents(name, quantity, price, id)
       );
@@ -116,7 +118,6 @@ const createCartContents = (name, quantity, price, id) => {
 ///// This function creates a template for each menu card.
 
 const createMenuCard = (name, photo_url, description, price, id) => {
-  // const menu_item = { name, price };
   const $menuCard = $(`
   <div class="menu-item card horizontal">
     <div class="card-image">
@@ -160,7 +161,6 @@ const renderAllMenuCards = (foods) => {
       createMenuCard(name, photo_url, description, price, id)
       );
   })
-
   categories.forEach((sectionCategory) => {
     foods.forEach((food) => {
       const { name, category, photo_url, description, price, id } = food;

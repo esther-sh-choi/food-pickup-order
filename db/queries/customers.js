@@ -2,33 +2,24 @@ const db = require("../connection");
 
 ///// This query adds a new food order into the food_orders bridge table
 
-// const addFoodOrder = (foodArray, order_id) => {
-//   const promises = foodArray.map((id) => {
-//     return db.query(
-//       `INSERT INTO food_orders (food_id, order_id)
-//        VALUES ($1, $2)
-//        RETURNING *;
-//       `,
-//       [id, order_id]
-//     );
-//   });
-//   return Promise.all(promises).then(() => {
-//     return order_id;
-//   });
-// };
-
 const addFoodOrder = (foodArray, order_id) => {
-  const promises = foodArray.map((id) => {
+    const valuesArray = foodArray.map((id) => {
+      return `(${id}, $1)`
+    })
+    const valueString = valuesArray.join(', ')
     return db.query(
       `INSERT INTO food_orders (food_id, order_id)
-       VALUES ($1, $2)
+       VALUES ${valueString}
        RETURNING *;
       `,
-      [id, order_id]
-    );
-  });
-  return Promise.all(promises);
+      [order_id]
+    )
+    .then((data) => {return data.rows})
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
+
 
 ///// This query gets all the food item data from the foods table.
 

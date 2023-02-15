@@ -27,17 +27,14 @@ router.post("/checkout", (req, res) => {
   }
   customerQueries.addCustomer(customerData)
   .then(customer => {
-    return customer;
+    return customerQueries.addOrder(customer.id);
   })
-  .then(res => {
-    return customerQueries.addOrder(res.id);
-  }) 
-  .then(res => {
-    return customerQueries.addFoodOrder(foodArray, res.id)
+  .then(order => {
+    return customerQueries.addFoodOrder(foodArray, order.id)
   })
-  .then(res => {
-    req.session.order_id = res[0].rows[0].order_id;
-    return res.redirect("/customer/status");
+  .then(foodOrder => {
+    req.session.order_id = foodOrder[0].order_id;
+    res.redirect("/customer/status");
   })
   .catch(err => {
     console.log(err);
