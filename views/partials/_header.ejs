@@ -1,7 +1,9 @@
 <nav>
   <div class="nav-wrapper">
     <!-- <a class="brand-logo left">LOGO</a> -->
-    <a class="brand-logo left"><img src="/docs/logoBoxNoBG.png" alt="Logo"></a>
+    <a class="brand-logo left"
+      ><img src="/docs/logoBoxNoBG.png" alt="Logo"
+    /></a>
     <ul class="right">
       <% if (owner) { %>
       <li>Logged in as: <%= owner.username %></li>
@@ -10,13 +12,13 @@
           <button type="submit" class="btn logout">Log Out</button>
         </form>
       </li>
-      <% } else { %>
+      <% } else { %> <% if (!status) { %>
       <li>
         <i class="material-icons sidenav-trigger" data-target="slide-out"
           >local_grocery_store</i
         >
       </li>
-      <% } %>
+      <% } %> <% } %>
     </ul>
   </div>
 </nav>
