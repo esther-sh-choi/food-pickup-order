@@ -16,15 +16,21 @@ router.get('/menu', (req, res) => {
     });
 });
 
-router.get("/checkout", (req, res) => {
+router.post("/checkout", (req, res) => {
   // const userId = req.session.userId;
   const userId = true;
   // let phone = req.body.phone_input
   // let name = req.body.name_input
   if (userId) {
-    customerQueries.addFoodOrder(1, 2)
-    .then(foods => {
-      res.json({ foods });
+    customerQueries.addCustomer(customers)
+    .then(customer => {
+      return customer;
+    })
+    .then(res => {
+      return customerQueries.addOrder(res.id);
+    })
+    .then(res => {
+      return customerQueries.addFoodOrder(res.id)
     })
     .catch(err => {
       res
@@ -32,6 +38,18 @@ router.get("/checkout", (req, res) => {
         .json({ error: err.message });
     });
   }
+});
+
+router.get('/status', (req, res) => {
+  customerQueries.addCustomer()
+    .then(foods => {
+      res.json(foods);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 

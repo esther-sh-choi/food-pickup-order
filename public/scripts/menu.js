@@ -28,22 +28,26 @@ $(() => {
 
   ///// The below captures the customer's name and phone number
 
+  const customerData = [];
+
   $(document).on("submit", "form.checkout", (event) => {
     event.preventDefault();
 
     const name = $("input#name_input").val();
-    const phone = $("input#phone_input").val();
+    const phone_number = $("input#phone_input").val();
 
-    console.log(`name: ${name}, phone: ${phone}`);
+    customerData.push(name, phone_number);
+    console.log(customerData);
+
+    const foodArray = cartArray.map((food) => {
+      return food.id;
+    })
+
+    console.log(foodArray);
+
   });
 
-
 });
-
-
-///// This function stores the customer info in an encrypted cookie-session
-
-// const createCustomerCookie =
 
 
 ///// This function renders the cart tempate.

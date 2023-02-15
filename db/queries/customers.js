@@ -60,16 +60,36 @@ const addCustomer = (customers) => {
   `, [customers.name, customers.phone_number])
   .then((data) => {
     console.log(data);
-    return data.rows;
+    return data.rows[0];
   })
   .catch((err) => {
     console.log(err.message);
   });
 };
 
+
+// This query adds a new customer order.
+
+const addOrder = (customer_id) => {
+  return db
+  .query(`
+    INSERT INTO orders (customer_id, created_at)
+    VALUES ($1, NOW())
+    RETURNING *;
+  `, [customer_id])
+  .then((data) => {
+    console.log(data);
+    return data.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+}
+
 module.exports = {
   getAllFoods,
   addFoodOrder,
   getAllCustomers,
-  addCustomer
+  addCustomer,
+  addOrder
 };
