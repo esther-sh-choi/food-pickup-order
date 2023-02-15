@@ -51,13 +51,16 @@ const toggleModalHandler = (e, message = "", target) => {
   }
 };
 
+// const val = $(target).data('order_ready')
 /*------------------------------------------------------------------------------------*/
 
 const getOrderCards = () => {
   $.ajax({
     type: "GET",
     url: "/api/restaurant/orders",
-    success: renderOrderCards,
+    success: (res) => {
+      renderOrderCards(res);
+    },
   });
 };
 
@@ -67,10 +70,7 @@ const confirmOrderForm = function (e, target) {
   e.preventDefault();
 
   const formData = $(target).serialize();
-  const order_id = formData
-    .split("&")
-    .map((data) => data.split("="))
-    .find((data) => data[0] === "order_id")[1];
+  const order_id = $(target).find("[name=order_id]").val();
 
   $.ajax({
     type: "POST",
@@ -86,22 +86,55 @@ const submitUpdateOrderForm = function (e, target) {
   e.preventDefault();
 
   const formData = $(target).serialize();
-  const order_id = formData
-    .split("&")
-    .map((data) => data.split("="))
-    .find((data) => data[0] === "order_id")[1];
+  const order_id = $(target).find("[name=order_id]").val();
 
   $.ajax({
     type: "POST",
     url: `/api/restaurant/orders/${order_id}/update`,
     data: formData,
-    success: getOrderCards(),
+    success: getOrderCards(true),
   });
 };
 
 /*------------------------------------------------------------------------------------*/
 
-const renderOrderCards = (orders) => {
+const renderOrderCards = (ordersData) => {
+  const parsedOrders = {};
+  ordersData.forEach((order) => {
+    const {
+      order_id,
+      created_at,
+      estimated_ready_at,
+      is_complete,
+      ready_at,
+      is_cancelled,
+      phone_number,
+    } = order;
+    if (!parsedOrders[order_id]) {
+      const orderObj = {
+        order_id,
+        created_at,
+        estimated_ready_at,
+        is_complete,
+        ready_at,
+        is_cancelled,
+        phone_number,
+        foods: [],
+      };
+
+      parsedOrders[order_id] = orderObj;
+    }
+
+    const parsedProduct = {
+      name: order.name,
+      quantity: Number(order.food_quantity),
+    };
+
+    parsedOrders[order_id].foods.push(parsedProduct);
+  });
+
+  const orders = Object.values(parsedOrders);
+
   const $modalContainer = $(".modal-container");
   $modalContainer.addClass("hide");
   $(".cards-container").empty();
@@ -185,7 +218,7 @@ const createOrderCard = (
 
   </div>
   <div class="button-forms">
-    <form class="update" id="order-ready">
+    <form class="update" data-order_ready="order-ready" onSubmit="" id="order-ready">
       <input type='hidden' name='isReady' value='true' />
       <input type='hidden' name='order_id' value='${order_id}' />
       <button class="btn modal-trigger order-ready">
@@ -207,7 +240,7 @@ const createOrderCard = (
   let $foodListContainer = $orderCard.find("ul");
   foods.forEach((food) => {
     $foodListContainer.append(
-      `<li>${food.name} x<strong>${food.food_count}</strong></li>`
+      `<li>${food.name} x <strong>${food.quantity}</strong></li>`
     );
   });
 
@@ -242,6 +275,8 @@ const createOrderCard = (
     const localTime = new Date(
       utcDate.getTime() - utcDate.getTimezoneOffset() * 60 * 1000
     ).toLocaleTimeString();
+
+    countdownFn(estimated_ready_at, order_id);
 
     $prepFormContent = $(`
     <p>You have until ${localTime} to prepare this order.</p>
@@ -288,15 +323,18 @@ const createOrderCard = (
 
   $preptimeFormContainer.append($prepFormContent);
 
-  countdownFn(estimated_ready_at, order_id);
-
   return $orderCard;
 };
 
+const orderRemainingTimeIntervals = {};
+
 const updateRemainingTime = (estimated_ready_at, order_id) => {
+  clearInterval(orderRemainingTimeIntervals[order_id]);
+
   const dateExpectedReadyAt = new Date(estimated_ready_at);
   const msSinceEpoch = dateExpectedReadyAt.getTime();
-  const countdown = setInterval(() => {
+
+  orderRemainingTimeIntervals[order_id] = setInterval(() => {
     const timeRemaining = msSinceEpoch - Date.now();
 
     const hours = Math.floor(
@@ -307,17 +345,15 @@ const updateRemainingTime = (estimated_ready_at, order_id) => {
     );
     const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    if (estimated_ready_at) {
-      $(`#countdown_${order_id}`).empty();
-      $(`#countdown_${order_id}`).append(
-        `Time Remaining: ${String(hours).padStart(2, "0")} : ${String(
-          minutes
-        ).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`
-      );
-    }
+    $(`#countdown_${order_id}`).empty();
+    $(`#countdown_${order_id}`).append(
+      `Time Remaining: ${String(hours).padStart(2, "0")} : ${String(
+        minutes
+      ).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`
+    );
 
     if (timeRemaining < 0) {
-      clearInterval(countdown);
+      clearInterval(orderRemainingTimeIntervals[order_id]);
       $(`#countdown_${order_id}`).empty();
       $(`#countdown_${order_id}`).append(`Time's up!`);
     }

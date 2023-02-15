@@ -3,29 +3,18 @@ const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
 
 router.get("/orders", async (req, res) => {
-  const templateVar = { orders: [] };
   const user = req.session.user;
 
   if (user) {
-    try {
-      const orders = await restaurantQueries.getAllOrders();
-
-      for (const order of orders) {
-        const foodData = await restaurantQueries.getAllOrderFoods(
-          order.order_id
-        );
-        templateVar.orders.push({
-          ...order,
-          foods: foodData,
-        });
-      }
-
-      res.send(templateVar.orders);
-    } catch (e) {
-      console.error(e);
-      res.send(e);
-    }
-    return;
+    restaurantQueries
+      .getAllOrders()
+      .then((orders) => {
+        res.json(orders);
+      })
+      .catch((e) => {
+        console.error(e);
+        res.send(e);
+      });
   }
 });
 

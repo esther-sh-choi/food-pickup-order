@@ -2,12 +2,19 @@ const db = require("../connection");
 
 const getAllOrders = () => {
   const queryString = `
-  SELECT orders.id as order_id, orders.estimated_ready_at, customers.phone_number,
-  orders.is_complete, orders.ready_at, orders.is_cancelled, orders.customer_id
+  SELECT
+  orders.id as order_id,
+  customers.id as customer_id,
+  foods.id as food_id,
+  COUNT(foods.*) as food_quantity,
+  orders.*,
+  customers.*,
+  foods.*
   FROM orders
   JOIN customers ON customers.id = orders.customer_id
   JOIN food_orders ON food_orders.order_id = orders.id
-  GROUP BY orders.id, customers.phone_number
+  JOIN foods ON food_orders.food_id = foods.id
+  GROUP BY foods.id, orders.id, customers.id
   ORDER BY created_at;`;
 
   return db
