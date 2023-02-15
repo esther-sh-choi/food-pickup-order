@@ -65,6 +65,29 @@ main.landing-content {
   }
 }
 
+main.landing-content h1 {
+  font-family: Didot, sans-serif;
+
+  /* Desktop styles */
+  @media only screen and (min-width: 1024px) {
+   font-size: 10rem;
+  }
+}
+
+
+#landing-customer-button {
+  background-color: #c58940;
+  font-family: Didot, sans-serif;
+  color: white;
+}
+
+.render_login_page {
+  background-color: #c58940;
+  font-family: Didot, sans-serif;
+  color: white;
+
+}
+
 // Landing Page END
 
 // Navbar
