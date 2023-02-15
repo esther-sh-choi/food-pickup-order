@@ -9,9 +9,7 @@ $(() => {
   $(document).on("submit", "form.add-to-cart", addToCartHandler);
 
   $(document).on("submit", "form.checkout", formCheckoutHandler);
-
 });
-
 
 const renderMenu = () => {
   $.ajax({
@@ -21,7 +19,6 @@ const renderMenu = () => {
   });
 };
 
-
 const checkoutHandler = (inputData) => {
   $.ajax({
     type: "POST",
@@ -29,10 +26,9 @@ const checkoutHandler = (inputData) => {
     data: inputData,
     success: () => {
       window.location.href = "/customer/status";
-    }
-  })
+    },
+  });
 };
-
 
 ///// The below captures what the customer adds to cart
 
@@ -49,7 +45,6 @@ const addToCartHandler = (event) => {
   renderCart(cartArray);
 };
 
-
 ///// The below captures the customer's name and phone number
 
 const formCheckoutHandler = (event) => {
@@ -60,10 +55,9 @@ const formCheckoutHandler = (event) => {
   customerData.push(name, phone_number);
   const foodArray = cartArray.map((food) => {
     return Number(food.id);
-  })
+  });
   checkoutHandler({ foodArray, customerData });
 };
-
 
 ///// This function renders the cart tempate.
 
@@ -76,29 +70,51 @@ const renderCart = (customer_orders) => {
       ordersObj[customer_order.id].quantity = 0;
     }
     ordersObj[customer_order.id].quantity++;
+
+    $(".show-count").empty();
+    $(".show-count").append(ordersObj[customer_order.id].quantity);
   }
 
-  const orders = Object.values(ordersObj)
+  const orders = Object.values(ordersObj);
   let subtotal = 0;
   orders.forEach((order) => {
     const { price, quantity } = order;
     subtotal += price * quantity;
-  })
+  });
   const tax = 0.13 * subtotal;
   const total = subtotal + tax;
   orders.forEach((order) => {
     const { name, quantity, price, id } = order;
-    $(".cart-container").append(
-      createCartContents(name, quantity, price, id)
-      );
+    $(".cart-container").append(createCartContents(name, quantity, price, id));
+  });
 
-    });
-    $(".subtotal").find("p").empty();
-    $(".tax").find("p").empty();
-    $(".total").find("p").empty();
-    $(".subtotal").find("p").append(`$${subtotal.toFixed(2)}`);
-    $(".tax").find("p").append(`$${tax.toFixed(2)}`);
-    $(".total").find("p").append(`$${total.toFixed(2)}`);
+  $(".cart-form").empty();
+  $(".cart-form").append(`
+  <div class="subtotal">
+    <h8>Subtotal</h8>
+    <p>$${subtotal.toFixed(2)}</p>
+  </div>
+  <div class="tax">
+    <h8>Tax</h8>
+    <p>$${tax.toFixed(2)}</p>
+  </div>
+  <div class="total">
+    <h6>TOTAL</h6>
+    <h6>$${total.toFixed(2)}</h6>
+  </div>
+  <div class="divider"></div>
+  <form class="checkout">
+    <div class="input-field">
+      <label for="name_input">Name</label>
+      <input type="text" id="name_input" />
+    </div>
+    <div class="input-field">
+      <label for="phone_input">Phone Number</label>
+      <input type="tel" id="phone_input" />
+    </div>
+    <button type="submit">Checkout</button>
+  </form>
+`);
 };
 
 ///// This function creates a template for the cart contents.
@@ -112,39 +128,42 @@ const createCartContents = (name, quantity, price, id) => {
   `);
 
   return $cartMenu;
-}
-
+};
 
 ///// This function creates a template for each menu card.
 
 const createMenuCard = (name, photo_url, description, price, id) => {
   const $menuCard = $(`
-  <div class="menu-item card horizontal">
-    <div class="card-image">
-      <img
-        src="${photo_url}"
-      />
-    </div>
-    <div class="card-stacked">
-      <div class="card-content">
-        <p>${name}</p>
-        <p>${description}</p>
-        <p>${price}</p>
+    <div class="col s12 m6 l4">
+      <div class="card">
+        <div class="card-image">
+          <img class="menu-image" src="${photo_url}">
+        </div>
+        <div class="card-content">
+          <p class="card-title">${name}</p>
+          <p>${description}</p>
+        </div>
+        <div class="card-action menu-action">
+          <h6>$${price}</h6>
+          <div class="food-counter">
+            <form class="remove-from-cart">
+              <input type="hidden" name="id" value="${id}"/>
+              <button class="add-on-click browser-default" type="submit"><i class="small material-icons">indeterminate_check_box</i></button>
+            </form>
+            <p class="show-count">0</p>
+            <form class="add-to-cart">
+              <input type="hidden" name="name" value="${name}"/>
+              <input type="hidden" name="price" value="${price}"/>
+              <input type="hidden" name="id" value="${id}"/>
+              <button class="add-on-click browser-default" type="submit"><i class="small material-icons">add_box</i></button>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="card-action">
-        <form class="add-to-cart">
-        <input type="hidden" name="name" value="${name}"/>
-        <input type="hidden" name="price" value="${price}"/>
-        <input type="hidden" name="id" value="${id}"/>
-        <button class="add-on-click" type="submit">Add to cart</button>
-        </form>
-      </div>
     </div>
-  </div>
-  `)
+ `);
   return $menuCard;
 };
-
 
 ///// This function renders the template above in each menu container on the page.
 
@@ -159,16 +178,16 @@ const renderAllMenuCards = (foods) => {
     const { name, photo_url, description, price, id } = food;
     $(".all-menu-container").append(
       createMenuCard(name, photo_url, description, price, id)
-      );
-  })
+    );
+  });
   categories.forEach((sectionCategory) => {
     foods.forEach((food) => {
       const { name, category, photo_url, description, price, id } = food;
       if (sectionCategory === category.toLowerCase()) {
         $(`.${sectionCategory}-menu-container`).append(
           createMenuCard(name, photo_url, description, price, id)
-          );
+        );
       }
-    })
-  })
-}
+    });
+  });
+};
