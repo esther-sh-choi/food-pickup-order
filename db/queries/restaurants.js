@@ -20,26 +20,6 @@ const getAllOrders = () => {
   return db
     .query(queryString)
     .then((data) => {
-      console.log(data.rows);
-      return data.rows;
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
-
-const getAllOrderFoods = (order_id) => {
-  const queryString = `
-  SELECT foods.name, count(food_orders.*) as food_count
-  FROM food_orders
-  JOIN foods ON food_orders.food_id = foods.id
-  WHERE order_id = $1
-  GROUP BY food_id, order_id, foods.name;
-  `;
-
-  return db
-    .query(queryString, [order_id])
-    .then((data) => {
       return data.rows;
     })
     .catch((err) => {
@@ -51,9 +31,7 @@ const updateEstimatedTime = (order_id, preparation_time) => {
   return db
     .query(
       `UPDATE orders
-  SET estimated_ready_at = NOW() + interval '${String(
-    preparation_time
-  )} minutes'
+  SET estimated_ready_at = NOW() + interval '${preparation_time} minutes'
   WHERE orders.id = $1
   RETURNING *;`,
       [order_id]
@@ -67,26 +45,22 @@ const updateEstimatedTime = (order_id, preparation_time) => {
 };
 
 const updateOrder = (order_id, data) => {
-  const { preparation_time, is_complete, isReady, is_cancelled } = data;
+  const { preptime, isComplete, type, isCancelled } = data;
 
-  let ready_at = null;
-  if (isReady) {
-    console.log("here");
+  if (type === "ready") {
     ready_at = "NOW()";
   }
 
   return db
     .query(
       `UPDATE orders
-  SET estimated_ready_at = estimated_ready_at + interval '${String(
-    preparation_time
-  )} minutes',
+  SET estimated_ready_at = estimated_ready_at + interval '${preptime} minutes',
   is_complete = $2,
-  ready_at = $3,
-  is_cancelled = $4
+  ready_at = ${type === "ready" ? "NOW()" : "ready_at"},
+  is_cancelled = $3
   WHERE orders.id = $1
   RETURNING *;`,
-      [order_id, is_complete, ready_at, is_cancelled]
+      [order_id, isComplete, isCancelled]
     )
     .then((data) => {
       return data.rows;
@@ -109,7 +83,6 @@ const getAdminWithUsername = (username) => {
 
 module.exports = {
   getAllOrders,
-  getAllOrderFoods,
   updateOrder,
   updateEstimatedTime,
   getAdminWithUsername,
