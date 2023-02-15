@@ -329,7 +329,6 @@ const createOrderCard = (
 const orderRemainingTimeIntervals = {};
 
 const updateRemainingTime = (estimated_ready_at, order_id) => {
-  console.log(order_id);
   clearInterval(orderRemainingTimeIntervals[order_id]);
 
   const dateExpectedReadyAt = new Date(estimated_ready_at);
