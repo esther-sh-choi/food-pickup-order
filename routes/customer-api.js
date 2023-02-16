@@ -4,9 +4,9 @@ const customerQueries = require("../db/queries/customers");
 const twilio = require('../public/scripts/helpers/twilio');
 
 
-
-// Customer Queries
-
+/**
+ * This route uses the getAllFoods query to get all foods data on the menu page.
+ */
 router.get("/menu", (req, res) => {
   customerQueries
     .getAllFoods()
@@ -18,6 +18,12 @@ router.get("/menu", (req, res) => {
     });
 });
 
+
+/**
+ * This route uses the customerData and foodArray made during the checkout process to create a new customer and order.
+ * It then sends an sms message to the restaurant confirming the new order.
+ * Finally, the customer is redirected to the status page.
+ */
 router.post("/checkout", (req, res) => {
   const { customerData, foodArray } = req.body;
   if (!customerData[0] || !customerData[1] || !foodArray?.length) {
@@ -47,6 +53,10 @@ router.post("/checkout", (req, res) => {
     });
 });
 
+
+/**
+ * This route uses the getOrderById query to get the customers order information on the status page.
+ */
 router.get("/status", (req, res) => {
   const order_id = req.session.order_id;
 
