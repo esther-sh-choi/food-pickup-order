@@ -81,6 +81,14 @@ body {
     object-fit: cover;
   }
 
+  .btn {
+    background-color: #c58940;
+  }
+
+  .btn:hover {
+    background-color: #a07233;
+  }
+
   .add-on-click {
     display: flex;
     align-items: center;
