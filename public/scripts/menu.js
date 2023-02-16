@@ -44,7 +44,6 @@ const addToCartHandler = (event) => {
   });
   cartArray.push(result);
   renderCart(result, false, ordersObj);
-  // console.log(cartArray);
 };
 
 const removeFromCartHandler = (event) => {
@@ -95,20 +94,17 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
       !ordersObj[customer_order.id] ||
       !ordersObj[customer_order.id].quantity
     ) {
-      console.log("zero!");
       delete ordersObj[customer_order.id];
     }
   }
 
   $(`.show-count-${customer_order.id}`).empty();
   $(`.show-count-${customer_order.id}`).html(
-    `${
-      ordersObj[customer_order.id] ? ordersObj[customer_order.id].quantity : 0
+    `${ordersObj[customer_order.id] ? ordersObj[customer_order.id].quantity : 0
     }`
   );
 
   const orders = Object.values(ordersObj);
-  console.log(orders);
   let subtotal = 0;
   orders.forEach((order) => {
     const { price, quantity } = order;
@@ -146,7 +142,7 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
     <label for="name_input">Name</label>
     <input type="text" id="name_input" />
     <label for="phone_input">Phone Number</label>
-    <input type="tel" id="phone_input" placeholder="no dash" maxlength="10" value="+1"  />
+    <input type="tel" id="phone_input" maxlength="12" value="+1"  />
     <button class="btn" type="submit">Checkout</button>
   </form>
 `);

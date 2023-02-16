@@ -1,28 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
-const twilio = require('../public/scripts/twilio');
+const twilio = require('../public/scripts/helpers/twilio');
 
-
-// const accountSid = process.env.TWILIO_ACCOUNT_SID;
-// const authToken = process.env.TWILIO_AUTH_TOKEN;
-// const client = require("twilio")(accountSid, authToken);
-
-// const smsMessage = (name, message, phone_number, photo_url) => {
-//   return new Promise((res, err) => {
-//     client.messages
-//       .create({
-//         body: `Hello, ${name}! ${message}`,
-//         from: "+15205237081",
-//         mediaUrl: [photo_url],
-//         to: `+1${phone_number}`,
-//       })
-//       .then((message) => res(message.sid))
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   });
-// };
 
 router.get("/orders", (req, res) => {
   const user = req.session.user;
@@ -34,7 +14,6 @@ router.get("/orders", (req, res) => {
         res.json(orders);
       })
       .catch((e) => {
-        console.error(e);
         res.send(e);
       });
   }
@@ -53,14 +32,12 @@ router.post("/orders/:order_id/confirm", (req, res) => {
         const photo_url =
           "https://images-ext-1.discordapp.net/external/cU3k6BlDpujtHPW-Yk-cJYdC0kydqJeW5_Q4LCvrW6Q/https/torontolife.com/wp-content/uploads/2021/01/KRISS_FINAL04.jpg?width=999&height=666";
 
-        console.log(customerName, phoneNumber);
-        twilio.smsMsgCustomer(customerName, message, phoneNumber, photo_url).then((res) =>
-          console.log(res)
-        );
+        // twilio.smsMsgCustomer(customerName, message, phoneNumber, photo_url).then((res) =>
+        //   console.log(res)
+        // );
         res.json(order);
       })
       .catch((e) => {
-        console.error(e);
         res.send(e);
       });
   }
@@ -98,17 +75,15 @@ router.post("/orders/:order_id/update", (req, res) => {
             "Thank you for choosing Aloette! We hope to serve you again soon.",
           edit: `Your order needs an extra ${preptime} minutes to prepare. Our apologies for the delay, thank you for your patience.`,
         };
-        console.log(customerName, phoneNumber);
-        twilio.smsMsgCustomer(customerName, messages[type], phoneNumber).then(
-          (res) => {
-            console.log(res);
-          }
-        );
+        // twilio.smsMsgCustomer(customerName, messages[type], phoneNumber).then(
+        //   (res) => {
+        //     console.log(res);
+        //   }
+        // );
 
         res.json(order);
       })
       .catch((e) => {
-        console.error(e);
         res.send(e);
       });
   }

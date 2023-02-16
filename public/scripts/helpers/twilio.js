@@ -9,7 +9,7 @@ const smsMsgCustomer = (name, message, phone_number, photo_url) => {
         body: `Hello, ${name}! ${message}`,
         from: "+15205237081",
         mediaUrl: [photo_url],
-        to: `+1${phone_number}`,
+        to: `${phone_number}`,
       })
       .then((message) => res(message.sid))
       .catch((err) => {
