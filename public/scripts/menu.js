@@ -7,6 +7,7 @@ $(() => {
   renderMenu();
 
   $(document).on("submit", "form.add-to-cart", addToCartHandler);
+  $(document).on("submit", "form.remove-from-cart", removeFromCartHandler);
 
   $(document).on("submit", "form.checkout", formCheckoutHandler);
 });
@@ -31,7 +32,7 @@ const checkoutHandler = (inputData) => {
 };
 
 ///// The below captures what the customer adds to cart
-
+const ordersObj = {};
 const cartArray = [];
 
 const addToCartHandler = (event) => {
@@ -42,7 +43,19 @@ const addToCartHandler = (event) => {
     result[data.name] = data.value;
   });
   cartArray.push(result);
-  renderCart(cartArray);
+  renderCart(result, false, ordersObj);
+  // console.log(cartArray);
+};
+
+const removeFromCartHandler = (event) => {
+  event.preventDefault();
+  const formDataArray = $(event.target).serializeArray();
+  const result = {};
+  formDataArray.forEach((data) => {
+    result[data.name] = data.value;
+  });
+  cartArray.push(result);
+  renderCart(result, true, ordersObj);
 };
 
 ///// The below captures the customer's name and phone number
@@ -61,21 +74,41 @@ const formCheckoutHandler = (event) => {
 
 ///// This function renders the cart tempate.
 
-const renderCart = (customer_orders) => {
+const renderCart = (customer_order, isRemove, ordersObj) => {
   $(".cart-container").empty();
-  const ordersObj = {};
-  for (const customer_order of customer_orders) {
+
+  if (!isRemove) {
     if (!ordersObj.hasOwnProperty(customer_order.id)) {
       ordersObj[customer_order.id] = customer_order;
       ordersObj[customer_order.id].quantity = 0;
     }
     ordersObj[customer_order.id].quantity++;
+  } else {
+    if (
+      ordersObj.hasOwnProperty(customer_order.id) &&
+      ordersObj[customer_order.id].quantity > 0
+    ) {
+      ordersObj[customer_order.id].quantity--;
+    }
 
-    $(".show-count").empty();
-    $(".show-count").append(ordersObj[customer_order.id].quantity);
+    if (
+      !ordersObj[customer_order.id] ||
+      !ordersObj[customer_order.id].quantity
+    ) {
+      console.log("zero!");
+      delete ordersObj[customer_order.id];
+    }
   }
 
+  $(`.show-count-${customer_order.id}`).empty();
+  $(`.show-count-${customer_order.id}`).html(
+    `${
+      ordersObj[customer_order.id] ? ordersObj[customer_order.id].quantity : 0
+    }`
+  );
+
   const orders = Object.values(ordersObj);
+  console.log(orders);
   let subtotal = 0;
   orders.forEach((order) => {
     const { price, quantity } = order;
@@ -83,13 +116,19 @@ const renderCart = (customer_orders) => {
   });
   const tax = 0.13 * subtotal;
   const total = subtotal + tax;
-  orders.forEach((order) => {
-    const { name, quantity, price, id } = order;
-    $(".cart-container").append(createCartContents(name, quantity, price, id));
-  });
 
   $(".cart-form").empty();
-  $(".cart-form").append(`
+  $(".cart-form").append("Your cart is empty.");
+
+  if (orders.length) {
+    orders.forEach((order) => {
+      const { name, quantity, price, id } = order;
+      $(".cart-container").append(
+        createCartContents(name, quantity, price, id)
+      );
+    });
+    $(".cart-form").empty();
+    $(".cart-form").append(`
   <div class="subtotal">
     <h8>Subtotal</h8>
     <p>$${subtotal.toFixed(2)}</p>
@@ -104,17 +143,14 @@ const renderCart = (customer_orders) => {
   </div>
   <div class="divider"></div>
   <form class="checkout">
-    <div class="input-field">
-      <label for="name_input">Name</label>
-      <input type="text" id="name_input" />
-    </div>
-    <div class="input-field">
-      <label for="phone_input">Phone Number</label>
-      <input type="tel" id="phone_input" />
-    </div>
-    <button type="submit">Checkout</button>
+    <label for="name_input">Name</label>
+    <input type="text" id="name_input" />
+    <label for="phone_input">Phone Number</label>
+    <input type="tel" id="phone_input" placeholder="no dash" maxlength="10" value="+1"  />
+    <button class="btn" type="submit">Checkout</button>
   </form>
 `);
+  }
 };
 
 ///// This function creates a template for the cart contents.
@@ -150,7 +186,7 @@ const createMenuCard = (name, photo_url, description, price, id) => {
               <input type="hidden" name="id" value="${id}"/>
               <button class="add-on-click browser-default" type="submit"><i class="small material-icons">indeterminate_check_box</i></button>
             </form>
-            <p class="show-count">0</p>
+            <p class="show-count-${id}">0</p>
             <form class="add-to-cart">
               <input type="hidden" name="name" value="${name}"/>
               <input type="hidden" name="price" value="${price}"/>
