@@ -1,9 +1,43 @@
+.custom-backdrop {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* use rgba to set the opacity */
+  border: none;
+
+ /* Desktop styles */
+ @media only screen and (min-width: 1024px) {
+  width: 70%;
+}
+}
+
+.input-field input {
+  color: white;
+}
+
+.input-field input:focus {
+  color: white !important;
+  border-bottom: 1px solid white !important;
+}
+
+.input-field label.active {
+  color: white !important;
+}
+
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   height: 100%;
+  background-image: url("https://aloetterestaurant.com/wp-content/uploads/2017/10/Aloette-Interiors_006.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: Didot, sans-serif;
+  color: white;
 }
 
 .input-container {
@@ -11,6 +45,8 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 300px;
+  position: relative;
+  z-index: 1;
 
   h3 {
     text-align: center;
@@ -26,21 +62,39 @@ form {
   }
 }
 
+.btn {
+  background-color: #c58940;
+  font-family: Didot, sans-serif;
+  color: white;
+
+}
+
+.btn:hover {
+  background-color: #a07233;
+}
+
 .link {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .login-error-message {
-  background-color: #bf000040;
+  // background-color: #bf000093;
+  background-color: #630606;
+  font-family: sans-serif;
+
   border-radius: 15px;
-  border: 1px solid #bf0000;
+  border: 1px solid black;
   padding: 20px 30px;
   margin: 40px 0;
 
   p {
     margin: 0;
+    margin-left: 16px;
+    width: 100%;
   }
 }
