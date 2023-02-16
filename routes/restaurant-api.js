@@ -46,7 +46,7 @@ router.post("/orders/:order_id/confirm", (req, res) => {
     restaurantQueries
       .updateEstimatedTime(order_id, preptime)
       .then((order) => {
-        const message = `We are preparing your order! Please pick up in ${preptime} minutes.`;
+        const message = `We are preparing your order! Please plan to pickup in ${preptime} minutes.`;
         const photo_url =
           "https://images-ext-1.discordapp.net/external/cU3k6BlDpujtHPW-Yk-cJYdC0kydqJeW5_Q4LCvrW6Q/https/torontolife.com/wp-content/uploads/2021/01/KRISS_FINAL04.jpg?width=999&height=666";
 
@@ -89,11 +89,11 @@ router.post("/orders/:order_id/update", (req, res) => {
       .then((order) => {
         const messages = {
           cancel:
-            "We are very sorry to inform you that your order has been cancelled. Please contact the restaurant for further details.",
-          ready: "Your order is ready for pickup! See you soon :)",
+            "Sadly we need to cancel your order. Please try again, or call us with your Order ID for further details.",
+          ready: "Your order is ready for pick up! See you soon :)",
           complete:
-            "Thank you for choose Aloette! Hope you see you again soon.",
-          edit: `We are very sorry. Your order needs extra ${preptime} minutes to prepare. Thank you for your patience.`,
+            "Thank you for choosing Aloette! We hope to serve you again soon.",
+          edit: `Your order needs an extra ${preptime} minutes to prepare. Our apologies for the delay, thank you for your patience.`,
         };
         const photo_url =
           "https://images-ext-1.discordapp.net/external/cU3k6BlDpujtHPW-Yk-cJYdC0kydqJeW5_Q4LCvrW6Q/https/torontolife.com/wp-content/uploads/2021/01/KRISS_FINAL04.jpg?width=999&height=666";
