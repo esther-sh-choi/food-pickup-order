@@ -19,7 +19,7 @@ const renderOrderData = (order) => {
 
   $(".order_info").empty();
   if (!estimated_ready_at) {
-    $(".order_info").append("Order pending.");
+    $(".order_info").append("Your order is pending. You will receive a text message with an estimated pickup time when the restaurant accepts your order.");
   } else {
     $(".order_info").append(`
     <p>Time remaining until pickup</p>
@@ -29,7 +29,7 @@ const renderOrderData = (order) => {
 
   if (ready_at && !is_complete) {
     $(".order_info").empty();
-    $(".order_info").append("Your order is ready for pickup!");
+    $(".order_info").append("ORDER UP! Your order is ready for pickup!");
   }
   if (is_complete) {
     $(".order_info").empty();
@@ -39,7 +39,7 @@ const renderOrderData = (order) => {
   if (is_cancelled) {
     $(".order_info").empty();
     $(".order_info").append(
-      "Sorry your order has been cancelled. Please contact the restaurant for details."
+      "Sadly we need to cancel your order. Please try again, or call us with your Order ID for further details."
     );
   }
 
