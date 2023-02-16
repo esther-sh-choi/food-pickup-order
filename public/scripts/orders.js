@@ -27,7 +27,14 @@ const onConfirm = (data) => {
     type: "POST",
     url: `/api/restaurant/orders/${data.orderId}/confirm`,
     data: data,
-    success: getOrderCards,
+    // success: getOrderCards,
+    success: function (result) {
+      console.log("AJAX Call success:", result);
+      getOrderCards();
+    },
+    error: function (err) {
+      console.log("there was an error :", err);
+    },
   });
 };
 
@@ -36,7 +43,14 @@ const onEdit = (data) => {
     type: "POST",
     url: `/api/restaurant/orders/${data.orderId}/update`,
     data: data,
-    success: getOrderCards,
+    // success: getOrderCards,
+    success: function (result) {
+      console.log("AJAX Call success OnEdit:", result);
+      getOrderCards();
+    },
+    error: function (err) {
+      console.log("there was an error :", err);
+    },
   });
 };
 
@@ -103,6 +117,7 @@ const renderOrderCards = (ordersData) => {
       ready_at,
       is_cancelled,
       phone_number,
+      customer_name,
     } = order;
     if (!parsedOrders[order_id]) {
       const orderObj = {
@@ -113,6 +128,7 @@ const renderOrderCards = (ordersData) => {
         ready_at,
         is_cancelled,
         phone_number,
+        customer_name,
         foods: [],
       };
 
@@ -142,6 +158,7 @@ const renderOrderCards = (ordersData) => {
       foods,
       is_complete,
       is_cancelled,
+      customer_name,
     } = order;
 
     if (is_complete) {
@@ -154,7 +171,8 @@ const renderOrderCards = (ordersData) => {
           ready_at,
           is_complete,
           updateRemainingTime,
-          is_cancelled
+          is_cancelled,
+          customer_name
         )
       );
     } else if (is_cancelled) {
@@ -167,7 +185,8 @@ const renderOrderCards = (ordersData) => {
           ready_at,
           is_complete,
           updateRemainingTime,
-          is_cancelled
+          is_cancelled,
+          customer_name
         )
       );
     } else {
@@ -180,7 +199,8 @@ const renderOrderCards = (ordersData) => {
           ready_at,
           is_complete,
           updateRemainingTime,
-          is_cancelled
+          is_cancelled,
+          customer_name
         )
       );
     }
@@ -197,7 +217,8 @@ const createOrderCard = (
   ready_at,
   is_complete,
   countdownFn,
-  is_cancelled
+  is_cancelled,
+  customer_name
 ) => {
   const $orderCard = $(`
   <div class="card col">
@@ -224,12 +245,12 @@ const createOrderCard = (
 
   </div>
   <div class="button-forms">
-    <form class="update" data-type="ready" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" id="order-ready">
+    <form class="update" data-type="ready" data-order-id="${order_id}" data-phone-number="${phone_number}" data-customer-name="${customer_name}" onSubmit="orderFormHandler(event)" id="order-ready">
       <button class="btn modal-trigger order-ready" type="submit">
         Order Ready
       </button>
     </form>
-    <form class="update" data-is-cancelled="true" data-type="cancel" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" id="order-cancel">
+    <form class="update" data-is-cancelled="true" data-phone-number="${phone_number}" data-type="cancel"  data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" id="order-cancel">
       <button class="btn modal-trigger order-cancel red darken-4" type="submit">
         Cancel Order
       </button>
@@ -260,7 +281,7 @@ const createOrderCard = (
 
   if (ready_at) {
     $prepFormContent = $(`
-    <form class="update" id="order-complete" data-is-complete="true" data-type="complete" data-order-id='${order_id}' onSubmit="orderFormHandler(event)" >
+    <form class="update" id="order-complete" data-is-complete="true" data-phone-number="${phone_number}" data-customer-name="${customer_name}" data-type="complete" data-order-id='${order_id}' onSubmit="orderFormHandler(event)" >
       <button class="btn modal-trigger order-complete" type="submit">
         Complete Order
       </button>
@@ -292,7 +313,7 @@ const createOrderCard = (
     <p id="countdown_${order_id}"></p>`);
 
     $orderCard.find(".preptime-form-container.edit").append(`
-      <form class="update" id="preptime-edit" data-type="edit" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
+      <form class="update" id="preptime-edit" data-type="edit" data-phone-number="${phone_number}" data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
         <label for="preptime-input" >How much more time do you need? (minutes)</label>
         <div class='input-container'>
           <input
@@ -310,7 +331,7 @@ const createOrderCard = (
 `);
   } else if (!estimated_ready_at && !ready_at && !is_cancelled) {
     $prepFormContent = $(`
-    <form id="preptime-confirm" data-type="confirm" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
+    <form id="preptime-confirm" data-type="confirm" data-phone-number="${phone_number}" data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
       <label for="preptime-input" >Estimated prep time (minutes)</label>
       <div class='input-container'>
         <input

@@ -8,7 +8,9 @@ const getAllOrders = () => {
   foods.id as food_id,
   COUNT(foods.*) as food_quantity,
   orders.*,
-  customers.*,
+  customers.id,
+  customers.name as customer_name,
+  customers.phone_number,
   foods.*
   FROM orders
   JOIN customers ON customers.id = orders.customer_id
@@ -81,9 +83,25 @@ const getAdminWithUsername = (username) => {
     });
 };
 
+const getCustomerById = (customer_id) => {
+  return db
+    .query(
+      `SELECT * FROM customers
+    WHERE id = $1;`,
+      [customer_id]
+    )
+    .then((data) => {
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 module.exports = {
   getAllOrders,
   updateOrder,
   updateEstimatedTime,
   getAdminWithUsername,
+  getCustomerById,
 };
