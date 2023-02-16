@@ -8,15 +8,37 @@ $(() => {
   });
 });
 
+const parsedOrders = {};
+
+const openFoodListModal = (event) => {
+  event.preventDefault();
+  const orderData = event.target.dataset;
+  const { orderId } = orderData;
+
+  $("#food-modal").removeClass("hide");
+
+  $(`.food-modal-content`).empty();
+  $(`.food-modal-content`).append(
+    `<h5 class="card-title">Order ID: ${orderId}</h5>`
+  );
+
+  $(".food-modal-content").append(`<ul id="food-list-${orderId}" ></ul>`);
+
+  const foodItems = parsedOrders[orderId].foods;
+  foodItems.forEach((food) => {
+    $(`#food-list-${orderId}`).append(
+      `<li>${food.quantity}</strong> x ${food.name}</strong></li>`
+    );
+  });
+};
+
 /*------------------------------------------------------------------------------------*/
 
 const getOrderCards = () => {
   $.ajax({
     type: "GET",
     url: "/api/restaurant/orders",
-    success: (res) => {
-      renderOrderCards(res);
-    },
+    success: renderOrderCards,
   });
 };
 
@@ -111,7 +133,6 @@ const toggleModalHandler = (formSubmitHandler, data) => {
 /*------------------------------------------------------------------------------------*/
 
 const renderOrderCards = (ordersData) => {
-  const parsedOrders = {};
   ordersData.forEach((order) => {
     const {
       order_id,
@@ -147,6 +168,7 @@ const renderOrderCards = (ordersData) => {
     parsedOrders[order_id].foods.push(parsedProduct);
   });
 
+  console.log(parsedOrders);
   const orders = Object.values(parsedOrders);
 
   const $modalContainer = $(".modal-container");
@@ -225,49 +247,58 @@ const createOrderCard = (
   customer_name
 ) => {
   const $orderCard = $(`
-  <div class="card col s12 m6 l3">
-  <div class="card-content">
-<span class="card-title activator grey-text text-darken-4"
-  >Order ID: ${order_id}<i class="material-icons right options-icon">more_vert</i></span
->
-<p>Phone Number: <a href="tel:${phone_number}">${phone_number}</a></p>
-<ul class='food-list'>
+  <div class="col s12 m6 l3">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">
+          Order ID: ${order_id}
+          <i class="material-icons right options-icon">more_vert</i>
+        </span>
+        <p>Phone Number: <a href="tel:${phone_number}">${phone_number}</a></p>
 
-</ul>
-<div class="preptime-form-container new">
-</div>
-</div>
-<div class="card-reveal">
-<section class="card-reveal-header">
-  <span class="card-title grey-text text-darken-4"
-    >Order ID: ${order_id}<i class="material-icons right">close</i></span
-  >
-  <p>Phone Number: <a href="tel:${phone_number}">${phone_number}</a></p>
-</section>
-<section class="card-reveal-content">
-  <div class="preptime-form-container edit">
+        <ul class='food-list'>
+        </ul>
 
-  </div>
-  <div class="button-forms">
-    <form class="update" data-type="ready" data-order-id="${order_id}" data-phone-number="${phone_number}" data-customer-name="${customer_name}" onSubmit="orderFormHandler(event)" id="order-ready">
-      <button class="btn modal-trigger order-ready" type="submit">
-        Order Ready
-      </button>
-    </form>
-    <form class="update" data-is-cancelled="true" data-phone-number="${phone_number}" data-type="cancel"  data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" id="order-cancel">
-      <button class="btn modal-trigger order-cancel red darken-4" type="submit">
-        Cancel Order
-      </button>
-    </form>
-  </div>
-</section>
-</div>
-</div>`);
+        <div class="preptime-form-container new">
+        </div>
+
+        <form data-order-id="${order_id}" onSubmit="openFoodListModal(event)">
+          <button type="submit" class="view-all-food-button btn-flat N/A transparent open-food-list">Expand Order</button>
+        </form>
+      </div>
+      <div class="card-reveal">
+        <section class="card-reveal-header">
+          <span class="card-title grey-text text-darken-4">
+            Order ID: ${order_id}
+            <i class="material-icons right">close</i>
+          </span>
+          <p>Phone Number: <a href="tel:${phone_number}">${phone_number}</a></p>
+        </section>
+        <section class="card-reveal-content">
+          <div class="preptime-form-container edit">
+
+          </div>
+          <div class="button-forms">
+            <form class="update" data-type="ready" data-order-id="${order_id}" data-phone-number="${phone_number}" data-customer-name="${customer_name}" onSubmit="orderFormHandler(event)" id="order-ready">
+              <button class="btn modal-trigger order-ready" type="submit">
+                Order Ready
+              </button>
+            </form>
+            <form class="update" data-is-cancelled="true" data-phone-number="${phone_number}" data-type="cancel"  data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" id="order-cancel">
+              <button class="btn modal-trigger order-cancel red darken-4" type="submit">
+                Cancel Order
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>`);
 
   let $foodListContainer = $orderCard.find("ul");
   foods.forEach((food) => {
     $foodListContainer.append(
-      `<li>${food.name} x <strong>${food.quantity}</strong></li>`
+      `<li><strong>${food.quantity}</strong> x ${food.name}</li>`
     );
   });
 
@@ -314,7 +345,7 @@ const createOrderCard = (
 
     $prepFormContent = $(`
     <p>You have until ${localTime} to prepare this order.</p>
-    <p class="countdown_container">Time Remaining: <span id="countdown_${order_id}"></span></p>`);
+    <p id="countdown_${order_id}"></p>`);
 
     $orderCard.find(".preptime-form-container.edit").append(`
       <form class="update" id="preptime-edit" data-type="edit" data-phone-number="${phone_number}" data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
