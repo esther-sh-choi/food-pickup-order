@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const customerQueries = require("../db/queries/customers");
+const twilio = require('../public/scripts/helpers/twilio');
+
+
 
 // Customer Queries
 
@@ -30,6 +33,9 @@ router.post("/checkout", (req, res) => {
       return customerQueries.addOrder(customer.id);
     })
     .then((order) => {
+      // const message = `You have recieved a new order from ${customerData[0]}! The order id is: ${order.id}. Check your orders page for more details.`;
+      // twilio.smsMsgRestaurant(message).then((res =>
+      //   console.log(res)));
       return customerQueries.addFoodOrder(foodArray, order.id);
     })
     .then((foodOrder) => {
@@ -37,15 +43,12 @@ router.post("/checkout", (req, res) => {
       res.redirect("/customer/status");
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({ error: err.message });
     });
 });
 
 router.get("/status", (req, res) => {
   const order_id = req.session.order_id;
-
-  console.log(order_id);
 
   if (order_id) {
     customerQueries
