@@ -225,7 +225,7 @@ const createOrderCard = (
   customer_name
 ) => {
   const $orderCard = $(`
-  <div class="card col">
+  <div class="card col s12 m6 l3">
   <div class="card-content">
 <span class="card-title activator grey-text text-darken-4"
   >Order ID: ${order_id}<i class="material-icons right options-icon">more_vert</i></span
