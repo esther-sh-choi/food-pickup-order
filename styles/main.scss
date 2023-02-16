@@ -97,6 +97,8 @@ main.landing-content h1 {
 // Navbar
 nav .nav-wrapper {
   background-color: #3c3c3c;
+  position: relative;
+  z-index: 3;
 
   .brand-logo {
     margin-left: 10px;

@@ -1,4 +1,26 @@
-//nav
+
+.custom-backdrop {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* use rgba to set the opacity */
+  border: none;
+  z-index: 2;
+
+ /* Desktop styles */
+ @media only screen and (min-width: 1024px) {
+  width: 80%;
+  left: 1%;
+  right: 1%;
+  margin: 0 auto;
+}
+}
+
+main {
+  position: relative;
+  z-index: 3;
+}
 
 body {
   background-color: #f7f7f7;
@@ -52,6 +74,14 @@ form.checkout {
   display: flex;
   justify-content: center;
   align-items: center;
+
+   /* Desktop styles */
+ @media only screen and (min-width: 1024px) {
+  width: 80%;
+  left: 1%;
+  right: 1%;
+  margin: 0 auto;
+}
 }
 
 .card-content {
@@ -114,3 +144,21 @@ form.checkout {
     padding: 3vw;
   }
 }
+
+body {
+  background-image: url("https://aloetterestaurant.com/wp-content/uploads/2017/10/Aloette-Interiors_003.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+
+   /* Desktop styles */
+   @media only screen and (min-width: 1024px) {
+    width: 100vw;
+    background-image: url("https://payload.cargocollective.com/1/5/166188/14046351/17088_171017_015_2000_c.jpg");
+  }
+
+}
+
+
