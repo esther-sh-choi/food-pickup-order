@@ -10,27 +10,27 @@ $(() => {
 
 const parsedOrders = {};
 
-// const openFoodListModal = (event) => {
-//   event.preventDefault();
-//   const orderData = event.target.dataset;
-//   const { orderId } = orderData;
+const openFoodListModal = (event) => {
+  event.preventDefault();
+  const orderData = event.target.dataset;
+  const { orderId } = orderData;
 
-//   $("#food-modal").removeClass("hide");
+  $("#food-modal").removeClass("hide");
 
-//   $(`.food-modal-content`).empty();
-//   $(`.food-modal-content`).append(
-//     `<h5 class="card-title">Order ID: ${orderId}</h5>`
-//   );
+  $(`.food-modal-content`).empty();
+  $(`.food-modal-content`).append(
+    `<h5 class="card-title">Order ID: ${orderId}</h5>`
+  );
 
-//   $(".food-modal-content").append(`<ul id="food-list-${orderId}" ></ul>`);
+  $(".food-modal-content").append(`<ul id="food-list-${orderId}" ></ul>`);
 
-//   const foodItems = parsedOrders[orderId].foods;
-//   foodItems.forEach((food) => {
-//     $(`#food-list-${orderId}`).append(
-//       `<li>${food.quantity}</strong> x ${food.name}</strong></li>`
-//     );
-//   });
-// };
+  const foodItems = parsedOrders[orderId].foods;
+  foodItems.forEach((food) => {
+    $(`#food-list-${orderId}`).append(
+      `<li>${food.quantity}</strong> x ${food.name}</strong></li>`
+    );
+  });
+};
 
 /*------------------------------------------------------------------------------------*/
 
