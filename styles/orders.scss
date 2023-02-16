@@ -1,8 +1,14 @@
 body {
   position: relative;
+  background-color: #f7f7f7;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 ul.tabs {
+  background-color: #f7f7f7;
   display: flex;
   justify-content: center;
 }
@@ -11,8 +17,12 @@ ul.food-list {
   overflow-y: auto;
 }
 
+.cards-container {
+  margin: 30px 5vw;
+}
+
 div.card {
-  height: 300px;
+  height: 350px;
   border: 1px solid #5e5e5e48;
   form {
     display: flex;
@@ -24,6 +34,15 @@ div.card {
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    form {
+      display: flex;
+      justify-content: center;
+
+      .view-all-food-button {
+        color: #a07233;
+      }
+    }
   }
 }
 
@@ -52,6 +71,35 @@ div.button-forms {
     }
   }
 }
+//////////////////////////////////////////
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: black;
+  will-change: left, right;
+}
+
+.tabs .tab a:focus,
+.tabs .tab a:focus.active {
+  background-color: rgba(245, 200, 104, 0.633);
+  outline: none;
+}
+
+.btn,
+.btn-large,
+.btn-small {
+  background-color: #c58940;
+}
+
+.btn:hover,
+.btn-large:hover,
+.btn-small:hover {
+  background-color: #a07233;
+}
+
+//////////////////////////////////////////////
 
 div.card-reveal {
   p {
@@ -60,10 +108,11 @@ div.card-reveal {
 }
 
 .preptime-form-container {
-  margin-top: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  flex: 1;
+
   form#preptime-confirm,
   #preptime-edit {
     display: flex;
@@ -86,6 +135,7 @@ div.card-reveal {
     }
   }
   p {
+    text-align: center;
     font-weight: bold;
   }
 }
@@ -145,10 +195,23 @@ div.card-reveal {
   }
 }
 
+#food-modal {
+  .custom-modal {
+    height: auto;
+    padding: 30px;
+    .food-modal-content {
+      padding-bottom: 30px;
+      h5 {
+        text-align: center;
+      }
+    }
+  }
+}
+
 // Modal End
 
 @media only screen and (min-width: 1024px) and (orientation: landscape) {
   .cards-container {
-    margin: 50px 0;
+    margin: 50px calc(30px + 5vw);
   }
 }

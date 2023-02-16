@@ -8,14 +8,12 @@ $(() => {
   });
 });
 
-let orderObj = {};
+const parsedOrders = {};
 
 const openFoodListModal = (event) => {
   event.preventDefault();
   const orderData = event.target.dataset;
   const { orderId } = orderData;
-
-  console.log(orderObj);
 
   $("#food-modal").removeClass("hide");
 
@@ -26,7 +24,7 @@ const openFoodListModal = (event) => {
 
   $(".food-modal-content").append(`<ul id="food-list-${orderId}" ></ul>`);
 
-  const foodItems = orderObj[orderId].foods;
+  const foodItems = parsedOrders[orderId].foods;
   foodItems.forEach((food) => {
     $(`#food-list-${orderId}`).append(
       `<li>${food.quantity}</strong> x ${food.name}</strong></li>`
@@ -133,7 +131,6 @@ const toggleModalHandler = (formSubmitHandler, data) => {
 /*------------------------------------------------------------------------------------*/
 
 const renderOrderCards = (ordersData) => {
-  const parsedOrders = {};
   ordersData.forEach((order) => {
     const {
       order_id,
@@ -169,7 +166,7 @@ const renderOrderCards = (ordersData) => {
     parsedOrders[order_id].foods.push(parsedProduct);
   });
 
-  orderObj = { ...parsedOrders };
+  console.log(parsedOrders);
 
   const orders = Object.values(parsedOrders);
 
@@ -248,8 +245,6 @@ const createOrderCard = (
   is_cancelled,
   customer_name
 ) => {
-  const stringifyFoods = JSON.stringify(foods);
-  console.log(stringifyFoods);
   const $orderCard = $(`
   <div class="col s12 m6 l3">
     <div class="card">
@@ -266,8 +261,7 @@ const createOrderCard = (
         <div class="preptime-form-container new">
         </div>
 
-        <form data-order-id="${order_id}" data-foods=${stringifyFoods} onSubmit="openFoodListModal(event)">
-          <input type="hidden" name="foods" value=${stringifyFoods}>
+        <form data-order-id="${order_id}" onSubmit="openFoodListModal(event)">
           <button type="submit" class="view-all-food-button btn-flat N/A transparent open-food-list">Expand Order</button>
         </form>
       </div>

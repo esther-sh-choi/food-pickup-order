@@ -52,20 +52,20 @@
 
     <ul class="tabs">
       <li class="tab col s3">
-        <a class="active" href="#in-progress ">In-Progress</a>
+        <a class="active black-text" href="#in-progress ">In-Progress</a>
       </li>
       <li class="tab col s3">
-        <a href="#completed">Completed</a>
+        <a class="black-text" href="#completed">Completed</a>
       </li>
       <li class="tab col s3">
-        <a href="#cancelled">Cancelled</a>
+        <a class="black-text" href="#cancelled">Cancelled</a>
       </li>
     </ul>
 
     <main class="cards-container row" id="in-progress"></main>
     <main class="cards-container row" id="completed"></main>
     <main class="cards-container row" id="cancelled"></main>
-    <div class="modal-container hide">
+    <div id="form-modal" class="modal-container hide">
       <div class="custom-backdrop close-modal"></div>
       <div class="custom-modal">
         <i class="small material-icons close-modal">close</i>
@@ -73,6 +73,16 @@
         <div class="modal-button-container">
           <button class="btn confirm-button">YES</button>
           <button class="btn close-modal">NO</button>
+        </div>
+      </div>
+    </div>
+    <div id="food-modal" class="modal-container hide">
+      <div class="custom-backdrop close-modal"></div>
+      <div class="custom-modal">
+        <i class="small material-icons close-modal">close</i>
+        <div class="food-modal-content"></div>
+        <div class="modal-button-container">
+          <button class="btn close-modal">OKAY</button>
         </div>
       </div>
     </div>
