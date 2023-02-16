@@ -26,6 +26,15 @@ div.card {
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    form {
+      display: flex;
+      justify-content: center;
+
+      .view-all-food-button {
+        color: #a07233;
+      }
+    }
   }
 }
 
@@ -172,6 +181,19 @@ div.card-reveal {
 
     i {
       align-self: flex-end;
+    }
+  }
+}
+
+#food-modal {
+  .custom-modal {
+    height: auto;
+    padding: 30px;
+    .food-modal-content {
+      padding-bottom: 30px;
+      h5 {
+        text-align: center;
+      }
     }
   }
 }

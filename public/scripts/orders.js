@@ -10,27 +10,27 @@ $(() => {
 
 const parsedOrders = {};
 
-const openFoodListModal = (event) => {
-  event.preventDefault();
-  const orderData = event.target.dataset;
-  const { orderId } = orderData;
+// const openFoodListModal = (event) => {
+//   event.preventDefault();
+//   const orderData = event.target.dataset;
+//   const { orderId } = orderData;
 
-  $("#food-modal").removeClass("hide");
+//   $("#food-modal").removeClass("hide");
 
-  $(`.food-modal-content`).empty();
-  $(`.food-modal-content`).append(
-    `<h5 class="card-title">Order ID: ${orderId}</h5>`
-  );
+//   $(`.food-modal-content`).empty();
+//   $(`.food-modal-content`).append(
+//     `<h5 class="card-title">Order ID: ${orderId}</h5>`
+//   );
 
-  $(".food-modal-content").append(`<ul id="food-list-${orderId}" ></ul>`);
+//   $(".food-modal-content").append(`<ul id="food-list-${orderId}" ></ul>`);
 
-  const foodItems = parsedOrders[orderId].foods;
-  foodItems.forEach((food) => {
-    $(`#food-list-${orderId}`).append(
-      `<li>${food.quantity}</strong> x ${food.name}</strong></li>`
-    );
-  });
-};
+//   const foodItems = parsedOrders[orderId].foods;
+//   foodItems.forEach((food) => {
+//     $(`#food-list-${orderId}`).append(
+//       `<li>${food.quantity}</strong> x ${food.name}</strong></li>`
+//     );
+//   });
+// };
 
 /*------------------------------------------------------------------------------------*/
 
@@ -49,7 +49,6 @@ const onConfirm = (data) => {
     type: "POST",
     url: `/api/restaurant/orders/${data.orderId}/confirm`,
     data: data,
-    // success: getOrderCards,
     success: function (result) {
       console.log("AJAX Call success:", result);
       getOrderCards();
@@ -65,7 +64,6 @@ const onEdit = (data) => {
     type: "POST",
     url: `/api/restaurant/orders/${data.orderId}/update`,
     data: data,
-    // success: getOrderCards,
     success: function (result) {
       console.log("AJAX Call success OnEdit:", result);
       getOrderCards();
@@ -103,7 +101,7 @@ const orderFormHandler = function (event) {
 /*------------------------------------------------------------------------------------*/
 
 const toggleModalHandler = (formSubmitHandler, data) => {
-  const $modalContainer = $(".modal-container");
+  const $modalContainer = $("#form-modal");
   const $modalMessage = $modalContainer.find("p");
 
   const modalMessages = {
@@ -169,9 +167,10 @@ const renderOrderCards = (ordersData) => {
   });
 
   console.log(parsedOrders);
+
   const orders = Object.values(parsedOrders);
 
-  const $modalContainer = $(".modal-container");
+  const $modalContainer = $("#form-modal");
   $modalContainer.addClass("hide");
   $(".cards-container").empty();
 
@@ -341,11 +340,16 @@ const createOrderCard = (
     const date = new Date(estimated_ready_at);
     const localTime = date.toLocaleTimeString();
 
-    countdownFn(estimated_ready_at, order_id);
+    if (order_id === 11) {
+      console.log(parsedOrders[order_id].estimated_ready_at);
+      console.log(estimated_ready_at);
+    }
 
     $prepFormContent = $(`
     <p>You have until ${localTime} to prepare this order.</p>
     <p id="countdown_${order_id}"></p>`);
+
+    countdownFn(estimated_ready_at, order_id);
 
     $orderCard.find(".preptime-form-container.edit").append(`
       <form class="update" id="preptime-edit" data-type="edit" data-phone-number="${phone_number}" data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
