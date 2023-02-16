@@ -1,6 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const customerQueries = require("../db/queries/customers");
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require("twilio")(accountSid, authToken);
+
+const smsMessage = (message) => {
+  return new Promise((res, err) => {
+    client.messages
+      .create({
+        body: `${message}`,
+        from: "+15205237081",
+        to: '14169869028',
+      })
+      .then((message) => res(message.sid))
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+};
+
 
 // Customer Queries
 
@@ -30,6 +49,9 @@ router.post("/checkout", (req, res) => {
       return customerQueries.addOrder(customer.id);
     })
     .then((order) => {
+      const message = `You have recieved a new order from ${customerData[0]}! The order id is: ${order.id}. Check your orders page for more details.`;
+      // smsMessage(message).then((res =>
+      //   console.log(res)));
       return customerQueries.addFoodOrder(foodArray, order.id);
     })
     .then((foodOrder) => {
