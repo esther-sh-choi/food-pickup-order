@@ -11,6 +11,9 @@ $(() => {
 });
 
 
+/**
+ * This function uses the renderAllMenuCards function to render menu on the customer menu page.
+ */
 const renderMenu = () => {
   $.ajax({
     type: "GET",
@@ -20,6 +23,9 @@ const renderMenu = () => {
 };
 
 
+/**
+ * This function takes in the data received during the checkout process and then takes the customer to the status page.
+ */
 const checkoutHandler = (inputData) => {
   $.ajax({
     type: "POST",
@@ -218,7 +224,7 @@ const createMenuCard = (name, photo_url, description, price, id) => {
 
 
 /**
- * This function renders the menucard template created above in each menu container on the page.
+ * This function renders the menucard template created above in each collapsible menu container.
  */
 const renderAllMenuCards = (foods) => {
   const categories = [];
