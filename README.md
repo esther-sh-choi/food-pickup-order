@@ -1,14 +1,30 @@
 # Order Up - Midterm Group Project
 
-Order Up is a multi-page food ordering app, similar to Snappy and Ritual. 
+"Order Up" is a multi-page food pickup ordering app.
 
 This is a fullstack project and relies on the following to run.
 
 Front-end:
-HTML, CSS, JS, jQuery, and AJAX. 
+
+  HTML, CSS, JS, jQuery, and AJAX. 
 
 Back-end:
-Node, Express, and PG.
+
+  Node, Express, and PG.
+
+The customer experience:
+
+  This page is a deliberately simple and easy to use menu. Any customer visiting this page is likely linking to it from the restaurants website or Google Maps info and they want to place their order ASAP! No account creation hassle needed.
+
+  When a customer visits the page they can place an order simply by including their name and phone number with their order during the checkout process. 
+
+  All of this data is stored securely in a cookie-session and allows the customer to view their order status on the status page. Once the customer has submitted their order, the restaurant is notified by SMS thanks to Twilio integration. The customer's order card also appears on the order page's in-progress orders. 
+
+The restaurant experience: 
+
+  This page acts as a minimalist digital representation of the back of house area of a restaurant called the pass, where all the night's orders are often displayed as paper tickets. 
+
+  Employees at the restaurant using this app can login as admin to view all the orders that are in-progress, completed, and cancelled. These orders are displayed as cards on the screen. Employees can update the order status and preptime on each cards as they are prepared. All updates are sent to both the customer status page and directly to the customer's phone via SMS thanks to Twilio integration. 
 
 ## Screenshots and GIFS
 
@@ -82,4 +98,3 @@ Customer Status Page Functionality:
 
 ## THANK YOU
 We appreciate you taking the time to look at this project.
-
