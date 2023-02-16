@@ -1,16 +1,12 @@
 body {
   position: relative;
-  background-color: #FEFCF3;
+  background-color: #f7f7f7;
 }
 
 ul.tabs {
-  background-color: #FEFCF3;
+  background-color: #f7f7f7;
   display: flex;
   justify-content: center;
-}
-
-.cards-container {
-  margin: 30px 5vw;
 }
 
 ul.food-list {
@@ -18,7 +14,7 @@ ul.food-list {
 }
 
 div.card {
-  height: 350px;
+  height: 300px;
   border: 1px solid #5e5e5e48;
   form {
     display: flex;
@@ -30,15 +26,6 @@ div.card {
     display: flex;
     flex-direction: column;
     height: 100%;
-
-    form {
-      display: flex;
-      justify-content: center;
-
-      .view-all-food-button {
-        color: #a07233;
-      }
-    }
   }
 }
 
@@ -60,7 +47,6 @@ div.button-forms {
   justify-content: space-between;
   width: 100%;
 
-
   form {
     width: 48%;
     button {
@@ -70,14 +56,6 @@ div.button-forms {
 }
 //////////////////////////////////////////
 
-nav .nav-wrapper {
-  position: relative;
-  height: 100%;
-  background-color: #863f2c;
-  font-family: helvetica, sans-serif;
-  color: white;
-}
-
 .tabs .indicator {
   position: absolute;
   bottom: 0;
@@ -86,21 +64,23 @@ nav .nav-wrapper {
   will-change: left, right;
 }
 
-.tabs .tab a:focus, .tabs .tab a:focus.active {
+.tabs .tab a:focus,
+.tabs .tab a:focus.active {
   background-color: rgba(245, 200, 104, 0.633);
   outline: none;
 }
 
-.btn, .btn-large, .btn-small {
+.btn,
+.btn-large,
+.btn-small {
   background-color: #c58940;
-  ;
 }
 
-.btn:hover, .btn-large:hover, .btn-small:hover {
+.btn:hover,
+.btn-large:hover,
+.btn-small:hover {
   background-color: #a07233;
-
 }
-
 
 //////////////////////////////////////////////
 
@@ -111,17 +91,10 @@ div.card-reveal {
 }
 
 .preptime-form-container {
+  margin-top: auto;
   display: flex;
-  margin: auto;
   flex-direction: column;
   align-items: center;
-  p {
-    font-weight: bold;
-
-    &:first-child {
-      padding-bottom: 5px;
-    }
-  }
   form#preptime-confirm,
   #preptime-edit {
     display: flex;
@@ -142,6 +115,9 @@ div.card-reveal {
       display: flex;
       align-items: center;
     }
+  }
+  p {
+    font-weight: bold;
   }
 }
 
@@ -200,24 +176,10 @@ div.card-reveal {
   }
 }
 
-#food-modal {
-  .custom-modal {
-    height: auto;
-  }
-
-  .food-modal-content {
-    padding: 20px;
-
-    h4 {
-      text-align: center;
-    }
-  }
-}
-
 // Modal End
 
 @media only screen and (min-width: 1024px) and (orientation: landscape) {
   .cards-container {
-    margin: 50px calc(30px + 5vw);
+    margin: 50px 0;
   }
 }

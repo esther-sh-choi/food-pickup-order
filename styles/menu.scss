@@ -1,12 +1,11 @@
 //nav
 
-nav .nav-wrapper {
-background-color: #863f2c;
-
-}
-
 body {
-  background-color: #DBCBBD;
+  background-color: #f7f7f7;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 // Cart
@@ -47,15 +46,9 @@ form.checkout {
 
 // cart end
 
-ul.collapsible li {
-  margin-top: 5px;
-}
-
 .collapsible-header {
-  padding: 35px 0;
-  background-color: #a07233;
   font-family: helvetica, sans-serif;
-  color: white;
+  font-size: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
