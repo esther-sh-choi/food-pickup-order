@@ -76,7 +76,7 @@ main.landing-content h1 {
 
 #landing-customer-button {
   background-color: #c58940;
-  font-family: helvetica, sans-serif;
+  font-family: Didot, sans-serif;
   color: white;
 }
 
@@ -85,7 +85,7 @@ main.landing-content h1 {
 }
 
 .render_login_page {
-  font-family: Didot, sans-serif;
+  font-family: helvetica, sans-serif;
   color: white;
   text-decoration: underline;
 }
@@ -97,6 +97,8 @@ main.landing-content h1 {
 // Navbar
 nav .nav-wrapper {
   background-color: #3c3c3c;
+  position: relative;
+  z-index: 3;
 
   .brand-logo {
     margin-left: 10px;
@@ -111,4 +113,14 @@ nav .nav-wrapper {
   ul :first-child {
     padding-right: 10px;
   }
+}
+
+//footer
+footer {
+  background-color: #f7f7f7;
+  padding: 1rem;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

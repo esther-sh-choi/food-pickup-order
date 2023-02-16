@@ -1,5 +1,3 @@
-//nav
-
 body {
   background-color: #f7f7f7;
 
@@ -8,109 +6,121 @@ body {
   }
 }
 
-// Cart
+  // Cart
 
-.hide {
-  display: none;
-}
-
-.cart-form {
-  padding-top: 1rem;
-}
-
-.menu-item,
-.subtotal,
-.tax,
-.total {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  p {
-    margin: 5px;
-  }
-}
-.cart-content {
-  background-color: white;
-  padding: 2rem;
-}
-
-form.checkout {
-  padding: 2rem 0;
-  display: flex;
-  flex-direction: column;
-
-  button {
-    align-self: flex-end;
-  }
-}
-
-// cart end
-
-.collapsible-header {
-  font-family: helvetica, sans-serif;
-  font-size: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-content {
-  height: 135px;
-  overflow-y: auto;
-}
-.menu-action {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h6 {
-    margin: 0;
-    font-weight: bold;
+  .hide {
+    display: none;
   }
 
-  form {
-    padding: 0;
-  }
-}
-
-.menu-image {
-  height: 400px;
-  object-fit: cover;
-}
-
-.add-on-click {
-  display: flex;
-  align-items: center;
-
-  border: none;
-  outline: none;
-  background: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-
-  &:hover,
-  &:focus {
-    background: none;
+  .cart-form {
+    padding-top: 1rem;
   }
 
-  i {
-    color: #be901b;
+  .menu-item,
+  .subtotal,
+  .tax,
+  .total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p {
+      margin: 5px;
+    }
   }
-}
+  .cart-content {
+    background-color: white;
+    padding: 2rem;
+  }
 
-.food-counter {
-  display: flex;
-  align-items: center;
-}
+  form.checkout {
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
 
-/* Desktop styles */
-@media only screen and (min-width: 1024px) and (orientation: landscape) {
+    button {
+      align-self: flex-end;
+    }
+  }
+
+  // cart end
+
+  ul.collapsible li {
+    margin-top: 5px;
+  }
+
+  .collapsible-header {
+    font-family: helvetica, sans-serif;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-content {
+    height: 135px;
+    overflow-y: auto;
+  }
+  .menu-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h6 {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    form {
+      padding: 0;
+    }
+  }
+
   .menu-image {
-    width: 200px;
-    height: 600px;
+    height: 400px;
+    object-fit: cover;
   }
 
-  .collapsible-body {
-    padding: 3vw;
+  .btn {
+    background-color: #c58940;
   }
-}
+
+  .btn:hover {
+    background-color: #a07233;
+  }
+
+  .add-on-click {
+    display: flex;
+    align-items: center;
+
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover,
+    &:focus {
+      background: none;
+    }
+
+    i {
+      color: #be901b;
+    }
+  }
+
+  .food-counter {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Desktop styles */
+  @media only screen and (min-width: 1024px) and (orientation: landscape) {
+    .menu-image {
+      width: 200px;
+      height: 600px;
+    }
+
+    .collapsible-body {
+      padding: 3vw;
+    }
+  }
