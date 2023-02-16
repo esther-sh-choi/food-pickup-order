@@ -19,16 +19,15 @@ const updateRemainingTime = (estimated_ready_at, order_id) => {
 
     $(`#countdown_${order_id}`).empty();
     $(`#countdown_${order_id}`).append(
-      `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
-        2,
-        "0"
-      )} : ${String(seconds).padStart(2, "0")}`
+      `Time remaining: ${String(hours).padStart(2, "0")} : ${String(
+        minutes
+      ).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`
     );
 
     if (timeRemaining < 0) {
       clearInterval(orderRemainingTimeIntervals[order_id]);
-      $(`.countdown_container`).empty();
-      $(`.countdown_container`).append(`Time's up!`);
+      $(`#countdown_${order_id}`).empty();
+      $(`#countdown_${order_id}`).append(`Time's up!`);
     }
   }, 1000);
 };

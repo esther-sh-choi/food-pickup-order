@@ -70,10 +70,9 @@ main.landing-content h1 {
 
   /* Desktop styles */
   @media only screen and (min-width: 1024px) {
-   font-size: 10rem;
+    font-size: 10rem;
   }
 }
-
 
 #landing-customer-button {
   background-color: #c58940;
@@ -91,22 +90,24 @@ main.landing-content h1 {
   text-decoration: underline;
 }
 
-
-
 // Landing Page END
 
 //Header
 
-
-
 // Navbar
 nav .nav-wrapper {
+  background-color: #3c3c3c;
+
   .brand-logo {
     margin-left: 10px;
     margin-top: 2px;
     display: flex;
     width: 116px;
-    height: 60px;  }
+    height: 60px;
+
+    font-family: helvetica, sans-serif;
+    color: white;
+  }
   ul :first-child {
     padding-right: 10px;
   }
