@@ -13,15 +13,21 @@ const renderStatusPage = (timer) => {
 };
 
 const renderOrderData = (order, timer) => {
-  const { estimated_ready_at, is_cancelled, is_complete, ready_at } = order;
+  const { estimated_ready_at, is_cancelled, is_complete, ready_at, orderId } =
+    order;
 
   $(".order_info").empty();
   if (!estimated_ready_at) {
-    $(".order_info").append("Your order is pending. You will receive a text message with an estimated pickup time when the restaurant accepts your order.");
+    $(".order_info").append(
+      "Your order is pending. You will receive a text message with an estimated pickup time when the restaurant accepts your order."
+    );
   } else {
+    const date = new Date(estimated_ready_at);
+    const localDateTime = date.toLocaleString();
+
     $(".order_info").append(`
-    <p>Time remaining until pickup</p>
-    <p>${estimated_ready_at}</p>
+    <p>Please come to pick up your order at:</p>
+    <p>${localDateTime}</p>
     `);
   }
 

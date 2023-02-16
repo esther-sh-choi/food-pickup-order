@@ -86,7 +86,8 @@ const toggleModalHandler = (formSubmitHandler, data) => {
 
   const modalMessages = {
     cancel: "Are you sure you want to cancel the order?",
-    ready: "Are you sure you want to notify the customer that the order is ready?",
+    ready:
+      "Are you sure you want to notify the customer that the order is ready?",
     complete: "Are you sure you want to complete this order?",
     edit: "Are you sure you want to edit the preparation time for this order?",
     confirm: "Are you sure you want to add the preparation time to this order?",
@@ -355,41 +356,4 @@ const createOrderCard = (
   $preptimeFormContainer.append($prepFormContent);
 
   return $orderCard;
-};
-
-/*------------------------------------------------------------------------------------*/
-
-const orderRemainingTimeIntervals = {};
-
-const updateRemainingTime = (estimated_ready_at, order_id) => {
-  clearInterval(orderRemainingTimeIntervals[order_id]);
-
-  const dateExpectedReadyAt = new Date(estimated_ready_at);
-  const msSinceEpoch = dateExpectedReadyAt.getTime();
-
-  orderRemainingTimeIntervals[order_id] = setInterval(() => {
-    const timeRemaining = msSinceEpoch - Date.now();
-
-    const hours = Math.floor(
-      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-    $(`#countdown_${order_id}`).empty();
-    $(`#countdown_${order_id}`).append(
-      `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
-        2,
-        "0"
-      )} : ${String(seconds).padStart(2, "0")}`
-    );
-
-    if (timeRemaining < 0) {
-      clearInterval(orderRemainingTimeIntervals[order_id]);
-      $(`.countdown_container`).empty();
-      $(`.countdown_container`).append(`Time's up!`);
-    }
-  }, 1000);
 };
