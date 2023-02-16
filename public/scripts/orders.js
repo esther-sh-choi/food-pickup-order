@@ -86,7 +86,7 @@ const toggleModalHandler = (formSubmitHandler, data) => {
 
   const modalMessages = {
     cancel: "Are you sure you want to cancel the order?",
-    ready: "Are you sure you want to notify customer that order is ready?",
+    ready: "Are you sure you want to notify the customer that the order is ready?",
     complete: "Are you sure you want to complete this order?",
     edit: "Are you sure you want to edit the preparation time for this order?",
     confirm: "Are you sure you want to add the preparation time to this order?",
