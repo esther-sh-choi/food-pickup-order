@@ -96,9 +96,13 @@ const toggleModalHandler = (formSubmitHandler, data) => {
     $modalMessage.empty();
     $modalMessage.append(modalMessages[data.type]);
     $modalContainer.removeClass("hide");
+/////////////////////////////////////////////////////////////////
+    $modalContainer.find(".confirm-button").prop("onclick", null).off("click");
     $modalContainer.find(".confirm-button").on("click", () => {
       formSubmitHandler(data);
     });
+// every time this line runs it adds a new event handler to it //
+
   } else {
     $modalContainer.addClass("hide");
   }
