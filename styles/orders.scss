@@ -7,20 +7,17 @@ ul.tabs {
   justify-content: center;
 }
 
-// main.cards-container {
-//   display: grid;
-//   grid-auto-rows: 1fr;
-
-//   // padding: 20px;
-// }
+ul.food-list {
+  overflow-y: auto;
+}
 
 div.card {
-  width: 400px;
-  margin: 10px;
+  height: 300px;
+  border: 1px solid #5e5e5e48;
   form {
     display: flex;
     align-items: center;
-    padding-top: 20px;
+    padding-top: 10px;
   }
 
   .card-content {
@@ -30,9 +27,17 @@ div.card {
   }
 }
 
+section.card-reveal-content {
+  margin-top: 60px;
+}
+
 p.range-field {
   flex: 1;
   padding-right: 20px;
+}
+
+p.countdown_container {
+  padding-top: 10px;
 }
 
 div.button-forms {
@@ -62,10 +67,14 @@ div.card-reveal {
   form#preptime-confirm,
   #preptime-edit {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
     width: 100%;
-    padding-top: 0;
+
+    label {
+      padding: 5px 0;
+    }
     input {
       height: 35px;
       width: 50px;
@@ -80,6 +89,8 @@ div.card-reveal {
     font-weight: bold;
   }
 }
+
+// Modal
 
 .hide {
   display: none;
@@ -131,5 +142,13 @@ div.card-reveal {
     i {
       align-self: flex-end;
     }
+  }
+}
+
+// Modal End
+
+@media only screen and (min-width: 1024px) and (orientation: landscape) {
+  .cards-container {
+    margin: 50px 0;
   }
 }
