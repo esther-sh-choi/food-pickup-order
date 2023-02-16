@@ -1,3 +1,14 @@
+//nav
+
+nav .nav-wrapper {
+background-color: #863f2c;
+
+}
+
+body {
+  background-color: #DBCBBD;
+}
+
 // Cart
 
 .hide {
@@ -36,8 +47,18 @@ form.checkout {
 
 // cart end
 
-.collapsible-body {
-  padding: 10px;
+ul.collapsible li {
+  margin-top: 5px;
+}
+
+.collapsible-header {
+  padding: 35px 0;
+  background-color: #a07233;
+  font-family: helvetica, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-content {

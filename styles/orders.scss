@@ -1,8 +1,10 @@
 body {
   position: relative;
+  background-color: #FEFCF3;
 }
 
 ul.tabs {
+  background-color: #FEFCF3;
   display: flex;
   justify-content: center;
 }
@@ -45,6 +47,7 @@ div.button-forms {
   justify-content: space-between;
   width: 100%;
 
+
   form {
     width: 48%;
     button {
@@ -52,6 +55,41 @@ div.button-forms {
     }
   }
 }
+//////////////////////////////////////////
+
+nav .nav-wrapper {
+  position: relative;
+  height: 100%;
+  background-color: #863f2c;
+  font-family: helvetica, sans-serif;
+  color: white;
+}
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: black;
+  will-change: left, right;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+  background-color: rgba(245, 200, 104, 0.633);
+  outline: none;
+}
+
+.btn, .btn-large, .btn-small {
+  background-color: #c58940;
+  ;
+}
+
+.btn:hover, .btn-large:hover, .btn-small:hover {
+  background-color: #a07233;
+
+}
+
+
+//////////////////////////////////////////////
 
 div.card-reveal {
   p {
