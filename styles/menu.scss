@@ -4,12 +4,20 @@
   display: none;
 }
 
+.cart-form {
+  padding-top: 1rem;
+}
+
 .menu-item,
 .subtotal,
 .tax,
 .total {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  p {
+    margin: 5px;
+  }
 }
 .cart-content {
   background-color: white;
@@ -21,3 +29,63 @@ form {
 }
 
 // cart end
+
+.collapsible-body {
+  padding: 10px;
+}
+
+.menu-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h6 {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  form {
+    padding: 0;
+  }
+}
+
+.menu-image {
+  height: 400px;
+  object-fit: cover;
+}
+
+.add-on-click {
+  display: flex;
+  align-items: center;
+
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover,
+  &:focus {
+    background: none;
+  }
+
+  i {
+    color: #be901b;
+  }
+}
+
+.food-counter {
+  display: flex;
+  align-items: center;
+}
+
+/* Desktop styles */
+@media only screen and (min-width: 1024px) and (orientation: landscape) {
+  .menu-image {
+    width: 200px;
+  }
+
+  .collapsible-body {
+    padding: 3vw;
+  }
+}
