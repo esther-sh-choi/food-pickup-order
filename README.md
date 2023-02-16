@@ -1,31 +1,70 @@
-LHL Node Skeleton
-=========
+# Order Up - Midterm Group Project
 
-## Project Setup
+"Order Up" is a multi-page food pickup ordering app.
 
-The following steps are only for _one_ of the group members to perform.
+This is a fullstack project and relies on the following to run.
 
-1. Create your own copy of this repo using the `Use This Template` button, ideally using the name of your project. The repo should be marked Public
-2. Verify that the skeleton code now shows up in your repo on GitHub, you should be automatically redirected
-3. Clone your copy of the repo to your dev machine
-4. Add your team members as collaborators to the project so that they can push to this repo
-5. Let your team members know the repo URL so that they use the same repo (they should _not_ create a copy/fork of this repo since that will add additional workflow complexity to the project)
+Front-end:
 
+  HTML, CSS, JS, jQuery, and AJAX. 
+
+Back-end:
+
+  Node, Express, and PG.
+
+The customer experience:
+
+  This page is a deliberately simple and easy to use menu. Any customer visiting this page is likely linking to it from the restaurants website or Google Maps info and they want to place their order ASAP! No account creation hassle needed.
+
+  When a customer visits the page they can place an order simply by including their name and phone number with their order during the checkout process. 
+
+  All of this data is stored securely in a cookie-session and allows the customer to view their order status on the status page. Once the customer has submitted their order, the restaurant is notified by SMS thanks to Twilio integration. The customer's order card also appears on the order page's in-progress orders. 
+
+The restaurant experience: 
+
+  This page acts as a minimalist digital representation of the back of house area of a restaurant called the pass, where all the night's orders are often displayed as paper tickets. 
+
+  Employees at the restaurant using this app can login as admin to view all the orders that are in-progress, completed, and cancelled. These orders are displayed as cards on the screen. Employees can update the order status and preptime on each cards as they are prepared. All updates are sent to both the customer status page and directly to the customer's phone via SMS thanks to Twilio integration. 
+
+## Screenshots and GIFS
+
+Mobile Landing Page:
+
+!["Screenshot of the Mobile Landing Page"](PLACEHOLDER)
+
+Desktop Landing Page:
+
+!["Screenshot of the Desktop Landing Page"](PLACEHOLDER)
+
+Restaurant Login Page:
+
+!["Screenshot of the Restaurant Login Page"](PLACEHOLDER)
+
+Restaurant Order Page Functionality:
+
+!["GIF of the Restaurant Order Page Functionality"](PLACEHOLDER)
+
+Customer Menu Page Functionality:
+
+!["GIF of the Customer Menu Page Functionality"](PLACEHOLDER)
+
+Customer Status Page Functionality:
+
+!["GIF of the Customer Status Page Functionality"](PLACEHOLDER)
 
 ## Getting Started
 
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information 
-  - username: `labber` 
-  - password: `labber` 
-  - database: `midterm`
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Reset database: `npm run db:reset`
+1. Fork this repo, then clone your fork of this repo.
+2. Install dependencies using the `npm install` command.
+3. Install dev-dependencies using the `npm install --save-dev` command.
+4. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
+5. Update the .env file with your correct local information 
+  - NOTE: you will need to update the phone numbers needed by TWILIO in the routes for SMS functionality. 
+6. Fix to binaries for sass: `npm rebuild node-sass`
+7. Reset database: `npm run db:reset`
   - Check the db folder to see what gets created and seeded in the SDB
-7. Run the server: `npm run local`
-  - Note: nodemon is used, so you should not have to restart your server
-8. Visit `http://localhost:8080/`
+8. Start the web server using the `npm run local` command. The app will be served at <http://localhost:8080/>.
+9. Go to <http://localhost:8080/> in your browser.
 
 ## Warnings & Tips
 
@@ -41,4 +80,21 @@ The following steps are only for _one_ of the group members to perform.
 
 - Node 10.x or above
 - NPM 5.x or above
-- PG 6.x
+- Bcrypt ^5.1.0
+- Chalk ^2.4.2
+- Cookie-Session ^2.0.0
+- Dotenv ^2.0.0
+- EJS ^2.6.2
+- Express ^4.17.1
+- Materialize-CSS ^1.0.0-rc.2
+- Morgan ^1.9.1
+- PG ^8.5.0,
+- SASS ^1.35.1
+- Twilio ^4.7.2
+
+## Dev Dependencies
+
+- Nodemon ^1.9.2
+
+## THANK YOU
+We appreciate you taking the time to look at this project.
