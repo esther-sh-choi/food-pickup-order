@@ -1,6 +1,5 @@
 $(() => {
   $(".collapsible").collapsible();
-
   const elems = $(".sidenav");
   const instances = M.Sidenav.init(elems, { edge: "right" });
 
@@ -8,9 +7,9 @@ $(() => {
 
   $(document).on("submit", "form.add-to-cart", addToCartHandler);
   $(document).on("submit", "form.remove-from-cart", removeFromCartHandler);
-
   $(document).on("submit", "form.checkout", formCheckoutHandler);
 });
+
 
 const renderMenu = () => {
   $.ajax({
@@ -19,6 +18,7 @@ const renderMenu = () => {
     success: renderAllMenuCards,
   });
 };
+
 
 const checkoutHandler = (inputData) => {
   $.ajax({
@@ -31,10 +31,17 @@ const checkoutHandler = (inputData) => {
   });
 };
 
-///// The below captures what the customer adds to cart
+
+/**
+ * These variables hold temporary data while the customer is creating their order before they submit it.
+ */
 const ordersObj = {};
 const cartArray = [];
 
+
+/**
+ * This function captures what the customer adds to the cart.
+ */
 const addToCartHandler = (event) => {
   event.preventDefault();
   const formDataArray = $(event.target).serializeArray();
@@ -46,6 +53,10 @@ const addToCartHandler = (event) => {
   renderCart(result, false, ordersObj);
 };
 
+
+/**
+ * This function captures what the customer removes from the cart.
+ */
 const removeFromCartHandler = (event) => {
   event.preventDefault();
   const formDataArray = $(event.target).serializeArray();
@@ -57,8 +68,10 @@ const removeFromCartHandler = (event) => {
   renderCart(result, true, ordersObj);
 };
 
-///// The below captures the customer's name and phone number
 
+/**
+ * This function captures the customer's name and phone number.
+ */
 const formCheckoutHandler = (event) => {
   event.preventDefault();
   const customerData = [];
@@ -71,8 +84,10 @@ const formCheckoutHandler = (event) => {
   checkoutHandler({ foodArray, customerData });
 };
 
-///// This function renders the cart tempate.
 
+/**
+ * This function renders the cart template.
+ */
 const renderCart = (customer_order, isRemove, ordersObj) => {
   $(".cart-container").empty();
 
@@ -149,8 +164,10 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
   }
 };
 
-///// This function creates a template for the cart contents.
 
+/**
+ * This function creates the template for the cart contents.
+ */
 const createCartContents = (name, quantity, price, id) => {
   const $cartMenu = $(`
   <div class="menu-item">
@@ -162,8 +179,10 @@ const createCartContents = (name, quantity, price, id) => {
   return $cartMenu;
 };
 
-///// This function creates a template for each menu card.
 
+/**
+ * This function creates a template for each menu card.
+ */
 const createMenuCard = (name, photo_url, description, price, id) => {
   const $menuCard = $(`
     <div class="col s12 m6 l4">
@@ -197,8 +216,10 @@ const createMenuCard = (name, photo_url, description, price, id) => {
   return $menuCard;
 };
 
-///// This function renders the template above in each menu container on the page.
 
+/**
+ * This function renders the menucard template created above in each menu container on the page.
+ */
 const renderAllMenuCards = (foods) => {
   const categories = [];
   foods.forEach((food) => {
