@@ -96,13 +96,12 @@ const toggleModalHandler = (formSubmitHandler, data) => {
     $modalMessage.empty();
     $modalMessage.append(modalMessages[data.type]);
     $modalContainer.removeClass("hide");
-/////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
     $modalContainer.find(".confirm-button").prop("onclick", null).off("click");
     $modalContainer.find(".confirm-button").on("click", () => {
       formSubmitHandler(data);
     });
-// every time this line runs it adds a new event handler to it //
-
+    // every time this line runs it adds a new event handler to it //
   } else {
     $modalContainer.addClass("hide");
   }
@@ -314,7 +313,7 @@ const createOrderCard = (
 
     $prepFormContent = $(`
     <p>You have until ${localTime} to prepare this order.</p>
-    <p id="countdown_${order_id}"></p>`);
+    <p class="countdown_container">Time Remaining: <span id="countdown_${order_id}"></span></p>`);
 
     $orderCard.find(".preptime-form-container.edit").append(`
       <form class="update" id="preptime-edit" data-type="edit" data-phone-number="${phone_number}" data-customer-name="${customer_name}" data-order-id="${order_id}" onSubmit="orderFormHandler(event)" >
@@ -381,15 +380,16 @@ const updateRemainingTime = (estimated_ready_at, order_id) => {
 
     $(`#countdown_${order_id}`).empty();
     $(`#countdown_${order_id}`).append(
-      `Time Remaining: ${String(hours).padStart(2, "0")} : ${String(
-        minutes
-      ).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`
+      `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
+        2,
+        "0"
+      )} : ${String(seconds).padStart(2, "0")}`
     );
 
     if (timeRemaining < 0) {
       clearInterval(orderRemainingTimeIntervals[order_id]);
-      $(`#countdown_${order_id}`).empty();
-      $(`#countdown_${order_id}`).append(`Time's up!`);
+      $(`.countdown_container`).empty();
+      $(`.countdown_container`).append(`Time's up!`);
     }
   }, 1000);
 };
