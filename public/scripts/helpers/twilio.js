@@ -2,7 +2,6 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
-
 /*
 Creates a message using the Twilio client and then sends it to the customers phone_number.
 */
@@ -33,7 +32,8 @@ const smsMsgRestaurant = (message) => {
       .create({
         body: `${message}`,
         from: "+15205237081",
-        to: "+14169869028",
+        //**** Put your number below to receive SMS as the restaurant when customer places an order. ****//
+        to: "+10000000000",
       })
       .then((message) => res(message.sid))
       .catch((err) => {
