@@ -2,6 +2,9 @@ $(() => {
   refreshEveryMinute();
 });
 
+/*
+Sends an AJAX request to the server to fetch order data and renders it onto the page.
+ */
 const renderStatusPage = (timer) => {
   $.ajax({
     type: "GET",
@@ -12,6 +15,10 @@ const renderStatusPage = (timer) => {
   });
 };
 
+
+/*
+Renders the customers order data on the screen and displays a message that gets updated throughout their order.
+*/
 const renderOrderData = (order, timer) => {
   const { estimated_ready_at, is_cancelled, is_complete, ready_at, orderId } =
     order;
@@ -49,7 +56,10 @@ const renderOrderData = (order, timer) => {
   }
 };
 
-// In real production, I would use a websocket or change 1000 to 1000*60 so that it renders every minute rather than every second
+
+/*
+In real production, I would use a websocket or change 1000 to 1000*60 so that it renders every minute rather than every second
+*/
 const refreshEveryMinute = () => {
   const timer = setInterval(() => {
     renderStatusPage(timer);

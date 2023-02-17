@@ -1,16 +1,24 @@
 # Order Up - Midterm Group Project
 
+## Team Members and Project Authors
+
+So Hyun (Esther) Choi - https://github.com/esther-sh-choi
+
+Ashley Ure - https://github.com/dorreb
+
+Jonathan Phair - https://github.com/jmphair
+
+## Project Description
+
 "Order Up" is a multi-page food pickup ordering app.
 
 This is a fullstack project and relies on the following to run.
 
-Front-end:
+Front-end: HTML, CSS, JS, jQuery, and AJAX. 
 
-  HTML, CSS, JS, jQuery, and AJAX. 
+Back-end: Node, Express, and PG.
 
-Back-end:
-
-  Node, Express, and PG.
+## Why Order Up?
 
 The customer experience:
 
@@ -26,31 +34,31 @@ The restaurant experience:
 
   Employees at the restaurant using this app can login as admin to view all the orders that are in-progress, completed, and cancelled. These orders are displayed as cards on the screen. Employees can update the order status and preptime on each cards as they are prepared. All updates are sent to both the customer status page and directly to the customer's phone via SMS thanks to Twilio integration. 
 
-## Screenshots and GIFS
-
-Mobile Landing Page:
-
-!["Screenshot of the Mobile Landing Page"](PLACEHOLDER)
-
-Desktop Landing Page:
-
-!["Screenshot of the Desktop Landing Page"](PLACEHOLDER)
-
-Restaurant Login Page:
-
-!["Screenshot of the Restaurant Login Page"](PLACEHOLDER)
+## Page Demo Details
 
 Restaurant Order Page Functionality:
 
-!["GIF of the Restaurant Order Page Functionality"](PLACEHOLDER)
+!["GIF of the Restaurant Order Page Functionality"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Restaurant-Orders-Functionality.gif?raw=true)
 
 Customer Menu Page Functionality:
 
-!["GIF of the Customer Menu Page Functionality"](PLACEHOLDER)
+!["GIF of the Customer Menu Page Functionality"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Customer-Menu-Functionality.gif?raw=true)
 
-Customer Status Page Functionality:
+Mobile Landing Page:
 
-!["GIF of the Customer Status Page Functionality"](PLACEHOLDER)
+!["Screenshot of the Mobile Landing Page"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Mobile-Landing-Page.jpg?raw=true)
+
+Desktop Landing Page:
+
+!["Screenshot of the Desktop Landing Page"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Desktop-Landing-Page.jpg?raw=true)
+
+Restaurant Login Page:
+
+!["Screenshot of the Restaurant Login Page"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Restaurant-Login-Page.jpg?raw=true)
+
+Customer Status Page:
+
+!["GIF of the Customer Status Page Functionality"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Status-Page.png?raw=true)
 
 ## Getting Started
 
