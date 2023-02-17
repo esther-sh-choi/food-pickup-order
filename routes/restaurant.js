@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
 
+/*
+GET request which renders the orders view with the owner set to the user object stored in the session, and the status set to false.
+*/
 router.get("/orders", (req, res) => {
   const user = req.session.user;
 
@@ -11,17 +14,24 @@ router.get("/orders", (req, res) => {
   }
 });
 
+
+/*
+GET request which checks if there is already a user logged in by checking the user object stored in the session.
+*/
 router.get("/login", (req, res) => {
   if (req.session.user) {
     res.redirect("/restaurant/orders");
   }
 
-  console.log("here");
-
   res.render("login", { errorMessage: "" });
 });
 
-const login = function (username, password) {
+
+/*
+Function that queries the database for the user with the specified username.
+Returns the user if the specified password matches the user's password.
+ */
+const login = function(username, password) {
   return restaurantQueries.getAdminWithUsername(username).then((user) => {
     if (password === user.password) {
       return user;
@@ -29,6 +39,15 @@ const login = function (username, password) {
     return null;
   });
 };
+
+
+/*
+POST request that checks if the username and password fields are not empty.
+If any of them are empty, it renders the login view with an error message.
+Calls the login helper function with the provided username and password.
+If the function returns null, it renders the login view with an error message.
+Otherwise, it sets the user object in the session to the returned user and redirects.
+*/
 
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -52,6 +71,12 @@ router.post("/login", (req, res) => {
     .catch((e) => res.send(e));
 });
 
+
+
+/*
+POST request.
+Sets the user object in the session to null.
+ */
 router.post("/logout", (req, res) => {
   req.session.user = null;
   res.redirect("/");

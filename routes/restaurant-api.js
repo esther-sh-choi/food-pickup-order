@@ -3,6 +3,11 @@ const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
 const twilio = require("../public/scripts/helpers/twilio");
 
+
+/*
+If the user is logged on this route will query the database for all the orders and return them as JSON
+*/
+
 router.get("/orders", (req, res) => {
   const user = req.session.user;
 
@@ -17,6 +22,13 @@ router.get("/orders", (req, res) => {
       });
   }
 });
+
+
+/*
+This route will update the estimated time for an order with the given order ID, based on the preptime value in the request body.
+After updating the database, it will send an SMS message to the customer using the Twilio helper function and then return the updated order information as JSON.
+*/
+
 
 router.post("/orders/:order_id/confirm", (req, res) => {
   const order_id = req.params.order_id;
@@ -41,6 +53,13 @@ router.post("/orders/:order_id/confirm", (req, res) => {
       });
   }
 });
+
+
+/*
+This route is a POST request to update an order with a given order_id.
+If a user is present, the restaurantQueries.updateOrder function is called with order_id and receivedData annd updates the order in the database.
+Once the order has been successfully updated, the appropriate message is sent to the customer via Twilio.
+*/
 
 router.post("/orders/:order_id/update", (req, res) => {
   const order_id = req.params.order_id;
