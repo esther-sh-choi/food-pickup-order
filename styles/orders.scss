@@ -1,6 +1,6 @@
 body {
-  position: relative;
   background-color: #f7f7f7;
+  width: 100%;
 
   &::-webkit-scrollbar {
     display: none;
@@ -18,7 +18,8 @@ ul.food-list {
 }
 
 .cards-container {
-  margin: 30px 5vw;
+  padding: 30px 5vw;
+  width: 100%;
 }
 
 div.card {
