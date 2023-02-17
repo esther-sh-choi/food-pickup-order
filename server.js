@@ -40,7 +40,6 @@ const customerApiRoutes = require("./routes/customer-api");
 const customerRoutes = require("./routes/customer");
 const restaurantRoutes = require("./routes/restaurant");
 
-
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -58,6 +57,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// listen
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
