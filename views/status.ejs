@@ -24,6 +24,7 @@
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
     <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/styles/status.css" />
 
@@ -37,27 +38,31 @@
   </head>
 
   <body>
-    <%- include('./partials/_header') %>
-    <%- include('./partials/_footer') %>
+    <%- include('./partials/_header') %> <%- include('./partials/_footer') %>
 
-    <div class="container">
-      <h1>Aloette</h1>
-      <img
-        src="https://secretcharlotte.co/wp-content/uploads/2022/01/haymakerfeatured-1024x640.jpg"
-        width="300"
-        height="200"
-        alt="Restaurant Photo"
-      />
-      <p class="order_id">Order ID: <%= order_id %></p>
-      <p class="order_info">Loading order information...</p>
-    </div>
+    <main class="status-page">
+      <div class="custom-backdrop"></div>
+      <div class="card">
+        <div class="card-image">
+          <img
+            src="http://www.apwa-mn.org/userfiles/ckfiles/images/Haymaker%20image001%20(7).jpg"
+            alt="Restaurant Photo"
+            class="restaurant-image"
+          /><span class="card-title restaurant-name">Aloette</span>
+        </div>
+        <div class="card-content">
+          <p class="card-title order_id">Order ID: <%= order_id %></p>
+          <p class="order_info">Loading order information...</p>
+          <div id="address">
+            <p>123 Queen Street</p>
+            <p>Toronto, ON</p>
+            <p>M4Y 3C3</p>
+            <p>(416) 123-4567</p>
+          </div>
+        </div>
+      </div>
+    </main>
 
-    <div id="address">
-      <p>123 Queen Street</p>
-      <p>Toronto, ON</p>
-      <p>M4Y 3C3</p>
-      <p>(416)000-0000</p>
-    </div>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
       integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q=="
