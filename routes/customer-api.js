@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const customerQueries = require("../db/queries/customers");
-const twilio = require('../public/scripts/helpers/twilio');
-
+const twilio = require("../public/scripts/helpers/twilio");
 
 /**
  * This route uses the getAllFoods query to get all foods data on the menu page.
@@ -17,7 +16,6 @@ router.get("/menu", (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
-
 
 /**
  * This route uses the customerData and foodArray made during the checkout process to create a new customer and order.
@@ -39,10 +37,9 @@ router.post("/checkout", (req, res) => {
       return customerQueries.addOrder(customer.id);
     })
     .then((order) => {
-      // const message = `You have recieved a new order from ${customerData[0]}! The order id is: ${order.id}. Check your orders page for more details.`;
-      // twilio.smsMsgRestaurant(message).then((res =>
-      //   console.log(res)));
-      return customerQueries.addFoodOrder(foodArray, order.id);
+      const message = `You have recieved a new order from ${customerData[0]}! The order id is: ${order.id}. Check your orders page for more details.`;
+      // twilio.smsMsgRestaurant(message).then((res) => console.log(res));
+      // return customerQueries.addFoodOrder(foodArray, order.id);
     })
     .then((foodOrder) => {
       req.session.order_id = foodOrder[0].order_id;
@@ -52,7 +49,6 @@ router.post("/checkout", (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
-
 
 /**
  * This route uses the getOrderById query to get the customers order information on the status page.

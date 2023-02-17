@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
-const twilio = require('../public/scripts/helpers/twilio');
-
+const twilio = require("../public/scripts/helpers/twilio");
 
 router.get("/orders", (req, res) => {
   const user = req.session.user;
@@ -32,9 +31,9 @@ router.post("/orders/:order_id/confirm", (req, res) => {
         const photo_url =
           "https://images-ext-1.discordapp.net/external/cU3k6BlDpujtHPW-Yk-cJYdC0kydqJeW5_Q4LCvrW6Q/https/torontolife.com/wp-content/uploads/2021/01/KRISS_FINAL04.jpg?width=999&height=666";
 
-        // twilio.smsMsgCustomer(customerName, message, phoneNumber, photo_url).then((res) =>
-        //   console.log(res)
-        // );
+        // twilio
+        //   .smsMsgCustomer(customerName, message, phoneNumber, photo_url)
+        //   .then((res) => console.log(res));
         res.json(order);
       })
       .catch((e) => {
@@ -75,11 +74,11 @@ router.post("/orders/:order_id/update", (req, res) => {
             "Thank you for choosing Aloette! We hope to serve you again soon.",
           edit: `Your order needs an extra ${preptime} minutes to prepare. Our apologies for the delay, thank you for your patience.`,
         };
-        // twilio.smsMsgCustomer(customerName, messages[type], phoneNumber).then(
-        //   (res) => {
+        // twilio
+        //   .smsMsgCustomer(customerName, messages[type], phoneNumber)
+        //   .then((res) => {
         //     console.log(res);
-        //   }
-        // );
+        //   });
 
         res.json(order);
       })
