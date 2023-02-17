@@ -52,10 +52,6 @@ main.landing-content {
   align-items: center;
   justify-content: space-between;
 
-  h1 {
-    font-size: 3rem;
-  }
-
   a {
     text-decoration: underline;
 
@@ -67,16 +63,16 @@ main.landing-content {
 
 main.landing-content h1 {
   font-family: Didot, sans-serif;
+  font-size: 5rem;
 
   /* Desktop styles */
   @media only screen and (min-width: 1024px) {
-    font-size: 10rem;
+    font-size: 7rem;
   }
 }
 
 #landing-customer-button {
   background-color: #c58940;
-  font-family: Didot, sans-serif;
   color: white;
 }
 
