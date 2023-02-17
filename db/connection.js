@@ -1,7 +1,8 @@
 // PG database client/connection setup
 const { Pool } = require("pg");
 
-/* Uncomment dbParams below to run in your own database and localhost */
+/* Comment dbParams below to run in your own database */
+
 // const dbParams = {
 //   host: process.env.DATABASE_URL,
 //   port: process.env.DB_PORT,
@@ -10,7 +11,7 @@ const { Pool } = require("pg");
 //   database: process.env.DB_NAME,
 // };
 
-/* Comment dbParams below to run in your own database */
+/* Uncomment dbParams below to run in your own database and localhost */
 const dbParams = {
   connectionString: process.env.DATABASE_URL,
   ssl: {

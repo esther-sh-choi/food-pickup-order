@@ -55,6 +55,7 @@ const addToCartHandler = (event) => {
   formDataArray.forEach((data) => {
     result[data.name] = data.value;
   });
+
   renderCart(result, false, ordersObj);
 };
 
@@ -68,6 +69,7 @@ const removeFromCartHandler = (event) => {
   formDataArray.forEach((data) => {
     result[data.name] = data.value;
   });
+
   renderCart(result, true, ordersObj);
 };
 
@@ -102,12 +104,24 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
       ordersObj[customer_order.id].quantity = 0;
     }
     ordersObj[customer_order.id].quantity++;
+    M.toast({
+      html: `${ordersObj[customer_order.id].name} has been added to your cart.`,
+      displayLength: 2500,
+      classes: "rounded",
+    });
   } else {
     if (
       ordersObj.hasOwnProperty(customer_order.id) &&
       ordersObj[customer_order.id].quantity > 0
     ) {
       ordersObj[customer_order.id].quantity--;
+      M.toast({
+        html: `${
+          ordersObj[customer_order.id].name
+        } has been removed from your cart.`,
+        displayLength: 2500,
+        classes: "rounded",
+      });
     }
 
     if (
@@ -214,6 +228,8 @@ const createMenuCard = (name, photo_url, description, price, id) => {
           <h6>$${price}</h6>
           <div class="food-counter">
             <form class="remove-from-cart">
+              <input type="hidden" name="name" value="${name}"/>
+              <input type="hidden" name="price" value="${price}"/>
               <input type="hidden" name="id" value="${id}"/>
               <button class="add-on-click browser-default" type="submit"><i class="small material-icons">indeterminate_check_box</i></button>
             </form>
