@@ -18,14 +18,13 @@ const smsMsgCustomer = (name, message, phone_number, photo_url) => {
   });
 };
 
-
 const smsMsgRestaurant = (message) => {
   return new Promise((res, err) => {
     client.messages
       .create({
         body: `${message}`,
         from: "+15205237081",
-        to: '+14167295604',
+        to: "+14169869028",
       })
       .then((message) => res(message.sid))
       .catch((err) => {
