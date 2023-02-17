@@ -23,13 +23,13 @@ router.get("/menu", (req, res) => {
  * Finally, the customer is redirected to the status page.
  */
 router.post("/checkout", (req, res) => {
-  const { customerData, foodArray } = req.body;
-  if (!customerData[0] || !customerData[1] || !foodArray?.length) {
-    return res.status(401).render("menu", {
-      errorMessage: "You cannot submit empty fields.",
-      owner: false,
-      status: false,
-    });
+  const { customerData, foodIdArray } = req.body;
+  if (
+    !customerData[0] ||
+    customerData[1]?.length < 12 ||
+    !foodIdArray?.length
+  ) {
+    return res.status(401).json({ error: "Invalid input. Please try again." });
   }
   customerQueries
     .addCustomer(customerData)
@@ -39,7 +39,7 @@ router.post("/checkout", (req, res) => {
     .then((order) => {
       const message = `You have recieved a new order from ${customerData[0]}! The order id is: ${order.id}. Check your orders page for more details.`;
       // twilio.smsMsgRestaurant(message).then((res) => console.log(res));
-      return customerQueries.addFoodOrder(foodArray, order.id);
+      return customerQueries.addFoodOrder(foodIdArray, order.id);
     })
     .then((foodOrder) => {
       req.session.order_id = foodOrder[0].order_id;

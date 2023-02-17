@@ -6,38 +6,24 @@
   background-color: rgba(0, 0, 0, 0.6); /* use rgba to set the opacity */
   border: none;
 
- /* Desktop styles */
- @media only screen and (min-width: 1024px) {
-  width: 70%;
+  /* Desktop styles */
+  @media only screen and (min-width: 1024px) {
+    width: 70%;
+  }
 }
-}
-
-.input-field input {
-  color: white;
-}
-
-.input-field input:focus {
-  color: white !important;
-  border-bottom: 1px solid white !important;
-}
-
-.input-field label.active {
-  color: white !important;
-}
-
 
 body {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   height: 100%;
   background-image: url("https://aloetterestaurant.com/wp-content/uploads/2017/10/Aloette-Interiors_006.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: Didot, sans-serif;
   color: white;
+  position: relative;
 }
 
 .input-container {
@@ -45,12 +31,27 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 300px;
-  position: relative;
+  margin-bottom: 70px;
   z-index: 1;
 
   h3 {
     text-align: center;
+    font-family: Didot, sans-serif;
   }
+}
+
+.input-field input {
+  color: white;
+
+  // !important is to override materialize css built in styles
+  &:focus {
+    color: white !important;
+    border-bottom: 1px solid white !important;
+  }
+}
+
+label.active {
+  color: white !important;
 }
 
 form {
@@ -64,9 +65,7 @@ form {
 
 .btn {
   background-color: #c58940;
-  font-family: Didot, sans-serif;
   color: white;
-
 }
 
 .btn:hover {
@@ -78,23 +77,21 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
   z-index: 1;
+  position: absolute;
+  bottom: 10vmin;
 }
 
 .login-error-message {
-  // background-color: #bf000093;
-  background-color: #630606;
+  background-color: #630606ca;
   font-family: sans-serif;
-
-  border-radius: 15px;
-  border: 1px solid black;
+  border-radius: 5px;
   padding: 20px 30px;
   margin: 40px 0;
 
   p {
     margin: 0;
-    margin-left: 16px;
+    text-align: center;
     width: 100%;
   }
 }

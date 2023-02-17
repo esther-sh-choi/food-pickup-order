@@ -10,7 +10,6 @@ $(() => {
   $(document).on("submit", "form.checkout", formCheckoutHandler);
 });
 
-
 /**
  * This function uses the renderAllMenuCards function to render menu on the customer menu page.
  */
@@ -21,7 +20,6 @@ const renderMenu = () => {
     success: renderAllMenuCards,
   });
 };
-
 
 /**
  * This function takes in the data received during the checkout process and then takes the customer to the status page.
@@ -34,16 +32,18 @@ const checkoutHandler = (inputData) => {
     success: () => {
       window.location.href = "/customer/status";
     },
+    error: (err) => {
+      $(".cart-error-message").removeClass("hide");
+      $(".cart-error-message").find("p").empty();
+      $(".cart-error-message").find("p").append(err.responseJSON.error);
+    },
   });
 };
-
 
 /**
  * These variables hold temporary data while the customer is creating their order before they submit it.
  */
 const ordersObj = {};
-const cartArray = [];
-
 
 /**
  * This function captures what the customer adds to the cart.
@@ -55,10 +55,8 @@ const addToCartHandler = (event) => {
   formDataArray.forEach((data) => {
     result[data.name] = data.value;
   });
-  cartArray.push(result);
   renderCart(result, false, ordersObj);
 };
-
 
 /**
  * This function captures what the customer removes from the cart.
@@ -70,10 +68,8 @@ const removeFromCartHandler = (event) => {
   formDataArray.forEach((data) => {
     result[data.name] = data.value;
   });
-  cartArray.push(result);
   renderCart(result, true, ordersObj);
 };
-
 
 /**
  * This function captures the customer's name and phone number.
@@ -84,12 +80,15 @@ const formCheckoutHandler = (event) => {
   const name = $("input#name_input").val();
   const phone_number = $("input#phone_input").val();
   customerData.push(name, phone_number);
-  const foodArray = cartArray.map((food) => {
-    return Number(food.id);
-  });
-  checkoutHandler({ foodArray, customerData });
-};
 
+  const foodIdArray = [];
+  Object.values(ordersObj).forEach((food) => {
+    for (let i = 0; i < food.quantity; i++) {
+      foodIdArray.push(Number(food.id));
+    }
+  });
+  checkoutHandler({ foodIdArray, customerData });
+};
 
 /**
  * This function renders the cart template.
@@ -121,11 +120,22 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
 
   $(`.show-count-${customer_order.id}`).empty();
   $(`.show-count-${customer_order.id}`).html(
-    `${ordersObj[customer_order.id] ? ordersObj[customer_order.id].quantity : 0
+    `${
+      ordersObj[customer_order.id] ? ordersObj[customer_order.id].quantity : 0
     }`
   );
 
   const orders = Object.values(ordersObj);
+  const foodIdArray = [];
+  orders.forEach((food) => {
+    for (let i = 0; i < food.quantity; i++) {
+      foodIdArray.push(Number(food.id));
+    }
+  });
+  const itemCount = foodIdArray.length;
+  $("#cart-count").empty();
+  $("#cart-count").append(itemCount);
+
   let subtotal = 0;
   orders.forEach((order) => {
     const { price, quantity } = order;
@@ -170,7 +180,6 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
   }
 };
 
-
 /**
  * This function creates the template for the cart contents.
  */
@@ -184,7 +193,6 @@ const createCartContents = (name, quantity, price, id) => {
 
   return $cartMenu;
 };
-
 
 /**
  * This function creates a template for each menu card.
@@ -221,7 +229,6 @@ const createMenuCard = (name, photo_url, description, price, id) => {
  `);
   return $menuCard;
 };
-
 
 /**
  * This function renders the menucard template created above in each collapsible menu container.

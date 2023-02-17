@@ -42,6 +42,33 @@ form.checkout {
   }
 }
 
+.cart-error-message {
+  background-color: #860000;
+  font-family: sans-serif;
+  border-radius: 5px;
+  padding: 20px 30px;
+  margin: 40px 0;
+  color: white;
+  p {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+#cart-count {
+  background-color: #be901b;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 40%;
+  padding: 0 8px;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 3;
+}
+
 // cart end
 
 ul.collapsible li {
