@@ -8,7 +8,7 @@ const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 
 // 8080 before
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 app.set("view engine", "ejs");
