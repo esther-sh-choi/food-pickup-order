@@ -8,6 +8,15 @@ $(() => {
   });
 });
 
+
+/*
+ Defines a function openFoodListModal that is called when an event is triggered.
+ The function extracts the orderId property from the data attribute of the element that triggered the event.
+ The orderId is used to display the order ID in the food modal that is displayed.
+ The function retrieves the list of food items for the specified order from the orderObj object and iterates over them to create a list of food items.
+
+*/
+
 let orderObj = {};
 
 const openFoodListModal = (event) => {
@@ -33,7 +42,10 @@ const openFoodListModal = (event) => {
 };
 
 /*------------------------------------------------------------------------------------*/
-
+/*
+Uses an AJAX GET request to fetch data about orders from the restaurant's API.
+When the request is successful, it calls the renderOrderCards function to render the order cards on the page.
+*/
 const getOrderCards = () => {
   $.ajax({
     type: "GET",
@@ -43,32 +55,39 @@ const getOrderCards = () => {
 };
 
 /*------------------------------------------------------------------------------------*/
-
+/*
+This function is called when the restaurant confirms an order.
+It uses an AJAX POST request to send data about the order to the API and confirm it.
+If the request is successful, it calls getOrderCards() to refresh the order cards on the page.
+*/
 const onConfirm = (data) => {
   $.ajax({
     type: "POST",
     url: `/api/restaurant/orders/${data.orderId}/confirm`,
     data: data,
-    success: function (result) {
-      console.log("AJAX Call success:", result);
+    success: function(result) {
       getOrderCards();
     },
-    error: function (err) {
+    error: function(err) {
       console.log("there was an error :", err);
     },
   });
 };
+
+/*
+This function is called when the restaurant edits an order.
+It uses an AJAX POST request to send updated data about the order to the API.
+*/
 
 const onEdit = (data) => {
   $.ajax({
     type: "POST",
     url: `/api/restaurant/orders/${data.orderId}/update`,
     data: data,
-    success: function (result) {
-      console.log("AJAX Call success OnEdit:", result);
+    success: function(result) {
       getOrderCards();
     },
-    error: function (err) {
+    error: function(err) {
       console.log("there was an error :", err);
     },
   });
@@ -76,7 +95,14 @@ const onEdit = (data) => {
 
 /*------------------------------------------------------------------------------------*/
 
-const orderFormHandler = function (event) {
+/*
+This function is called when the user submits a form to confirm or edit an order.
+The function extracts the data object and the preptime value from the form and creates a new object called completeData that combines this information.
+If the type of action is "confirm", the function calls toggleModalHandler with the onConfirm function and the completeData object as arguments.
+If the type of action is not "confirm", the function calls toggleModalHandler with the onEdit function and the completeData object as arguments.
+*/
+
+const orderFormHandler = function(event) {
   event.preventDefault();
 
   const data = event.target.dataset;
@@ -99,6 +125,14 @@ const orderFormHandler = function (event) {
 };
 
 /*------------------------------------------------------------------------------------*/
+
+/*
+This function is called when the user clicks a button to show a confirmation modal.
+It takes two arguments: formSubmitHandler is a function that will be called if the user confirms the action, and data is an object containing information about the order and the type of action to be confirmed.
+The function displays a modal with a message asking the user to confirm the action.
+If the user confirms the action, the function calls the formSubmitHandler function with the data object as an argument.
+If the user cancels the action, the function hides the modal.
+*/
 
 const toggleModalHandler = (formSubmitHandler, data) => {
   const $modalContainer = $("#form-modal");
@@ -129,6 +163,12 @@ const toggleModalHandler = (formSubmitHandler, data) => {
 };
 
 /*------------------------------------------------------------------------------------*/
+
+/*
+This function receives an array of orders data.
+It parses the data and groups the order items by their order_id.
+The function then uses the createOrderCard function to create a card for each order and appends them to their respective categories.
+*/
 
 const renderOrderCards = (ordersData) => {
   const parsedOrders = {};
@@ -234,6 +274,14 @@ const renderOrderCards = (ordersData) => {
 };
 
 /*------------------------------------------------------------------------------------*/
+
+/*
+This function creates an HTML element that represents a food order card.
+It updates the HTML of the div element with the relevant order information.
+The function also adds click events to the buttons so that they will trigger a specified function when clicked.
+The function checks if certain conditions are met and updates the card accordingly by removing elements or adding new ones to the HTML.
+If the estimated_ready_at parameter is not null, a countdown timer is added to the order card using the countdownFn parameter that is passed in.
+*/
 
 const createOrderCard = (
   order_id,
