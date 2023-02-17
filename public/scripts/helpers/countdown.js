@@ -1,3 +1,9 @@
+/*
+Function that updates the remaining time until a specified estimated ready time.
+If the time remaining is less than zero, it clears the interval.
+*/
+
+
 const orderRemainingTimeIntervals = {};
 
 const updateRemainingTime = (estimated_ready_at, order_id) => {
