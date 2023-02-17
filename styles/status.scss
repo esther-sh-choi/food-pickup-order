@@ -2,6 +2,10 @@ footer {
   z-index: 1;
 }
 
+body {
+  width: 100%;
+}
+
 .status-page {
   background-image: url("https://img.freepik.com/free-photo/green-leaves-eucalyptus-branches-white-background_1182-2693.jpg?w=1800&t=st=1676598027~exp=1676598627~hmac=d3b8b21031f5ac7e4a9cfe0e8bf9fea5fc9bdbf18d22d06eb1f77fca9825c317");
   background-position: center;
@@ -11,6 +15,7 @@ footer {
   justify-content: center;
   align-items: center;
   height: 90%;
+  width: 100%;
 
   .custom-backdrop {
     background-color: rgba(255, 255, 255, 0.9);
