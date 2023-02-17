@@ -30,23 +30,23 @@ The restaurant experience:
 
 Mobile Landing Page:
 
-!["Screenshot of the Mobile Landing Page"](PLACEHOLDER)
+!["Screenshot of the Mobile Landing Page"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Mobile-Landing-Page.jpg?raw=true)
 
 Desktop Landing Page:
 
-!["Screenshot of the Desktop Landing Page"](PLACEHOLDER)
+!["Screenshot of the Desktop Landing Page"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Desktop-Landing-Page.jpg?raw=true)
 
 Restaurant Login Page:
 
-!["Screenshot of the Restaurant Login Page"](PLACEHOLDER)
+!["Screenshot of the Restaurant Login Page"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Restaurant-Login-Page.jpg?raw=true)
 
 Restaurant Order Page Functionality:
 
-!["GIF of the Restaurant Order Page Functionality"](PLACEHOLDER)
+!["GIF of the Restaurant Order Page Functionality"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Restaurant-Orders-Functionality.gif?raw=true)
 
 Customer Menu Page Functionality:
 
-!["GIF of the Customer Menu Page Functionality"](PLACEHOLDER)
+!["GIF of the Customer Menu Page Functionality"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Customer-Menu-Functionality.gif?raw=true)
 
 Customer Status Page Functionality:
 
