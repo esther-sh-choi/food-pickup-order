@@ -7,7 +7,8 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 
-const PORT = process.env.PORT || 8080;
+// 8080 before
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.set("view engine", "ejs");
@@ -57,7 +58,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// listen
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
