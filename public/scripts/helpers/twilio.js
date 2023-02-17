@@ -2,6 +2,11 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
+
+/*
+Creates a message using the Twilio client and then sends it to the customers phone_number.
+*/
+
 const smsMsgCustomer = (name, message, phone_number, photo_url) => {
   return new Promise((res, err) => {
     client.messages
@@ -17,6 +22,10 @@ const smsMsgCustomer = (name, message, phone_number, photo_url) => {
       });
   });
 };
+
+/*
+Creates a message using the Twilio client and then sends it to the restauranst phone_number.
+*/
 
 const smsMsgRestaurant = (message) => {
   return new Promise((res, err) => {
