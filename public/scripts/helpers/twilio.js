@@ -33,7 +33,7 @@ const smsMsgRestaurant = (message) => {
         body: `${message}`,
         from: "+15205237081",
         //**** Put your number below to receive SMS as the restaurant when customer places an order. ****//
-        to: "+10000000000",
+        to: "+14167295604",
       })
       .then((message) => res(message.sid))
       .catch((err) => {
