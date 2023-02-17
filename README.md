@@ -1,6 +1,6 @@
 # Order Up - Midterm Group Project
 
-Team Members and Project Authors:
+## Team Members and Project Authors
 
 So Hyun (Esther) Choi - https://github.com/esther-sh-choi
 
@@ -8,17 +8,17 @@ Ashley Ure - https://github.com/dorreb
 
 Jonathan Phair - https://github.com/jmphair
 
+## Project Description
+
 "Order Up" is a multi-page food pickup ordering app.
 
 This is a fullstack project and relies on the following to run.
 
-Front-end:
+Front-end: HTML, CSS, JS, jQuery, and AJAX. 
 
-  HTML, CSS, JS, jQuery, and AJAX. 
+Back-end: Node, Express, and PG.
 
-Back-end:
-
-  Node, Express, and PG.
+## Why Order Up?
 
 The customer experience:
 
@@ -58,7 +58,7 @@ Restaurant Login Page:
 
 Customer Status Page:
 
-!["GIF of the Customer Status Page Functionality"](PLACEHOLDER)
+!["GIF of the Customer Status Page Functionality"](https://github.com/esther-sh-choi/food-pickup-order/blob/master/public/docs/Readme%20Media/Status-Page.png?raw=true)
 
 ## Getting Started
 
