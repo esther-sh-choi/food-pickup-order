@@ -15,8 +15,6 @@ const openFoodListModal = (event) => {
   const orderData = event.target.dataset;
   const { orderId } = orderData;
 
-  console.log(orderObj);
-
   $("#food-modal").removeClass("hide");
 
   $(`.food-modal-content`).empty();
@@ -248,8 +246,6 @@ const createOrderCard = (
   is_cancelled,
   customer_name
 ) => {
-  const stringifyFoods = JSON.stringify(foods);
-  console.log(stringifyFoods);
   const $orderCard = $(`
   <div class="col s12 m6 l3">
     <div class="card">
@@ -266,8 +262,7 @@ const createOrderCard = (
         <div class="preptime-form-container new">
         </div>
 
-        <form data-order-id="${order_id}" data-foods=${stringifyFoods} onSubmit="openFoodListModal(event)">
-          <input type="hidden" name="foods" value=${stringifyFoods}>
+        <form data-order-id="${order_id}" onSubmit="openFoodListModal(event)">
           <button type="submit" class="view-all-food-button btn-flat N/A transparent open-food-list">Expand Order</button>
         </form>
       </div>
@@ -345,11 +340,6 @@ const createOrderCard = (
   if (estimated_ready_at && !ready_at && !is_complete && !is_cancelled) {
     const date = new Date(estimated_ready_at);
     const localTime = date.toLocaleTimeString();
-
-    if (order_id === 11) {
-      console.log(parsedOrders[order_id].estimated_ready_at);
-      console.log(estimated_ready_at);
-    }
 
     $prepFormContent = $(`
     <p>You have until ${localTime} to prepare this order.</p>
