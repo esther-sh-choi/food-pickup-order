@@ -1,5 +1,5 @@
 // load .env data into process.env
-/* Uncomment dotenv config if you want to use your own server/database */
+/* Heroku doesn't need dotenv */
 require("dotenv").config();
 
 // Web server config
