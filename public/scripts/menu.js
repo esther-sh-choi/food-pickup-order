@@ -134,7 +134,9 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
   });
   const itemCount = foodIdArray.length;
   $("#cart-count").empty();
-  $("#cart-count").append(itemCount);
+  if (itemCount.length) {
+    $("#cart-count").append(itemCount);
+  }
 
   let subtotal = 0;
   orders.forEach((order) => {
