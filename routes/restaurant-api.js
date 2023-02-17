@@ -3,7 +3,6 @@ const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
 const twilio = require("../public/scripts/helpers/twilio");
 
-
 /*
 If the user is logged on this route will query the database for all the orders and return them as JSON
 */
@@ -23,12 +22,10 @@ router.get("/orders", (req, res) => {
   }
 });
 
-
 /*
 This route will update the estimated time for an order with the given order ID, based on the preptime value in the request body.
 After updating the database, it will send an SMS message to the customer using the Twilio helper function and then return the updated order information as JSON.
 */
-
 
 router.post("/orders/:order_id/confirm", (req, res) => {
   const order_id = req.params.order_id;
@@ -43,9 +40,9 @@ router.post("/orders/:order_id/confirm", (req, res) => {
         const photo_url =
           "https://images-ext-1.discordapp.net/external/cU3k6BlDpujtHPW-Yk-cJYdC0kydqJeW5_Q4LCvrW6Q/https/torontolife.com/wp-content/uploads/2021/01/KRISS_FINAL04.jpg?width=999&height=666";
 
-        // twilio
-        //   .smsMsgCustomer(customerName, message, phoneNumber, photo_url)
-        //   .then((res) => console.log(res));
+        twilio
+          .smsMsgCustomer(customerName, message, phoneNumber, photo_url)
+          .then((res) => console.log(res));
         res.json(order);
       })
       .catch((e) => {
@@ -53,7 +50,6 @@ router.post("/orders/:order_id/confirm", (req, res) => {
       });
   }
 });
-
 
 /*
 This route is a POST request to update an order with a given order_id.
@@ -93,11 +89,11 @@ router.post("/orders/:order_id/update", (req, res) => {
             "Thank you for choosing Aloette! We hope to serve you again soon.",
           edit: `Your order needs an extra ${preptime} minutes to prepare. Our apologies for the delay, thank you for your patience.`,
         };
-        // twilio
-        //   .smsMsgCustomer(customerName, messages[type], phoneNumber)
-        //   .then((res) => {
-        //     console.log(res);
-        //   });
+        twilio
+          .smsMsgCustomer(customerName, messages[type], phoneNumber)
+          .then((res) => {
+            console.log(res);
+          });
 
         res.json(order);
       })

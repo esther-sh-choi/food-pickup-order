@@ -1,5 +1,5 @@
 footer {
-  z-index: 2;
+  z-index: 1;
 }
 
 .status-page {
@@ -23,8 +23,12 @@ footer {
     max-width: 600px;
 
     .card-image {
-      max-height: 400px;
+      max-height: 30vh;
       overflow: hidden;
+
+      @media only screen and (min-width: 1024px) {
+        max-height: 400px;
+      }
 
       img {
         object-fit: cover;

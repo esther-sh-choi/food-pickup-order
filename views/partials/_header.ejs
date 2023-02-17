@@ -6,7 +6,7 @@
     /></a>
     <ul class="right">
       <% if (owner) { %>
-      <li>Logged in as: <%= owner.username %></li>
+      <li id="username-info">Logged in as: <%= owner.username %></li>
       <li>
         <form action="/restaurant/logout" method="POST">
           <button type="submit" class="btn logout">Log Out</button>
