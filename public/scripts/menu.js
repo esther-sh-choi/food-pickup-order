@@ -134,7 +134,7 @@ const renderCart = (customer_order, isRemove, ordersObj) => {
   });
   const itemCount = foodIdArray.length;
   $("#cart-count").empty();
-  if (itemCount.length) {
+  if (itemCount > 0) {
     $("#cart-count").append(itemCount);
   }
 
