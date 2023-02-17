@@ -1,5 +1,13 @@
 # Order Up - Midterm Group Project
 
+Team Members and Project Authors:
+
+So Hyun (Esther) Choi - https://github.com/esther-sh-choi
+
+Ashley Ure - https://github.com/dorreb
+
+Jonathan Phair https://github.com/jmphair
+
 "Order Up" is a multi-page food pickup ordering app.
 
 This is a fullstack project and relies on the following to run.
