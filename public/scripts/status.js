@@ -1,5 +1,13 @@
 $(() => {
   refreshEveryMinute();
+
+  const socket = io();
+  io.on("connection", (socket) => {
+    console.log("a user connected");
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
+  });
 });
 
 /*
@@ -14,7 +22,6 @@ const renderStatusPage = (timer) => {
     },
   });
 };
-
 
 /*
 Renders the customers order data on the screen and displays a message that gets updated throughout their order.
@@ -55,7 +62,6 @@ const renderOrderData = (order, timer) => {
     );
   }
 };
-
 
 /*
 In real production, I would use a websocket or change 1000 to 1000*60 so that it renders every minute rather than every second
