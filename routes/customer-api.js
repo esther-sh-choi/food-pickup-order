@@ -37,8 +37,17 @@ router.post("/checkout", (req, res) => {
       return customerQueries.addOrder(customer.id);
     })
     .then((order) => {
-      const message = `You have recieved a new order from ${customerData[0]}! The order id is: ${order.id}. Check your orders page for more details.`;
-      twilio.smsMsgRestaurant(message).then((res) => console.log(res));
+      // const message = `You have recieved a new order from ${customerData[0]}! The order id is: ${order.id}. Check your orders page for more details.`;
+      // twilio.smsMsgRestaurant(message).then((res) => console.log(res));
+
+      const message = `We have received your order! Please give us a moment to figure out the estimated preptime for your order.`;
+      const photo_url =
+        "https://images-ext-1.discordapp.net/external/cU3k6BlDpujtHPW-Yk-cJYdC0kydqJeW5_Q4LCvrW6Q/https/torontolife.com/wp-content/uploads/2021/01/KRISS_FINAL04.jpg?width=999&height=666";
+
+      twilio
+        .smsMsgCustomer(customerData[0], message, customerData[1], photo_url)
+        .then((res) => console.log(res));
+
       return customerQueries.addFoodOrder(foodIdArray, order.id);
     })
     .then((foodOrder) => {
