@@ -7,9 +7,16 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
+// const socketServer = require("./socketServer");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 
 const PORT = process.env.PORT || 8080;
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  /* options */
+});
 
 app.set("view engine", "ejs");
 
@@ -44,7 +51,8 @@ const restaurantRoutes = require("./routes/restaurant");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
-app.use("/api/restaurant", restaurantApiRoutes);
+// app.use("/api/restaurant", restaurantApiRoutes(socketServer));
+app.use("/api/restaurant", restaurantApiRoutes(io));
 app.use("/api/customer", customerApiRoutes);
 app.use("/customer", customerRoutes);
 app.use("/restaurant", restaurantRoutes);
@@ -58,6 +66,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

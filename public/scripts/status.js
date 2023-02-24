@@ -1,24 +1,23 @@
+let socket = io();
 $(() => {
-  refreshEveryMinute();
-
-  const socket = io();
-  io.on("connection", (socket) => {
-    console.log("a user connected");
-    socket.on("disconnect", () => {
-      console.log("user disconnected");
-    });
-  });
+  // refreshEveryMinute();
+  renderStatusPage();
 });
 
 /*
 Sends an AJAX request to the server to fetch order data and renders it onto the page.
- */
-const renderStatusPage = (timer) => {
+*/
+const renderStatusPage = (timer = null) => {
   $.ajax({
     type: "GET",
     url: "/api/customer/status",
     success: (data) => {
-      renderOrderData(data, timer);
+      renderOrderData(data);
+      socket.on("connect", () => {
+        socket.on("hello", function () {
+          console.log(arguments);
+        });
+      });
     },
   });
 };
@@ -52,7 +51,7 @@ const renderOrderData = (order, timer) => {
   if (is_complete) {
     $(".order_info").empty();
     $(".order_info").append("Thank you for your order. Enjoy your meal!");
-    clearInterval(timer);
+    // clearInterval(timer);
   }
 
   if (is_cancelled) {
@@ -66,8 +65,8 @@ const renderOrderData = (order, timer) => {
 /*
 In real production, I would use a websocket or change 1000 to 1000*60 so that it renders every minute rather than every second
 */
-const refreshEveryMinute = () => {
-  const timer = setInterval(() => {
-    renderStatusPage(timer);
-  }, 1000);
-};
+// const refreshEveryMinute = () => {
+//   const timer = setInterval(() => {
+//     renderStatusPage(timer);
+//   }, 1000);
+// };

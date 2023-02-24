@@ -44,9 +44,9 @@ router.post("/checkout", (req, res) => {
       const photo_url =
         "https://images-ext-1.discordapp.net/external/cU3k6BlDpujtHPW-Yk-cJYdC0kydqJeW5_Q4LCvrW6Q/https/torontolife.com/wp-content/uploads/2021/01/KRISS_FINAL04.jpg?width=999&height=666";
 
-      twilio
-        .smsMsgCustomer(customerData[0], message, customerData[1], photo_url)
-        .then((res) => console.log(res));
+      // twilio
+      //   .smsMsgCustomer(customerData[0], message, customerData[1], photo_url)
+      //   .then((res) => console.log(res));
 
       return customerQueries.addFoodOrder(foodIdArray, order.id);
     })
