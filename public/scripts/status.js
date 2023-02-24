@@ -2,6 +2,11 @@ let socket = io();
 $(() => {
   // refreshEveryMinute();
   renderStatusPage();
+  socket.on("connect", () => {
+    socket.on("hello", function () {
+      console.log(arguments);
+    });
+  });
 });
 
 /*
@@ -13,11 +18,6 @@ const renderStatusPage = (timer = null) => {
     url: "/api/customer/status",
     success: (data) => {
       renderOrderData(data);
-      socket.on("connect", () => {
-        socket.on("hello", function () {
-          console.log(arguments);
-        });
-      });
     },
   });
 };

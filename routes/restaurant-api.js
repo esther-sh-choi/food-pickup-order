@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const restaurantQueries = require("../db/queries/restaurants");
 const twilio = require("../public/scripts/helpers/twilio");
+// const socketServer = require("../socketServer");
 
 /*
 If the user is logged on this route will query the database for all the orders and return them as JSON
@@ -23,7 +24,7 @@ router.get("/orders", (req, res) => {
   }
 });
 
-const createRouter = (io) => {
+const createRouter = (socketServer) => {
   /*
 This route will update the estimated time for an order with the given order ID, based on the preptime value in the request body.
 After updating the database, it will send an SMS message to the customer using the Twilio helper function and then return the updated order information as JSON.
@@ -79,6 +80,13 @@ Once the order has been successfully updated, the appropriate message is sent to
       preptime,
       ...req.body,
     };
+
+    socketServer.to(order_id).emit("hello", { string: "world", num: 8 });
+
+    // socketServer.on("connection", (socket) => {
+    //   console.log("connected");
+    //   socket.join(order_id);
+    // });
 
     if (user) {
       restaurantQueries
